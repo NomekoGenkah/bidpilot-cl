@@ -20,6 +20,15 @@ npm start              # abre http://127.0.0.1:3000
 
 Otros comandos: `npm run dev` (recarga automática), `npm test`, `npm run lint`, `npm run typecheck` y `npm run check` (los tres anteriores).
 
+### Con Docker
+
+```bash
+cp .env.example .env   # completa tus claves
+docker compose up --build
+```
+
+La interfaz queda en http://127.0.0.1:3000 y los datos locales se guardan en `./data`.
+
 ## Avisos
 
 - **No es asesoría legal.** Revisa siempre las bases originales antes de postular.

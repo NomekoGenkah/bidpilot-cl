@@ -1,0 +1,11 @@
+services:
+  bidpilot:
+    build: .
+    ports:
+      # Solo accesible desde tu computador (local-first)
+      - '127.0.0.1:3000:3000'
+    env_file:
+      - path: .env
+        required: false
+    volumes:
+      - ./data:/app/data
