@@ -1,0 +1,27 @@
+# Plan privado del proyecto (nunca al repo público)
+PLAN.md
+
+# Secretos
+.env
+.env.*
+!.env.example
+
+# Dependencias y builds
+node_modules/
+dist/
+coverage/
+
+# Datos locales (SQLite)
+data/
+*.sqlite
+*.sqlite3
+*.db
+
+# Bases descargadas (privadas)
+fixtures/private/*
+!fixtures/private/.gitkeep
+
+# Sistema / editor
+.DS_Store
+*:Zone.Identifier
+.vscode/
