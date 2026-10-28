@@ -10,7 +10,7 @@ BidPilot CL corre en tu computador. Tus documentos y datos se guardan localmente
 
 ## Instalación
 
-Requiere Node.js 20 o superior.
+Requiere Node.js 20.16 o superior (por la extracción de PDF).
 
 ```bash
 npm install
@@ -19,6 +19,60 @@ npm start              # abre http://127.0.0.1:3000
 ```
 
 Otros comandos: `npm run dev` (recarga automática), `npm test`, `npm run lint`, `npm run typecheck` y `npm run check` (los tres anteriores).
+
+### Ingestar una licitación y sus bases
+
+Descarga el PDF original y guárdalo en `fixtures/private/` (fuera de Git). Luego:
+
+```bash
+npm run ingest -- 730566-48-L123 fixtures/private/730566-48-L123/bases.pdf
+```
+
+Puedes añadir la URL de origen del PDF como tercer argumento. El comando carga `.env`,
+consulta los metadatos de Mercado Público y guarda `tender.json` y `bases.json` en
+`data/tenders/<id>/`. Las bases conservan el texto de cada página física (desde 1),
+las páginas sin texto y el hash SHA-256 del PDF original. Verifica que el documento
+corresponda al ID indicado: esa asociación se realiza manualmente.
+
+La descarga de adjuntos del portal aún es manual. Los PDFs escaneados requieren OCR,
+que todavía no está implementado. La ingesta no extrae requisitos ni los envía al modelo.
+
+La primera prueba real y sus fuentes están documentadas en [docs/INGESTION_NOTES.md](docs/INGESTION_NOTES.md).
+
+### Extraer requisitos con citas
+
+Después de la ingesta:
+
+```bash
+npm run extract -- 730566-48-L123
+```
+
+Este comando **envía el texto de las bases a Meta**. Procesa bloques de cuatro páginas
+y guarda el resultado en `data/tenders/<id>/requirements.json`. Cada requisito candidato tiene
+categoría, etapa (oferta, adjudicación o ejecución), naturaleza (obligación o criterio
+de evaluación), página y cita textual.
+
+El núcleo valida el JSON y comprueba cada cita contra su página, tolerando únicamente
+diferencias de espacios y saltos de línea. Reintenta una vez los bloques con esquema
+o citas inválidas; las citas que siguen fallando quedan en `rechazados`, fuera de la
+lista de requisitos aceptados. Si una llamada falla o se trunca, conserva el resultado
+anterior y no publica una extracción parcial.
+
+La coincidencia de una cita no garantiza que la interpretación sea correcta ni que
+se hayan encontrado todos los requisitos. Revisa el resultado antes de usarlo.
+
+Detalles de validación y límites: [docs/EXTRACTION_NOTES.md](docs/EXTRACTION_NOTES.md).
+
+### Evaluar la extracción
+
+```bash
+npm run eval -- 730566-48-L123
+```
+
+La primera muestra incluye 34 requisitos clave y una auditoría de 25 candidatos.
+El comando compara con adjudicaciones explícitas y genera un informe local sin llamar
+al modelo. Las etiquetas son provisionales y la muestra es de desarrollo, no un test
+ciego. Resultados, denominadores y reproducción en [eval/README.md](eval/README.md).
 
 ### Con Docker
 

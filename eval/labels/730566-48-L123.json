@@ -1,0 +1,677 @@
+{
+  "schemaVersion": 1,
+  "tenderId": "730566-48-L123",
+  "sourceSha256": "0109081dd5842533cb29f23ef2443631430f264bdb958af998f1258f738f92b0",
+  "sourceUrl": "https://www.desarrollosocialyfamilia.gob.cl/transparencia/documentos/2023/SES/Octubre/DAF/Adquisiciones/APRUEBA%20BASES%20Y%20DESIGNA%20COMISIN%20730566-48-L123.pdf",
+  "status": "provisional_pendiente_revision",
+  "split": "desarrollo",
+  "scope": "34 requisitos clave seleccionados; no inventario exhaustivo ni test ciego.",
+  "requisitos": [
+    {
+      "id": "G01",
+      "descripcion": "Renovar Jira Software Standard para hasta 50 usuarios.",
+      "categoria": "tecnica",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 3,
+          "texto": "Jira Software (versión Standard)   Hasta 50 usuarios",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G02",
+      "descripcion": "Renovar Power BI Connector for JIRA para hasta 50 usuarios.",
+      "categoria": "tecnica",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 3,
+          "texto": "Power BI Connector for JIRA   Hasta 50 usuarios",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G03",
+      "descripcion": "Cargar licencias en cuenta corporativa, coordinando con contraparte después de formalizar orden de compra.",
+      "categoria": "tecnica",
+      "etapa": "ejecucion",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 2,
+          "texto": "Dichas licencias deben ser cargadas a nuestra cuenta administración\n(adminjira@desarrollosocial.gob.cl) existente corporativa, dicha gestión\ndebe ser coordinada con nuestra contraparte técnica una vez\nformalizada la Orden de Compra",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G04",
+      "descripcion": "Designar coordinador técnico del contratista.",
+      "categoria": "contractual",
+      "etapa": "ejecucion",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 4,
+          "texto": "Por su parte, el contratista deberá designar un coordinador técnico que se relacionará con la\nContraparte Técnica para todos los efectos señalados.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G05",
+      "descripcion": "Presentar oferta antes del cierre histórico indicado: 13/11/2023 a las 17:00.",
+      "categoria": "administrativa",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 4,
+          "texto": "Fecha de cierre para presentar ofertas: 13/11/2023 17:00:00",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G06",
+      "descripcion": "Conservar validez mínima de 60 días desde notificación de adjudicación según página 5.",
+      "categoria": "administrativa",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 5,
+          "texto": "Las ofertas tendrán una validez mínima de 60 días corridos, contados desde la notificación de la\nadjudicación.",
+          "clausula": null
+        }
+      ],
+      "nota": "Preservar ambas versiones; no decidir prevalencia."
+    },
+    {
+      "id": "G07",
+      "descripcion": "Conservar validez mínima de 30 días desde cierre de recepción según página 16.",
+      "categoria": "administrativa",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 16,
+          "texto": "Las ofertas tendrán una validez mínima de 30 días corridos contados desde la fecha de cierre de\nrecepción de ofertas.",
+          "clausula": null
+        }
+      ],
+      "nota": "Preservar ambas versiones; no decidir prevalencia."
+    },
+    {
+      "id": "G08",
+      "descripcion": "Para puntaje de discapacidad acreditar contrato y registro, Compin, trámite o equivalente.",
+      "categoria": "evaluacion",
+      "etapa": "oferta",
+      "naturaleza": "criterio_evaluacion",
+      "citas": [
+        {
+          "pagina": 6,
+          "texto": "Trabajadores con discapacidad (Conforme lo dispuesto en la Ley N°21.015 que Incentiva la Inclusión de\nPersonas con Discapacidad al Mundo Laboral).\nSe acreditará mediante:\na.Copia del contrato de trabajo o prestación de servicios de trabajadores o prestadores con discapacidad.\nb.Copia del documento que acredite la inscripción del trabajador o prestador de servicios en el Registro\nNacional de la Discapacidad o certificación de la Compin o comprobante de haber iniciado el último\ntrámite, o su equivalente.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G09",
+      "descripcion": "Para subcriterio de discapacidad solo se evalúan trabajadores por sobre mínimo legal.",
+      "categoria": "evaluacion",
+      "etapa": "oferta",
+      "naturaleza": "criterio_evaluacion",
+      "citas": [
+        {
+          "pagina": 6,
+          "texto": "Nota 8: La evaluación será efectuada, a los oferentes que presenten ofertas que contemplen trabajadores\npor sobre el mínimo legal",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G10",
+      "descripcion": "Para experiencia presentar Anexo Técnico 1 o formato propio y cartola SII; si se omite la cartola el organismo puede obtenerla por ser pública.",
+      "categoria": "evaluacion",
+      "etapa": "oferta",
+      "naturaleza": "criterio_evaluacion",
+      "citas": [
+        {
+          "pagina": 8,
+          "texto": "Medio Verificador: Anexo Técnico N°1 Experiencia o formato propio del oferente, el cual deberá contener\ntoda la información solicitada. Asimismo, la experiencia debe ser acreditada con cartola del contribuyente\nde SII, que se obtiene por internet. Dicho documento señala fecha de iniciación de actividades. En el caso\nde que el proveedor omita la presentación de dicha cartola, la entidad licitante podrá obtener el certificado\npor sus medios en la medida que es una información pública.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G11",
+      "descripcion": "La experiencia tiene ponderación de 10%.",
+      "categoria": "evaluacion",
+      "etapa": "oferta",
+      "naturaleza": "criterio_evaluacion",
+      "citas": [
+        {
+          "pagina": 5,
+          "texto": "Nombre   % (Porcentaje)",
+          "clausula": null
+        },
+        {
+          "pagina": 6,
+          "texto": "Experiencia   10",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G12",
+      "descripcion": "El precio tiene ponderación de 80%.",
+      "categoria": "evaluacion",
+      "etapa": "oferta",
+      "naturaleza": "criterio_evaluacion",
+      "citas": [
+        {
+          "pagina": 5,
+          "texto": "Nombre   % (Porcentaje)",
+          "clausula": null
+        },
+        {
+          "pagina": 6,
+          "texto": "Precio   80",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G13",
+      "descripcion": "Para puntaje de género acreditar política firmada por representante legal vigente desde hace al menos seis meses.",
+      "categoria": "evaluacion",
+      "etapa": "oferta",
+      "naturaleza": "criterio_evaluacion",
+      "citas": [
+        {
+          "pagina": 7,
+          "texto": "1.- Cuenten con una política de inclusión de género. Acreditada mediante copia escrita y firmada por\nrepresentante legal y vigente a lo menos desde hace 6 meses, y",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G14",
+      "descripcion": "Para puntaje de igualdad remunerativa acreditar contratos y últimos tres pagos AFP en igualdad de funciones.",
+      "categoria": "evaluacion",
+      "etapa": "oferta",
+      "naturaleza": "criterio_evaluacion",
+      "citas": [
+        {
+          "pagina": 7,
+          "texto": "2.- Igualdad de remuneraciones entre hombre y mujeres: En igualdad de funciones y acreditado mediante\ncopia de contratos y últimos 3 pagos a AFP.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G15",
+      "descripcion": "Si adjudicatario es persona natural adjuntar cédula simple por Registro de Proveedores.",
+      "categoria": "administrativa",
+      "etapa": "adjudicacion",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 10,
+          "texto": "1- Si el adjudicatario es Persona Natural \n- Debe encontrarse inscrito en estado 'hábil' en el Registro de Proveedores.\n- Debe acompañar Fotocopia simple de la cédula de identidad de la persona natural adjudicada, la que\ndebe adjuntarse a través del Registro de Proveedores.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G16",
+      "descripcion": "Persona jurídica adjudicataria: vigencia de sociedad no mayor a 60 días o antecedente equivalente, por Registro de Proveedores.",
+      "categoria": "administrativa",
+      "etapa": "adjudicacion",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 10,
+          "texto": "2.- Si el adjudicatario no es Persona Natural:",
+          "clausula": null
+        },
+        {
+          "pagina": 11,
+          "texto": "- Debe presentar un Certificado de Vigencia de la Sociedad con una antigüedad no superior a 60 días\ncorridos, contados desde la fecha de notificación de la adjudicación, o el antecedente que acredite la\nexistencia jurídica del oferente. Este documento deberá adjuntarse a través del Registro de Proveedores.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G17",
+      "descripcion": "Persona jurídica: vigencia de poder no mayor a 60 días o antecedente equivalente admisible, por Registro de Proveedores.",
+      "categoria": "administrativa",
+      "etapa": "adjudicacion",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 10,
+          "texto": "2.- Si el adjudicatario no es Persona Natural:",
+          "clausula": null
+        },
+        {
+          "pagina": 11,
+          "texto": "- Debe presentar un Certificado de vigencia del poder del representante legal, con una antigüedad no\nsuperior a 60 días corridos, contados desde la fecha de notificación de la adjudicación, otorgado por el\nConservador de Bienes Raíces correspondiente o, en los casos que resulte procedente, cualquier otro\nantecedente que acredite la vigencia del poder del representante legal del oferente, a la época de\npresentación de la oferta. Este documento deberá adjuntarse a través del Registro de Proveedores.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G18",
+      "descripcion": "Entregar certificado con vencimientos y fechas de renovación en hasta diez días hábiles desde orden de compra.",
+      "categoria": "contractual",
+      "etapa": "ejecucion",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 12,
+          "texto": "El proveedor adjudicado deberá entregar un documento que certifique la entrega de todos los certificados\nindicando el detalle de los vencimientos de cada uno de los productos y sus fechas de renovación, con un\nplazo máximo de hasta 10 días hábiles una vez emitida la Orden de Compra.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G19",
+      "descripcion": "Ante incumplimiento multa diaria de 0,5% del valor total, con tope acumulado de 10%.",
+      "categoria": "contractual",
+      "etapa": "ejecucion",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 12,
+          "texto": "Si la prestación del servicio por parte del adjudicatario presenta incumplimientos de cualquier naturaleza, o\nbien, se demuestra la incapacidad de responder operativamente a los requerimientos técnicos, se obligará\nal adjudicatario a pagar una multa de incumplimiento equivalente al 0,5% del valor total del contrato por\ncada día de atraso. Para proceder a hacer efectiva la multa se descontará su monto del pago\ncorrespondiente, lo que se comunicará por carta certificada dirigida al domicilio del adjudicatario. El tope\nmáximo para la aplicación de multas durante la ejecución del contrato será el monto equivalente al 10%\ndel precio total contratado.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G20",
+      "descripcion": "Confidencialidad durante y después del contrato salvo autorización escrita previa del Ministerio.",
+      "categoria": "contractual",
+      "etapa": "ejecucion",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 14,
+          "texto": "El contratista, durante el desarrollo del contrato y una vez expirado éste, está obligado a guardar reserva y\nquedará expresamente prohibido utilizar total o parcialmente datos, resultados o cualquier antecedente\nque haya mantenido en su poder, sin la previa y debida autorización por escrito del Ministerio de\nDesarrollo Social y Familia.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G21",
+      "descripcion": "No ofrecer ni conceder sobornos o dádivas a funcionarios ni terceros influyentes en proceso o contrato.",
+      "categoria": "administrativa",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 15,
+          "texto": "El oferente se obliga a no ofrecer ni conceder, ni intentar ofrecer o conceder, sobornos, regalos, premios,\ndádivas o pagos, cualquiera fuese su tipo, naturaleza y/o monto, a ningún funcionario público en relación\ncon su oferta, con el proceso de licitación pública, ni con la ejecución de él o los contratos que\neventualmente se deriven de la misma, ni tampoco a ofrecerlas o concederlas a terceras personas que\npudiesen influir directa o indirectamente en el proceso licitatorio, en su toma de decisiones o en la posterior\nadjudicación y ejecución del o los contratos que de ello se deriven.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G22",
+      "descripcion": "Hacer cumplir integridad por empleados, asesores, agentes y subcontratistas, asumiendo responsabilidad.",
+      "categoria": "administrativa",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 15,
+          "texto": "El oferente se obliga a tomar todas las medidas que fuesen necesarias para que las obligaciones\nanteriormente señaladas sean asumidas y cabalmente cumplidas por sus empleados y/o dependientes y/o\nasesores y/o agentes y en general, todas las personas con que éste o éstos se relacionen directa o\nindirectamente en virtud o como efecto de la presente licitación, incluidos sus subcontratistas, haciéndose\nplenamente responsable de las consecuencias de su infracción, sin perjuicio de las responsabilidades\nindividuales que también procediesen y/o fuesen determinadas por los organismos correspondientes.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G23",
+      "descripcion": "Incluir Anexo 1 de declaración de inhabilidades en oferta.",
+      "categoria": "administrativa",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 19,
+          "texto": "A)Anexo N° 1, Declaración Jurada que acredita no encontrarse afecto a ninguna de las inhabilidades y\nsituaciones indicadas en el artículo 4º inciso primero y sexto, de la Ley Nº 19.886. Asimismo, que está en\nconocimiento del inciso segundo del artículo 4° de la Ley N° 19.886 y la obligación descrita en la letra d)\ndel mismo documento.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G24",
+      "descripcion": "Incluir Anexo 2 de identificación del oferente.",
+      "categoria": "administrativa",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 19,
+          "texto": "B)Anexo N° 2, Identificación del Oferente.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G25",
+      "descripcion": "Si se oferta como persona jurídica adjuntar copia del RUT de empresa.",
+      "categoria": "administrativa",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 20,
+          "texto": "D)Fotocopia del RUT de la empresa, si la oferta corresponde a una persona jurídica.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G26",
+      "descripcion": "Si existe UTP formalizar solidaridad y representante común con poderes suficientes.",
+      "categoria": "administrativa",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 20,
+          "texto": "E)Documento público o privado que formaliza la unión temporal de proveedores (UTP): Si dos o más\nproveedores se unen para el efecto de participar en este proceso de compra, deberán establecer, en el\ndocumento que formaliza la unión, a lo menos, la solidaridad entre las partes respecto de todas las\nobligaciones que se generen con la Entidad y el nombramiento de un representante o apoderado común\ncon poderes suficientes.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G27",
+      "descripcion": "Persona jurídica: certificado laboral/previsional o Anexo 05-B/05-D según corresponda hasta cinco días hábiles tras adjudicación.",
+      "categoria": "administrativa",
+      "etapa": "adjudicacion",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 20,
+          "texto": "Si es persona jurídica:\nCertificado de antecedentes laborales, previsionales ó la siguiente declaración jurada, según corresponda,\nen un plazo no mayor a 5 días hábiles de notificada la adjudicación:\n-Anexo N° 05-B. Declaración Jurada sin Deudas o Saldos Insolutos con Trabajadores ó\n-Anexo N° 05-D. Declaración Jurada con Deudas o Saldos Insolutos con Trabajadores.",
+          "clausula": null
+        }
+      ],
+      "nota": "La Nota 1 posterior plantea ambigüedad de etapa; ver A03."
+    },
+    {
+      "id": "G28",
+      "descripcion": "Presentar Anexo 06 Ley 20.393 hasta cinco días hábiles tras adjudicación.",
+      "categoria": "administrativa",
+      "etapa": "adjudicacion",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 20,
+          "texto": "Anexo 06: Declaración Jurada de no estar afecto a la Ley N° 20.393, en un plazo no mayor a 5 días\nhábiles de notificada la adjudicación:",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G29",
+      "descripcion": "Estar hábil en ChileProveedores o presentar Anexo 7 hasta diez días hábiles tras adjudicación.",
+      "categoria": "administrativa",
+      "etapa": "adjudicacion",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 20,
+          "texto": "3 ) Encontrarse hábil en ChileProveedores ó presentar el Anexo 7: Declaración Jurada de Socios, en un\nplazo no mayor a 10 días hábiles de notificada la adjudicación.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G30",
+      "descripcion": "Presentar propuesta técnica Anexo 03 o formato propio completo mediante portal.",
+      "categoria": "tecnica",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 20,
+          "texto": "La Propuesta Técnica estará conformada por el formulario correspondiente al Anexo N° 03, o en el\nformulario propio del proveedor, pero que contenga toda la información requerida y que deberá\ncompletarse e ingresarse al portal electrónico www.mercadopublico.cl.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G31",
+      "descripcion": "Presentar oferta económica Anexo 04 por valor neto y con impuestos, incluyendo todos los costos.",
+      "categoria": "economica",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 21,
+          "texto": "A)La oferta económica, corresponderá al valor neto y con impuestos (incluidos todos los costos), estará\nconformada por el formulario Propuesta Económica Anexo N° 04.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G32",
+      "descripcion": "Indicar régimen tributario o exenciones aplicables.",
+      "categoria": "economica",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 21,
+          "texto": "B)El oferente indicará el régimen tributario o bien si todo o parte de sus servicios están exentos de\ndeterminado impuesto.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G33",
+      "descripcion": "Entregar antecedentes en español y formato digital por portal.",
+      "categoria": "administrativa",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 21,
+          "texto": "Todos serán entregados en idioma español y en formato digital en http://www.mercadopublico.cl",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    },
+    {
+      "id": "G34",
+      "descripcion": "No entregar factura antes de aprobación técnica de productos.",
+      "categoria": "contractual",
+      "etapa": "ejecucion",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 18,
+          "texto": "El contratista no podrá entregar al Ministerio la factura por los bienes entregados   mientras la contraparte\ntécnica no apruebe formalmente los productos señalados.",
+          "clausula": null
+        }
+      ],
+      "nota": ""
+    }
+  ],
+  "exclusiones": [
+    {
+      "id": "N01",
+      "descripcion": "Pago dentro de 30 días a cargo de entidad.",
+      "motivo": "organismo",
+      "cita": {
+        "pagina": 18,
+        "texto": "El/los pago/s al proveedor por los bienes adquiridos o servicios contratados por la entidad licitante, deberá\nefectuarse por ésta dentro de los 30 días corridos siguientes a la recepción de la factura o del respectivo\ninstrumento tributario de cobro.",
+        "clausula": null
+      }
+    },
+    {
+      "id": "N02",
+      "descripcion": "Facultad de presentar descargos en cinco días.",
+      "motivo": "derecho",
+      "cita": {
+        "pagina": 13,
+        "texto": "El contratista dispondrá de un plazo de 5 días hábiles, contados desde la notificación, para efectuar sus\ndescargos.",
+        "clausula": null
+      }
+    },
+    {
+      "id": "N03",
+      "descripcion": "Facultad de formular consultas sobre licitación.",
+      "motivo": "derecho",
+      "cita": {
+        "pagina": 4,
+        "texto": "Los interesados en participar en la presente licitación podrán formular consultas y solicitar aclaraciones a\ntravés del sistema www.mercadopublico.cl, dentro de 1 día(s) corrido(s) a las 17:00 horas, contados desde\nla publicación del llamado a licitación en el sistema www.mercadopublico.cl.",
+        "clausula": null
+      }
+    },
+    {
+      "id": "N04",
+      "descripcion": "Regla interna de desempate por experiencia.",
+      "motivo": "regla_interna",
+      "cita": {
+        "pagina": 8,
+        "texto": "Mecanismo de resolución de empates \nEn el evento de que una vez culminado el proceso de evaluación de ofertas, hubiese dos o más\nproponentes que hayan obtenido el mismo puntaje máximo, quedando más de uno en condiciones de\nresultar adjudicados, se optará por aquella oferta que cuente con un mayor puntaje en el criterio\nExperiencia.",
+        "clausula": null
+      }
+    },
+    {
+      "id": "N05",
+      "descripcion": "Reuniones periódicas a cargo de contraparte del organismo.",
+      "motivo": "organismo",
+      "cita": {
+        "pagina": 4,
+        "texto": "De ser necesario, mantener reuniones periódicas con la entidad contratada para efectos del\nbuen desarrollo del contrato y/o acuerdos operativos.",
+        "clausula": null
+      }
+    },
+    {
+      "id": "N06",
+      "descripcion": "Verificar disponibilidad en catálogo del organismo.",
+      "motivo": "regla_interna",
+      "cita": {
+        "pagina": 1,
+        "texto": "5° Que verificado el catálogo de productos y servicios en el portal de Mercado Público, de la Dirección de\nCompras y Contratación Pública, los servicios requeridos no se encuentran ofertados en la modalidad del\nConvenio Marco.",
+        "clausula": null
+      }
+    },
+    {
+      "id": "N07",
+      "descripcion": "Solicitud opcional de prórroga; no obligación general de pedirla.",
+      "motivo": "derecho",
+      "cita": {
+        "pagina": 21,
+        "texto": "No obstante, previa solicitud escrita por el Consultor de extensión de plazo de entrega de los servicios, que\ndeberá ser efectuada con una anticipación de a lo menos 5 días hábiles al plazo de que se trate de\nprorrogar, la Contraparte Técnica podrá autorizar su prórroga, dejando constancia de ello en un informe\nfundado y deberá suscribirse el correspondiente acuerdo operativo.",
+        "clausula": null
+      }
+    },
+    {
+      "id": "N08",
+      "descripcion": "Destino interno Ecosistema Digital, sin exigir una nueva funcionalidad al proveedor.",
+      "motivo": "antecedente",
+      "cita": {
+        "pagina": 15,
+        "texto": "Herramienta principalmente usada para el proyecto de Ecosistema Digital que se encuentra en pleno\ndesarrollo de nuestro Ministerio de Desarrollo Social y Familia.",
+        "clausula": null
+      }
+    }
+  ],
+  "ambiguedades": [
+    {
+      "id": "A01",
+      "descripcion": "Validez: 60 días desde adjudicación frente a 30 desde cierre; no decidir prevalencia.",
+      "goldIds": ["G06", "G07"],
+      "citas": [
+        {
+          "pagina": 5,
+          "texto": "Las ofertas tendrán una validez mínima de 60 días corridos, contados desde la notificación de la\nadjudicación.",
+          "clausula": null
+        },
+        {
+          "pagina": 16,
+          "texto": "Las ofertas tendrán una validez mínima de 30 días corridos contados desde la fecha de cierre de\nrecepción de ofertas.",
+          "clausula": null
+        }
+      ]
+    },
+    {
+      "id": "A02",
+      "descripcion": "Subsanación: un día hábil y 24 horas; no tratarlos como equivalentes sin revisión.",
+      "goldIds": [],
+      "citas": [
+        {
+          "pagina": 10,
+          "texto": "Para dichas aclaraciones y presentaciones de antecedentes se otorgará un plazo fatal de 1 días hábiles,\ncontados desde el requerimiento de la entidad licitante, el que se informará a través del Sistema de\ninformación www.mercadopublico.cl.",
+          "clausula": null
+        },
+        {
+          "pagina": 17,
+          "texto": "Para dichas aclaraciones y presentaciones de antecedentes\nse otorgará un plazo fatal de 24 horas, contados desde el requerimiento de la entidad licitante, el que se\ninformará a través del Sistema de información www.mercadopublico.cl.",
+          "clausula": null
+        }
+      ]
+    },
+    {
+      "id": "A03",
+      "descripcion": "Antecedentes laborales tras adjudicación frente a Nota 1 que vincula omisión a inadmisibilidad en apertura.",
+      "goldIds": ["G27"],
+      "citas": [
+        {
+          "pagina": 20,
+          "texto": "Si es persona jurídica:\nCertificado de antecedentes laborales, previsionales ó la siguiente declaración jurada, según corresponda,\nen un plazo no mayor a 5 días hábiles de notificada la adjudicación:\n-Anexo N° 05-B. Declaración Jurada sin Deudas o Saldos Insolutos con Trabajadores ó\n-Anexo N° 05-D. Declaración Jurada con Deudas o Saldos Insolutos con Trabajadores.",
+          "clausula": null
+        },
+        {
+          "pagina": 20,
+          "texto": "Nota 1: La omisión de los Anexos N°01 y certificado de antecedentes laborales, previsionales en caso de\ncorresponder o declaraciones juradas según corresponda (N°05-A o N°05-C si es persona natural, N°05-B\no N°05-D si es persona jurídica), o parte de la informacion contenida en el anexo den la apertura provocará\nque la oferta sea declarada inadmisible y en consecuencia, dicha propuesta no será evaluada.",
+          "clausula": null
+        }
+      ]
+    }
+  ],
+  "pagesSha256": "0b1b08624a7c339b7097fe8a267935cfc5a0661114560d49008104d2fb46add3"
+}

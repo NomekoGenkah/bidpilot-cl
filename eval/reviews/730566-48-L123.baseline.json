@@ -1,0 +1,407 @@
+{
+  "schemaVersion": 1,
+  "tenderId": "730566-48-L123",
+  "predictionSha256": "28acbdb8c4e9f10d12a37d891d93f795a834ee4e74e25a1794e3845d7dec4843",
+  "status": "provisional_pendiente_revision",
+  "matches": [
+    {
+      "goldId": "G01",
+      "predictionIds": ["REQ-001"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G02",
+      "predictionIds": ["REQ-002"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G03",
+      "predictionIds": ["REQ-003"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G04",
+      "predictionIds": ["REQ-004"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G05",
+      "predictionIds": [],
+      "veredicto": "ausente",
+      "nota": "No se encontró en extracción congelada."
+    },
+    {
+      "goldId": "G06",
+      "predictionIds": ["REQ-009"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G07",
+      "predictionIds": ["REQ-043"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G08",
+      "predictionIds": ["REQ-010"],
+      "veredicto": "parcial",
+      "nota": "Omite equivalente documental."
+    },
+    {
+      "goldId": "G09",
+      "predictionIds": ["REQ-010"],
+      "veredicto": "parcial",
+      "nota": "Omite superar mínimo legal."
+    },
+    {
+      "goldId": "G10",
+      "predictionIds": ["REQ-016"],
+      "veredicto": "parcial",
+      "nota": "Omite obtención de cartola por organismo si no se presenta."
+    },
+    {
+      "goldId": "G11",
+      "predictionIds": [],
+      "veredicto": "ausente",
+      "nota": "No se encontró en extracción congelada."
+    },
+    {
+      "goldId": "G12",
+      "predictionIds": [],
+      "veredicto": "ausente",
+      "nota": "No se encontró en extracción congelada."
+    },
+    {
+      "goldId": "G13",
+      "predictionIds": ["REQ-014"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G14",
+      "predictionIds": ["REQ-014"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G15",
+      "predictionIds": ["REQ-020"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G16",
+      "predictionIds": ["REQ-025"],
+      "veredicto": "parcial",
+      "nota": "Omite alcance a persona jurídica y alternativa equivalente."
+    },
+    {
+      "goldId": "G17",
+      "predictionIds": ["REQ-026"],
+      "veredicto": "parcial",
+      "nota": "Omite alcance a persona jurídica y alternativa equivalente."
+    },
+    {
+      "goldId": "G18",
+      "predictionIds": ["REQ-030"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G19",
+      "predictionIds": ["REQ-031"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G20",
+      "predictionIds": ["REQ-033"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G21",
+      "predictionIds": ["REQ-035"],
+      "veredicto": "parcial",
+      "nota": "Omite prohibición de dádivas a terceros influyentes."
+    },
+    {
+      "goldId": "G22",
+      "predictionIds": [],
+      "veredicto": "ausente",
+      "nota": "No se encontró en extracción congelada."
+    },
+    {
+      "goldId": "G23",
+      "predictionIds": ["REQ-052"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G24",
+      "predictionIds": ["REQ-053"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G25",
+      "predictionIds": ["REQ-056"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G26",
+      "predictionIds": ["REQ-057"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G27",
+      "predictionIds": ["REQ-059"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G28",
+      "predictionIds": ["REQ-060"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G29",
+      "predictionIds": ["REQ-061"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G30",
+      "predictionIds": ["REQ-062"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G31",
+      "predictionIds": ["REQ-063"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G32",
+      "predictionIds": ["REQ-064"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G33",
+      "predictionIds": ["REQ-065"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    },
+    {
+      "goldId": "G34",
+      "predictionIds": ["REQ-049"],
+      "veredicto": "completo",
+      "nota": "Contenido de etiqueta recuperado; citas se evalúan por separado."
+    }
+  ],
+  "audits": [
+    {
+      "predictionId": "REQ-001",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Producto, versión y cantidad sustentados."
+    },
+    {
+      "predictionId": "REQ-002",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Producto y cantidad sustentados."
+    },
+    {
+      "predictionId": "REQ-003",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Conserva coordinación y momento de carga."
+    },
+    {
+      "predictionId": "REQ-004",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Obligación expresa del contratista."
+    },
+    {
+      "predictionId": "REQ-006",
+      "veredicto": "correcto",
+      "citaSuficiente": false,
+      "nota": "Declaración de plataforma está fuera de cita."
+    },
+    {
+      "predictionId": "REQ-009",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Preserva versión de página 5."
+    },
+    {
+      "predictionId": "REQ-010",
+      "veredicto": "parcial",
+      "citaSuficiente": false,
+      "nota": "Omite equivalente y condición de mínimo legal; cita solo acredita contrato."
+    },
+    {
+      "predictionId": "REQ-012",
+      "veredicto": "parcial",
+      "citaSuficiente": false,
+      "nota": "Generaliza otro documento oficial sin supuesto de extranjero; cita solo incluye contrato."
+    },
+    {
+      "predictionId": "REQ-014",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Dos componentes y condiciones presentes."
+    },
+    {
+      "predictionId": "REQ-016",
+      "veredicto": "parcial",
+      "citaSuficiente": false,
+      "nota": "Omite obtención alternativa por organismo; cita no conserva detalles temporales."
+    },
+    {
+      "predictionId": "REQ-025",
+      "veredicto": "parcial",
+      "citaSuficiente": false,
+      "nota": "Generaliza a todo adjudicatario y omite existencia jurídica equivalente."
+    },
+    {
+      "predictionId": "REQ-026",
+      "veredicto": "parcial",
+      "citaSuficiente": false,
+      "nota": "Generaliza a todo adjudicatario y omite alternativa equivalente de poder."
+    },
+    {
+      "predictionId": "REQ-030",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Conserva plazo, hito y contenido."
+    },
+    {
+      "predictionId": "REQ-031",
+      "veredicto": "correcto",
+      "citaSuficiente": false,
+      "nota": "Tope 10% está en página pero fuera de cita."
+    },
+    {
+      "predictionId": "REQ-033",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Sujeto, duración y autorización presentes."
+    },
+    {
+      "predictionId": "REQ-034",
+      "veredicto": "correcto",
+      "citaSuficiente": false,
+      "nota": "Continuación sin sujeto; antecedente en página anterior."
+    },
+    {
+      "predictionId": "REQ-040",
+      "veredicto": "correcto",
+      "citaSuficiente": false,
+      "nota": "Recupera genéricamente el objeto contratado; es redundante respecto de los productos específicos. La cita no expresa por sí sola obligación de ejecución del proveedor."
+    },
+    {
+      "predictionId": "REQ-043",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Preserva versión de página 16."
+    },
+    {
+      "predictionId": "REQ-044",
+      "veredicto": "correcto",
+      "citaSuficiente": false,
+      "nota": "Cita interrumpida en mitad de condición."
+    },
+    {
+      "predictionId": "REQ-045",
+      "veredicto": "correcto",
+      "citaSuficiente": false,
+      "nota": "Cita interrumpida y sin objeto de subsanación."
+    },
+    {
+      "predictionId": "REQ-046",
+      "veredicto": "correcto",
+      "citaSuficiente": false,
+      "nota": "Cita no incluye condición de saldos insolutos ni objeto completo."
+    },
+    {
+      "predictionId": "REQ-050",
+      "veredicto": "parcial",
+      "citaSuficiente": false,
+      "nota": "Omite condición de no transferencia de factura a terceros."
+    },
+    {
+      "predictionId": "REQ-057",
+      "veredicto": "correcto",
+      "citaSuficiente": false,
+      "nota": "Cita omite supuesto UTP presente en página."
+    },
+    {
+      "predictionId": "REQ-059",
+      "veredicto": "correcto",
+      "citaSuficiente": false,
+      "nota": "Cita omite sujeto persona jurídica y números de anexos."
+    },
+    {
+      "predictionId": "REQ-063",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Valor neto, impuestos y anexo sustentados."
+    }
+  ],
+  "exclusions": [
+    {
+      "exclusionId": "N01",
+      "predictionIds": [],
+      "nota": "No se detectó inclusión en extracción congelada."
+    },
+    {
+      "exclusionId": "N02",
+      "predictionIds": [],
+      "nota": "No se detectó inclusión en extracción congelada."
+    },
+    {
+      "exclusionId": "N03",
+      "predictionIds": [],
+      "nota": "No se detectó inclusión en extracción congelada."
+    },
+    {
+      "exclusionId": "N04",
+      "predictionIds": [],
+      "nota": "No se detectó inclusión en extracción congelada."
+    },
+    {
+      "exclusionId": "N05",
+      "predictionIds": [],
+      "nota": "No se detectó inclusión en extracción congelada."
+    },
+    {
+      "exclusionId": "N06",
+      "predictionIds": [],
+      "nota": "No se detectó inclusión en extracción congelada."
+    },
+    {
+      "exclusionId": "N07",
+      "predictionIds": [],
+      "nota": "No se detectó inclusión en extracción congelada."
+    },
+    {
+      "exclusionId": "N08",
+      "predictionIds": [],
+      "nota": "No convierte el destino Ecosistema Digital en funcionalidad exigida."
+    }
+  ],
+  "labelsSha256": "ef4814a5c55a697aeb89c0f4a5acbacea9d9916c6aa5bf85adb28ae143bb5a0a"
+}

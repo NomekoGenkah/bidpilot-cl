@@ -6,12 +6,15 @@
   "description": "Agente local-first que prepara postulaciones a licitaciones de Mercado Público (Chile).",
   "license": "MIT",
   "engines": {
-    "node": ">=20"
+    "node": ">=20.16.0"
   },
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
+    "eval": "tsx packages/core/src/eval-cli.ts",
+    "extract": "tsx --env-file=.env packages/core/src/extract-cli.ts",
+    "ingest": "tsx --env-file=.env packages/core/src/ingest-cli.ts",
     "start": "npm run start -w @bidpilot/web",
     "dev": "npm run dev -w @bidpilot/web",
     "test": "vitest run",
