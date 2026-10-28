@@ -88,6 +88,7 @@ Para documentos o atributos que dan puntaje usa criterio_evaluacion y etapa ofer
 No extraigas instrucciones internas del organismo ni antecedentes legales genéricos. No inventes condiciones ni completes frases cortadas con suposiciones.
 Conserva en descripcion y condicionAplicacion TODOS los supuestos que restringen una exigencia (persona natural o jurídica, si hay UTP, si existen saldos insolutos, si no hubo transferencia a terceros, superar mínimos legales). No generalices a todos los oferentes.
 Antes de interpretar una fila o viñeta, identifica el encabezado que gobierna su lista, incluso si está en la página anterior. Mantén ese alcance hasta un nuevo encabezado del mismo nivel. Por ejemplo, los certificados enumerados bajo persona jurídica deben conservar esa condición y citar también el encabezado; que una viñeta no repita el sujeto no elimina la restricción.
+Construye las citas ANTES de redactar la descripción: primero copia el encabezado literal que determina el sujeto o la unidad de la tabla y luego la fila o viñeta. Para cada requisito bajo un encabezado, repite la cita del encabezado en SU PROPIO citas[]; no basta con citarlo en otro requisito. Por ejemplo, si dos certificados dependen de "Si el adjudicatario no es Persona Natural", ambos deben incluir esa cita además del certificado respectivo. Si una fila muestra un número sin unidad, cita también "Nombre % (Porcentaje)" o el encabezado literal equivalente. No basta con conservar el sujeto en condicionAplicacion ni con citar otra fila de la tabla. Puedes usar una cita corta de encabezado con su oración o fila contigua para alcanzar los 20 caracteres mínimos.
 Separa las obligaciones con condiciones distintas en requisitos independientes. Si un anexo es obligatorio para todos y solo una sección aplica a una UTP, crea un requisito general para el anexo y otro condicional para esa sección; no restrinjas todo el anexo a UTP. No combines en un candidato obligaciones cuyos sujetos o condiciones difieren.
 Conserva en descripcion y alternativasAceptadas TODAS las alternativas admitidas: "o equivalente", formato propio, distintos anexos o que el organismo obtenga un antecedente omitido. Una alternativa no es otro requisito obligatorio independiente. Usa null y [] si no hay condición o alternativa explícita.
 Cada requisito DEBE tener una o varias citas textuales continuas de al menos 20 caracteres. Copia párrafos o filas completos, no fragmentos interrumpidos. Las citas en conjunto deben sustentar TODOS los datos, condiciones, alternativas, plazos y topes de la descripción; incluye la oración siguiente si completa una excepción o un tope.
@@ -116,7 +117,7 @@ export async function extractRequirements(
   const schema = z.toJSONSchema(extractionSchema);
   for (let offset = 0; offset < bases.pages.length; offset += 4) {
     const pages = bases.pages.slice(offset, offset + 4);
-    const previous = bases.pages.slice(Math.max(0, offset - 1), offset);
+    const previous = bases.pages.slice(Math.max(0, offset - 2), offset);
     const following = bases.pages.slice(offset + 4, offset + 5);
     const available = [...previous, ...pages, ...following];
     const from = offset + 1;
@@ -183,7 +184,7 @@ export async function extractRequirements(
   });
   return {
     schemaVersion: 2,
-    promptVersion: 'requisitos-v3',
+    promptVersion: 'requisitos-v4',
     tenderId: bases.tenderId,
     sourceSha256: bases.sha256,
     model: config.model,

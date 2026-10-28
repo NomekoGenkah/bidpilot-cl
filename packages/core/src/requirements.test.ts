@@ -85,6 +85,33 @@ describe('verificación de citas', () => {
 });
 
 describe('extracción de requisitos', () => {
+  it('permite citar un encabezado dos páginas antes sin extraer requisitos de contexto', async () => {
+    const header = 'Nombre del criterio y ponderación % (Porcentaje)';
+    const pages = Array.from({ length: 5 }, (_, index) => ({
+      page: index + 1,
+      text: index === 2 ? header : quote,
+    }));
+    const continued = {
+      ...requirement,
+      paginaPrincipal: 5,
+      citas: [
+        { pagina: 3, texto: header, clausula: null },
+        { pagina: 5, texto: quote, clausula: null },
+      ],
+    };
+    vi.mocked(metaJson)
+      .mockResolvedValueOnce({ requisitos: [] })
+      .mockResolvedValueOnce({ requisitos: [continued] });
+    const result = await extractRequirements({ ...bases, pageCount: 5, pages }, config);
+    expect(result.requisitos).toEqual([{ id: 'REQ-001', ...continued }]);
+    expect(result.rechazados).toEqual([]);
+    const message = vi.mocked(metaJson).mock.calls[1]?.[1][1];
+    if (!message) throw new Error('Falta el segundo bloque.');
+    const request = JSON.parse(message.content);
+    expect(request.contextoAnterior.map((page: { page: number }) => page.page)).toEqual([3, 4]);
+    expect(request.paginasObjetivo.map((page: { page: number }) => page.page)).toEqual([5]);
+  });
+
   it('reintenta citas inválidas y conserva solo las respaldadas tras el segundo intento', async () => {
     const invalid = {
       ...requirement,

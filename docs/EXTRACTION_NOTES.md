@@ -8,7 +8,7 @@ npm run extract -- 730566-48-L123
 
 Lee `data/tenders/<id>/bases.json`, valida la secuencia de páginas y envía el texto
 a Meta mediante Chat Completions con JSON Schema estricto. Procesa cuatro páginas
-por bloque, con las páginas anterior y siguiente como contexto. Un requisito debe
+por bloque, con las dos páginas anteriores y la siguiente como contexto. Un requisito debe
 tener su `paginaPrincipal` en el bloque objetivo y al menos una cita allí; puede
 completar su evidencia con citas de las páginas de contexto disponibles.
 
@@ -27,7 +27,7 @@ Referencia de parámetros: [documentación oficial de Meta](https://dev.meta.ai/
 - Las citas que siguen fallando se guardan en `rechazados`, fuera de los requisitos aceptados.
 - Respuestas truncadas, contenido vacío o errores de API cancelan la ejecución; el resultado anterior permanece intacto.
 
-La salida usa `schemaVersion: 2`, `promptVersion: requisitos-v3` y `citas[]` en lugar
+La salida usa `schemaVersion: 2`, `promptVersion: requisitos-v4` y `citas[]` en lugar
 de `cita`. Cada candidato incluye `condicionAplicacion` (texto o null) y
 `alternativasAceptadas` (lista). Esos campos estructuran la interpretación del modelo;
 el verificador literal no comprueba por sí solo su exactitud.
@@ -105,3 +105,7 @@ respaldaban todos los detalles de sus descripciones. La salida v2 conserva ambas
 páginas cuando hace falta y recupera varias condiciones y alternativas. Resultados y
 errores que permanecen: [eval/V2.md](../eval/V2.md). Antes de la matriz, revisar los
 campos de alcance que siguen incompletos y validar en una licitación nueva.
+
+La continuación con prompt v4, los encabezados completados mediante revisión y la
+validación en una segunda licitación están en
+[eval/HEADERS_AND_SECOND_TENDER.md](../eval/HEADERS_AND_SECOND_TENDER.md).

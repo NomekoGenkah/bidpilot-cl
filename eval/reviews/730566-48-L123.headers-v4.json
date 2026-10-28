@@ -1,0 +1,108 @@
+{
+  "sourceSha256": "0109081dd5842533cb29f23ef2443631430f264bdb958af998f1258f738f92b0",
+  "rawPredictionSha256": "2256629dee091463818e1294687b8d8d0a85e7893d2909b616f408e2a8467856",
+  "reviewedPredictionSha256": "4f3fabc80ea925766d98dae7dd3264cc84d7e9bb12500ac04312e6e0d1c18db6",
+  "status": "provisional_pendiente_revision",
+  "scope": {
+    "scope": "Corrección de evidencia REQ-015; REQ-026/027 comprobados sin modificación. No auditoría completa.",
+    "changes": [
+      {
+        "id": "REQ-015",
+        "reason": "Añadir encabezado porcentual y párrafo completo de condiciones y alternativas; retirar máximo explícito no sustentado en citas."
+      }
+    ]
+  },
+  "requirements": [
+    {
+      "id": "REQ-015",
+      "descripcion": "El criterio Cumplimiento de requisitos formales con ponderación de 5% corresponde a la entrega de los documentos administrativos dentro de los plazos requeridos, verificado con Anexo N° 2, fotocopia del RUT del representante legal o persona natural que firme la Declaración Jurada y fotocopia del RUT de la empresa si es persona jurídica; puntaje: cumple oportunamente 100 puntos, no cumple oportunamente 1 punto.",
+      "categoria": "evaluacion",
+      "etapa": "oferta",
+      "naturaleza": "criterio_evaluacion",
+      "paginaPrincipal": 7,
+      "condicionAplicacion": null,
+      "alternativasAceptadas": [
+        "fotocopia del RUT u otro documento que no mutable en el tiempo y que no perjudique o beneficie a algún proponente, de la empresa, si la oferta corresponde a una persona jurídica",
+        "que la entidad solicite antecedentes omitidos a través del portal www.mercadopublico.cl cuando sirvan para aclarar dudas y no perjudique o beneficie a algún proponente"
+      ],
+      "citas": [
+        {
+          "pagina": 6,
+          "texto": "Cumplimiento derequisitos formales   5",
+          "clausula": null
+        },
+        {
+          "pagina": 7,
+          "texto": "Corresponde a la entrega de los documentos administrativos, dentro de los plazos requeridos en esta\nlicitación.",
+          "clausula": null
+        },
+        {
+          "pagina": 7,
+          "texto": "Medio de verificación: Anexo N° 2, fotocopia del RUT del representante legal o persona natural que firme\nla Declaración Jurada, fotocopia del RUT u otro documento que no mutable en el tiempo",
+          "clausula": null
+        },
+        {
+          "pagina": 7,
+          "texto": "Cumple oportunamente con lo solicitado en las bases: 100 puntos\nNo cumple oportunamente con lo solicitado en las bases : 1 puntos",
+          "clausula": null
+        },
+        {
+          "pagina": 5,
+          "texto": "Nombre   % (Porcentaje)\nCompras públicas inclusivas   5",
+          "clausula": null
+        },
+        {
+          "pagina": 7,
+          "texto": "Cumplimiento derequisitos formales \nCorresponde a la entrega de los documentos administrativos, dentro de los plazos requeridos en esta\nlicitación. Siempre y cuando los antecedentes omitidos por los oferentes sirvan para aclarar dudas\nrelacionadas al proceso y no perjudique o beneficie a algún proponente, estos podrán ser solicitados a\ntravés del portal www.mercadopublico.\nMedio de verificación: Anexo N° 2, fotocopia del RUT del representante legal o persona natural que firme\nla Declaración Jurada, fotocopia del RUT u otro documento que no mutable en el tiempo y que no\nperjudique o beneficie a algún proponente, de la empresa, si la oferta corresponde a una persona jurídica.\nFormula de puntaje\nCumple oportunamente con lo solicitado en las bases: 100 puntos\nNo cumple oportunamente con lo solicitado en las bases : 1 puntos",
+          "clausula": null
+        }
+      ]
+    },
+    {
+      "id": "REQ-026",
+      "descripcion": "Si el adjudicatario no es Persona Natural, debe presentar un Certificado de Vigencia de la Sociedad con una antigüedad no superior a 60 días corridos contados desde la fecha de notificación de la adjudicación, documento que deberá adjuntarse a través del Registro de Proveedores",
+      "categoria": "administrativa",
+      "etapa": "adjudicacion",
+      "naturaleza": "obligacion",
+      "paginaPrincipal": 11,
+      "condicionAplicacion": "Si el adjudicatario no es Persona Natural",
+      "alternativasAceptadas": ["el antecedente que acredite la existencia jurídica del oferente"],
+      "citas": [
+        {
+          "pagina": 10,
+          "texto": "2.- Si el adjudicatario no es Persona Natural:",
+          "clausula": null
+        },
+        {
+          "pagina": 11,
+          "texto": "- Debe presentar un Certificado de Vigencia de la Sociedad con una antigüedad no superior a 60 días\ncorridos, contados desde la fecha de notificación de la adjudicación, o el antecedente que acredite la\nexistencia jurídica del oferente. Este documento deberá adjuntarse a través del Registro de Proveedores.",
+          "clausula": null
+        }
+      ]
+    },
+    {
+      "id": "REQ-027",
+      "descripcion": "Si el adjudicatario no es Persona Natural, debe presentar un Certificado de vigencia del poder del representante legal con una antigüedad no superior a 60 días corridos contados desde la fecha de notificación de la adjudicación, otorgado por el Conservador de Bienes Raíces correspondiente, documento que deberá adjuntarse a través del Registro de Proveedores",
+      "categoria": "administrativa",
+      "etapa": "adjudicacion",
+      "naturaleza": "obligacion",
+      "paginaPrincipal": 11,
+      "condicionAplicacion": "Si el adjudicatario no es Persona Natural",
+      "alternativasAceptadas": [
+        "cualquier otro antecedente que acredite la vigencia del poder del representante legal del oferente, a la época de presentación de la oferta, en los casos que resulte procedente"
+      ],
+      "citas": [
+        {
+          "pagina": 10,
+          "texto": "2.- Si el adjudicatario no es Persona Natural:",
+          "clausula": null
+        },
+        {
+          "pagina": 11,
+          "texto": "- Debe presentar un Certificado de vigencia del poder del representante legal, con una antigüedad no\nsuperior a 60 días corridos, contados desde la fecha de notificación de la adjudicación, otorgado por el\nConservador de Bienes Raíces correspondiente o, en los casos que resulte procedente, cualquier otro\nantecedente que acredite la vigencia del poder del representante legal del oferente, a la época de\npresentación de la oferta. Este documento deberá adjuntarse a través del Registro de Proveedores.",
+          "clausula": null
+        }
+      ]
+    }
+  ]
+}

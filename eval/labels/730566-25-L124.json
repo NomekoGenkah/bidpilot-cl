@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "tenderId": "730566-25-L124",
+  "sourceSha256": "af6da1aa559592265a3d819f37ad090797c53c9b9eb139f36c5c036d4897df70",
+  "pagesSha256": "3c849cd3fc5a6dcd5e8590244d578833c7cf1a45a07cd8e7f9dca24e56ea87ef",
+  "sourceUrl": "https://www.desarrollosocialyfamilia.gob.cl/transparencia/documentos/2024/SES/Abril/DAF/Adquisiciones/Bases_730566%2025%20L124%20dDAF%20512.pdf",
+  "status": "provisional_pendiente_revision",
+  "split": "desarrollo",
+  "scope": "12 requisitos seleccionados leyendo páginas antes de revisar la extracción; segundo documento del mismo organismo y plantilla similar, no test independiente amplio.",
+  "requisitos": [
+    {
+      "id": "G01",
+      "descripcion": "Renovar cinco licencias Adobe Creative Cloud All App mediante suscripción anual.",
+      "categoria": "tecnica",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 2,
+          "texto": "Descripción de la Licitación   El Ministerio de Desarrollo Social y Familia, viene a llamar a licitación\npública a proponentes y personas naturales o jurídicas, chilenas o\nextranjeras, con el objeto de contar con la Renovación de 5 Licencias\nAdobe Creative Cloud Todas las aplicaciones Suscripción Anual.",
+          "clausula": null
+        }
+      ],
+      "nota": "Selección previa a revisar la extracción; adjudicación semántica provisional."
+    },
+    {
+      "id": "G02",
+      "descripcion": "Adjuntar certificado digital ADOBE Partner Gold o superior con la oferta económica; omisión causa inadmisibilidad.",
+      "categoria": "tecnica",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 3,
+          "texto": "Se requiere que el proveedor que presente su oferta económica, adicionalmente adjunte en\nformato digital (Certificado ADOBE Partner Gold o superioir),   todo proveedor que no cumpla con\ndicho requisito técnico, será declarado inadmisible en dicho proceso de compra.",
+          "clausula": null
+        }
+      ],
+      "nota": "Selección previa a revisar la extracción; adjudicación semántica provisional."
+    },
+    {
+      "id": "G03",
+      "descripcion": "Presentar ofertas antes del 20/05/2024 a las 17:00.",
+      "categoria": "administrativa",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 4,
+          "texto": "Fecha de cierre para presentar ofertas: 20/05/2024 17:00:00 \n5 día(s) corrido(s), contados desde el plazo para publicar respuestas a las consultas en el sistema\nwww.mercadopublico.cl, a las 17:00 horas. En todo caso, el plazo de cierre para la recepción de ofertas no\npodrá vencer en días inhábiles ni en un día lunes o en un día siguiente a un día inhábil, antes de las\nquince horas.",
+          "clausula": null
+        }
+      ],
+      "nota": "Selección previa a revisar la extracción; adjudicación semántica provisional."
+    },
+    {
+      "id": "G04",
+      "descripcion": "Presentar ofertas mediante el formulario electrónico de Mercado Público.",
+      "categoria": "administrativa",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 4,
+          "texto": "Los oferentes deberán enviar sus ofertas a través de www.mercadopublico.cl, por medio del formulario\nelectrónico disponible en dicha plataforma.",
+          "clausula": null
+        }
+      ],
+      "nota": "Selección previa a revisar la extracción; adjudicación semántica provisional."
+    },
+    {
+      "id": "G05",
+      "descripcion": "Programa de integridad pondera 1%, cumplimiento formal 4%, compras inclusivas 5%, propuesta económica 80% y experiencia 10%.",
+      "categoria": "evaluacion",
+      "etapa": "oferta",
+      "naturaleza": "criterio_evaluacion",
+      "citas": [
+        {
+          "pagina": 5,
+          "texto": "Nombre   % (Porcentaje)\nPrograma de integridad   1\nCumplimiento de requisitos formales de presentación de ofertas   4\nCompras Públicas Inclusivas   5\nPropuesta Económica   80\nExperiencia   10",
+          "clausula": null
+        }
+      ],
+      "nota": "Selección previa a revisar la extracción; adjudicación semántica provisional."
+    },
+    {
+      "id": "G06",
+      "descripcion": "Si no es persona natural, presentar certificado de vigencia de sociedad de hasta 60 días desde adjudicación o antecedente de existencia jurídica, por Registro de Proveedores.",
+      "categoria": "administrativa",
+      "etapa": "adjudicacion",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 11,
+          "texto": "2.- Si el adjudicatario no es Persona Natural: \n- Debe encontrarse inscrito en estado 'hábil' en el Registro de Proveedores.\n- Debe presentar una Declaración Jurada disponible en el Registro de Proveedores, donde declare que el\nadjudicatario no se encuentra afecto a ninguna de las inhabilidades contempladas en el inciso 6° del\nartículo 4°, de la Ley 19.886. Esta declaración debe ser firmada por el representante legal de la persona\njurídica o por quien\ntenga poder suficiente para representarla para estos efectos. Cuando resulte adjudicada una unión\ntemporal de proveedores, dicha declaración deberá ser presentada por cada uno de sus integrantes.\nTratándose exclusivamente de las personas jurídicas, no podrán contratar con organismos del Estado,\naquellas que hayan sido condenadas por los delitos previstos en el artículo 27 de la ley N° 19.913, en el\nartículo 8° de la ley N° 18.314 y en los artículos 250 y 251 bis del Código Penal, a la pena de prohibición\nde celebrar actos\ny contratos con organismos del Estado. Lo anterior se verificará a través del Registro dispuesto por la ley\nN° 20.393, que establece la responsabilidad penal de las personas jurídicas en los delitos de cohecho,\nlavado de activos y financiamiento del terrorismo.\n- Debe presentar un Certificado de Vigencia de la Sociedad con una antigüedad no superior a 60 días\ncorridos, contados desde la fecha de notificación de la adjudicación, o el antecedente que acredite la\nexistencia jurídica del oferente. Este documento deberá adjuntarse a través del Registro de Proveedores.\n- Debe presentar un Certificado de vigencia del poder del representante legal, con una antigüedad no\nsuperior a 60 días corridos, contados desde la fecha de notificación de la adjudicación, otorgado por el\nConservador de Bienes Raíces correspondiente o, en los casos que resulte procedente, cualquier otro\nantecedente que acredite la vigencia del poder del representante legal del oferente, a la época de\npresentación de la oferta. Este documento deberá adjuntarse a través del Registro de Proveedores.",
+          "clausula": null
+        }
+      ],
+      "nota": "Selección previa a revisar la extracción; adjudicación semántica provisional."
+    },
+    {
+      "id": "G07",
+      "descripcion": "Si no es persona natural, presentar certificado de poder del representante de hasta 60 días desde adjudicación o antecedente equivalente cuando proceda, por Registro de Proveedores.",
+      "categoria": "administrativa",
+      "etapa": "adjudicacion",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 11,
+          "texto": "2.- Si el adjudicatario no es Persona Natural: \n- Debe encontrarse inscrito en estado 'hábil' en el Registro de Proveedores.\n- Debe presentar una Declaración Jurada disponible en el Registro de Proveedores, donde declare que el\nadjudicatario no se encuentra afecto a ninguna de las inhabilidades contempladas en el inciso 6° del\nartículo 4°, de la Ley 19.886. Esta declaración debe ser firmada por el representante legal de la persona\njurídica o por quien\ntenga poder suficiente para representarla para estos efectos. Cuando resulte adjudicada una unión\ntemporal de proveedores, dicha declaración deberá ser presentada por cada uno de sus integrantes.\nTratándose exclusivamente de las personas jurídicas, no podrán contratar con organismos del Estado,\naquellas que hayan sido condenadas por los delitos previstos en el artículo 27 de la ley N° 19.913, en el\nartículo 8° de la ley N° 18.314 y en los artículos 250 y 251 bis del Código Penal, a la pena de prohibición\nde celebrar actos\ny contratos con organismos del Estado. Lo anterior se verificará a través del Registro dispuesto por la ley\nN° 20.393, que establece la responsabilidad penal de las personas jurídicas en los delitos de cohecho,\nlavado de activos y financiamiento del terrorismo.\n- Debe presentar un Certificado de Vigencia de la Sociedad con una antigüedad no superior a 60 días\ncorridos, contados desde la fecha de notificación de la adjudicación, o el antecedente que acredite la\nexistencia jurídica del oferente. Este documento deberá adjuntarse a través del Registro de Proveedores.\n- Debe presentar un Certificado de vigencia del poder del representante legal, con una antigüedad no\nsuperior a 60 días corridos, contados desde la fecha de notificación de la adjudicación, otorgado por el\nConservador de Bienes Raíces correspondiente o, en los casos que resulte procedente, cualquier otro\nantecedente que acredite la vigencia del poder del representante legal del oferente, a la época de\npresentación de la oferta. Este documento deberá adjuntarse a través del Registro de Proveedores.",
+          "clausula": null
+        }
+      ],
+      "nota": "Selección previa a revisar la extracción; adjudicación semántica provisional."
+    },
+    {
+      "id": "G08",
+      "descripcion": "Si es UTP, presentar un anexo administrativo por cada integrante firmado por el integrante o su representante.",
+      "categoria": "administrativa",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 19,
+          "texto": "Cuando el oferente sea una Unión Temporal de Proveedores (UTP), aquél deberá presentar un anexo por\ncada integrante de la UTP, suscrito por el representante legal del integrante o por éste, según, sea el caso.",
+          "clausula": null
+        }
+      ],
+      "nota": "Selección previa a revisar la extracción; adjudicación semántica provisional."
+    },
+    {
+      "id": "G09",
+      "descripcion": "Presentar propuesta técnica Anexo 06 con vigencia mínima de 30 días desde cierre.",
+      "categoria": "tecnica",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 19,
+          "texto": "La Propuesta Técnica estará conformada por:\nLos oferentes deberán ingresar su propuesta técnica en el Sistema de Información, adjuntando el o los\narchivos correspondientes (Anexo técnico N° 06) en el portal www.mercadopublico.cl., de acuerdo con los\nrequisitos y detalle del Requerimientos técnicos. La oferta técnica deberá tener una vigencia mínima de 30\ndías, contados desde la fecha de cierre de recepción de ofertas indicado en el portal.",
+          "clausula": null
+        }
+      ],
+      "nota": "Selección previa a revisar la extracción; adjudicación semántica provisional."
+    },
+    {
+      "id": "G10",
+      "descripcion": "Expresar el precio de la oferta económica en pesos chilenos.",
+      "categoria": "economica",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 20,
+          "texto": "i). - El precio de la oferta económica se expresará en pesos chilenos.",
+          "clausula": null
+        }
+      ],
+      "nota": "Selección previa a revisar la extracción; adjudicación semántica provisional."
+    },
+    {
+      "id": "G11",
+      "descripcion": "La oferta económica debe tener vigencia mínima de 60 días desde cierre.",
+      "categoria": "economica",
+      "etapa": "oferta",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 20,
+          "texto": "iii). - La oferta deberá tener una vigencia mínima de 60 días, contados desde la fecha de cierre de\nrecepción de ofertas indicado en el portal.",
+          "clausula": null
+        }
+      ],
+      "nota": "Selección previa a revisar la extracción; adjudicación semántica provisional."
+    },
+    {
+      "id": "G12",
+      "descripcion": "El contratista debe designar un coordinador técnico.",
+      "categoria": "contractual",
+      "etapa": "ejecucion",
+      "naturaleza": "obligacion",
+      "citas": [
+        {
+          "pagina": 20,
+          "texto": "G)Por su parte, el contratista deberá designar un coordinador técnico que se relacionará con la\nContraparte Técnica para todos los efectos señalados.",
+          "clausula": null
+        }
+      ],
+      "nota": "Selección previa a revisar la extracción; adjudicación semántica provisional."
+    }
+  ],
+  "exclusiones": [
+    {
+      "id": "X01",
+      "descripcion": "Asignación de licencias por el jefe TI.",
+      "motivo": "Obligación del organismo, no del proveedor.",
+      "cita": {
+        "pagina": 3,
+        "texto": "La asignación de las licencias estará a cargo del Jefe del Departamento Tecnologías de la Información, o quien lo\nreemplace en su ausencia.",
+        "clausula": null
+      }
+    }
+  ],
+  "ambiguedades": []
+}

@@ -72,3 +72,9 @@ Las métricas tienen denominadores distintos: cobertura sobre las 34 etiquetas e
 precisión y suficiencia sobre 25 candidatos auditados, coincidencia literal sobre los
 66 candidatos. No son estimaciones de calidad para todas las licitaciones ni un inventario
 exhaustivo del documento. No se calcula F1 combinando estas muestras diferentes.
+
+## Segunda licitación y encabezados
+
+Validación exploratoria del prompt v4 en `730566-25-L124`: [procedimiento, resultados
+y límites](HEADERS_AND_SECOND_TENDER.md). Incluye 12 etiquetas y auditoría de 16
+candidatos, con hashes propios y sin reutilizar las adjudicaciones del primer documento.

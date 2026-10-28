@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "tenderId": "730566-25-L124",
+  "predictionSha256": "8ad2fabe9eb6affaabf421da05050521d3fce5ff60364494465b7f92c60093b7",
+  "labelsSha256": "36a83cae7c62e12e11141a875df5c1887485776424ce649e9d533418b15a172a",
+  "status": "provisional_pendiente_revision",
+  "matches": [
+    {
+      "goldId": "G01",
+      "predictionIds": ["REQ-001"],
+      "veredicto": "completo",
+      "nota": "Recupera la etiqueta seleccionada en descripción y campos; auditoría de detalles adicionales por separado."
+    },
+    {
+      "goldId": "G02",
+      "predictionIds": ["REQ-002"],
+      "veredicto": "completo",
+      "nota": "Recupera la etiqueta seleccionada en descripción y campos; auditoría de detalles adicionales por separado."
+    },
+    {
+      "goldId": "G03",
+      "predictionIds": ["REQ-005"],
+      "veredicto": "completo",
+      "nota": "Recupera la etiqueta seleccionada en descripción y campos; auditoría de detalles adicionales por separado."
+    },
+    {
+      "goldId": "G04",
+      "predictionIds": ["REQ-004"],
+      "veredicto": "completo",
+      "nota": "Recupera la etiqueta seleccionada en descripción y campos; auditoría de detalles adicionales por separado."
+    },
+    {
+      "goldId": "G05",
+      "predictionIds": ["REQ-008", "REQ-009", "REQ-010", "REQ-015", "REQ-016"],
+      "veredicto": "completo",
+      "nota": "Recupera la etiqueta seleccionada en descripción y campos; auditoría de detalles adicionales por separado."
+    },
+    {
+      "goldId": "G06",
+      "predictionIds": ["REQ-023"],
+      "veredicto": "completo",
+      "nota": "Recupera la etiqueta seleccionada en descripción y campos; auditoría de detalles adicionales por separado."
+    },
+    {
+      "goldId": "G07",
+      "predictionIds": ["REQ-024"],
+      "veredicto": "parcial",
+      "nota": "La alternativa del poder no conserva explícitamente la condición en los casos que resulte procedente ni toda la referencia temporal en descripción/campos, aunque la cita sí la conserva."
+    },
+    {
+      "goldId": "G08",
+      "predictionIds": ["REQ-040"],
+      "veredicto": "completo",
+      "nota": "Recupera la etiqueta seleccionada en descripción y campos; auditoría de detalles adicionales por separado."
+    },
+    {
+      "goldId": "G09",
+      "predictionIds": ["REQ-047"],
+      "veredicto": "completo",
+      "nota": "Recupera la etiqueta seleccionada en descripción y campos; auditoría de detalles adicionales por separado."
+    },
+    {
+      "goldId": "G10",
+      "predictionIds": ["REQ-049"],
+      "veredicto": "completo",
+      "nota": "Recupera la etiqueta seleccionada en descripción y campos; auditoría de detalles adicionales por separado."
+    },
+    {
+      "goldId": "G11",
+      "predictionIds": ["REQ-051"],
+      "veredicto": "completo",
+      "nota": "Recupera la etiqueta seleccionada en descripción y campos; auditoría de detalles adicionales por separado."
+    },
+    {
+      "goldId": "G12",
+      "predictionIds": ["REQ-053"],
+      "veredicto": "completo",
+      "nota": "Recupera la etiqueta seleccionada en descripción y campos; auditoría de detalles adicionales por separado."
+    }
+  ],
+  "audits": [
+    {
+      "predictionId": "REQ-001",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Contenido seleccionado respaldado por sus citas; revisión provisional."
+    },
+    {
+      "predictionId": "REQ-002",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Contenido seleccionado respaldado por sus citas; revisión provisional."
+    },
+    {
+      "predictionId": "REQ-004",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Contenido seleccionado respaldado por sus citas; revisión provisional."
+    },
+    {
+      "predictionId": "REQ-005",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Contenido seleccionado respaldado por sus citas; revisión provisional."
+    },
+    {
+      "predictionId": "REQ-008",
+      "veredicto": "correcto",
+      "citaSuficiente": false,
+      "nota": "Falta citar el resultado 0 y el máximo de 100, aunque están en la página."
+    },
+    {
+      "predictionId": "REQ-009",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Contenido seleccionado respaldado por sus citas; revisión provisional."
+    },
+    {
+      "predictionId": "REQ-010",
+      "veredicto": "parcial",
+      "citaSuficiente": false,
+      "nota": "Omite la condición razones fundadas para cumplimiento alternativo y las citas no incluyen los puntajes 10/0 ni la nota 157 bis."
+    },
+    {
+      "predictionId": "REQ-015",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Contenido seleccionado respaldado por sus citas; revisión provisional."
+    },
+    {
+      "predictionId": "REQ-016",
+      "veredicto": "correcto",
+      "citaSuficiente": false,
+      "nota": "Cita la escala hasta 100, pero no el máximo explícito del criterio."
+    },
+    {
+      "predictionId": "REQ-023",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Contenido seleccionado respaldado por sus citas; revisión provisional."
+    },
+    {
+      "predictionId": "REQ-024",
+      "veredicto": "parcial",
+      "citaSuficiente": true,
+      "nota": "La alternativa omite la condición cuando resulte procedente; cita completa con encabezado."
+    },
+    {
+      "predictionId": "REQ-040",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Contenido seleccionado respaldado por sus citas; revisión provisional."
+    },
+    {
+      "predictionId": "REQ-047",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Contenido seleccionado respaldado por sus citas; revisión provisional."
+    },
+    {
+      "predictionId": "REQ-049",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Contenido seleccionado respaldado por sus citas; revisión provisional."
+    },
+    {
+      "predictionId": "REQ-051",
+      "veredicto": "correcto",
+      "citaSuficiente": false,
+      "nota": "La cita de la viñeta no incluye el encabezado que establece oferta económica."
+    },
+    {
+      "predictionId": "REQ-053",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Contenido seleccionado respaldado por sus citas; revisión provisional."
+    }
+  ],
+  "exclusions": [
+    {
+      "exclusionId": "X01",
+      "predictionIds": [],
+      "nota": "Ningún candidato atribuye al proveedor la asignación de licencias del jefe TI."
+    }
+  ]
+}

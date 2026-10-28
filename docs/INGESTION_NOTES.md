@@ -40,5 +40,5 @@ La asociación entre el PDF y el ID es manual. Esta prueba no valida el orden de
 en todos los diseños de tablas, ni compara calidad contra un extractor Python.
 
 La extracción de requisitos con Meta sobre estas páginas ya está implementada:
-ver [EXTRACTION_NOTES.md](EXTRACTION_NOTES.md). El conjunto de evaluación aún no
-está etiquetado y todavía no hay métricas de precisión o cobertura de requisitos.
+ver [EXTRACTION_NOTES.md](EXTRACTION_NOTES.md). Ya existe una muestra provisional etiquetada y métricas de desarrollo en
+[eval/V2.md](../eval/V2.md).
