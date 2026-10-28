@@ -84,7 +84,7 @@ Comparación de la salida original y la versión 2: [eval/V2.md](eval/V2.md).
 
 Con una licitación ingerida y sus requisitos extraídos, ejecuta `npm start` y abre
 http://127.0.0.1:3000. Guarda evidencia en texto/PDF, selecciona la licitación y pulsa
-«Generar matriz con Meta». Revisa las citas, responde preguntas y exporta JSON o
+«Analizar con Meta». Revisa las citas, responde preguntas y exporta JSON o
 Markdown. «Cargar perfil ficticio» permite probar con datos de demostración.
 
 El texto seleccionado y las respuestas se envían a Meta al generar la matriz.

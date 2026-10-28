@@ -9,10 +9,10 @@ adjudicaciones del evaluador.
 
 1. Guarda documentos PDF con texto, archivos UTF-8 o texto pegado en el baúl.
 2. Busca términos para inspeccionar las páginas recuperadas.
-3. Pulsa «Generar matriz con Meta». El proceso muestra su progreso por bloques.
-4. Revisa las razones, aplicabilidad, condiciones, alternativas y citas desplegables.
+3. Pulsa «Analizar con Meta» o «Actualizar con Meta». El proceso muestra su progreso por bloques.
+4. Selecciona una fila de Matriz o Preguntas para revisar sus razones, condiciones y citas.
 5. Responde las preguntas o carga nuevos documentos y vuelve a generar.
-6. Exporta JSON o Markdown cuando la matriz esté actualizada.
+6. Usa Exportar para descargar JSON o Markdown cuando la matriz esté actualizada.
 
 «Cargar perfil ficticio» añade tres documentos de demostración identificados como
 ficticios: una oferta/perfil de Taller Sur SpA y dos declaraciones contradictorias de
@@ -133,3 +133,6 @@ página, ausencia, contradicción, condiciones, respeto a auditorías previas y 
 HTTP de carga, exportación, respuestas, invalidación, concurrencia y conservación de
 la matriz ante fallo remoto. Las evaluaciones anteriores de ambas extracciones
 siguen reproduciendo sus resultados originales.
+
+La organización de las secciones, los filtros y las ayudas «?» se describen en
+[UI_REVIEW.md](UI_REVIEW.md).

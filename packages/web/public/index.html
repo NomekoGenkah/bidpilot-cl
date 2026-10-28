@@ -3,114 +3,167 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>BidPilot CL · Mesa de postulación</title>
+    <title>BidPilot CL</title>
     <link rel="stylesheet" href="/style.css" />
     <script src="/app.js" defer></script>
   </head>
   <body>
-    <header>
+    <header class="topbar">
       <a href="/" class="brand">BidPilot <span>CL</span></a
-      ><span>Tu mesa de postulación</span><span class="local">Guardado en este computador</span>
+      ><span class="local">Local</span
+      ><button
+        class="help"
+        type="button"
+        aria-label="Ayuda sobre los datos locales"
+        data-help="Los documentos se guardan en este computador. Al analizar, se envían a Meta los requisitos, fragmentos seleccionados de evidencia y tus respuestas. No se envían postulaciones al portal."
+      >
+        ?
+      </button>
     </header>
     <main>
-      <section class="intro">
-        <div>
-          <h1>De las bases<br />a la evidencia.</h1>
-          <p>
-            Revisa qué puedes acreditar, qué falta y qué necesitas aclarar antes de preparar tu
-            oferta.
-          </p>
+      <h1 class="sr-only">Revisión de licitación</h1>
+      <section class="tenderbar" aria-label="Licitación actual">
+        <div class="tenderpick">
+          <label for="tender">Licitación</label
+          ><select id="tender">
+            <option value="">Cargando…</option>
+          </select>
         </div>
-        <aside>
-          <strong>La última palabra es tuya.</strong>
-          <p>
-            Los resultados son provisionales y requieren revisión humana. No es asesoría legal. Tú
-            revisas y postulas en el portal.
-          </p>
-        </aside>
+        <span id="profile" class="demo-label" hidden>Perfil ficticio</span>
+        <div class="main-actions">
+          <button id="generate" class="primary">Analizar con Meta</button
+          ><button
+            class="help"
+            type="button"
+            aria-label="Qué ocurre al analizar"
+            data-help="Meta contrasta los requisitos con tus documentos y respuestas. Puede tardar varios minutos. Mientras trabaja no puedes cambiar la evidencia. Los resultados son provisionales y requieren revisión humana."
+          >
+            ?
+          </button>
+          <details class="export-menu">
+            <summary>Exportar</summary>
+            <div>
+              <a id="exportjson" hidden>JSON</a><a id="exportmd" hidden>Markdown</a
+              ><span id="exportempty">Primero genera un análisis actualizado.</span>
+            </div>
+          </details>
+        </div>
       </section>
       <div id="notice" role="status" aria-live="polite"></div>
-      <div class="workspace">
-        <aside class="vault">
-          <h2>Baúl de evidencia</h2>
-          <p>
-            Sube antecedentes que permitan comprobar los requisitos. El texto seleccionado se
-            enviará a Meta al generar la matriz.
-          </p>
-          <form id="upload">
-            <label for="docname">Nombre del documento</label
-            ><input
-              id="docname"
-              maxlength="180"
-              placeholder="Ej. Experiencia del proveedor"
-            /><label for="file">Archivo PDF o texto UTF-8</label
-            ><input id="file" type="file" accept=".pdf,.txt,.md" /><label for="doctext"
-              >O pega el texto</label
-            ><textarea
-              id="doctext"
-              rows="5"
-              placeholder="Incluye fechas, condiciones y quién emite el documento."
-            ></textarea
-            ><label class="check"
-              ><input id="fictional" type="checkbox" /> Es un documento ficticio de prueba</label
-            ><button type="submit">Guardar documento</button>
-          </form>
-          <button id="demo" class="secondary">Cargar perfil ficticio</button>
-          <p class="hint">
-            El perfil de prueba contiene datos suficientes, ausentes y contradictorios. No
-            representa una empresa real.
-          </p>
-          <h3>Documentos guardados</h3>
-          <ul id="documents"></ul>
-          <label for="search">Buscar en la evidencia</label
-          ><input id="search" type="search" placeholder="Certificado, licencias, experiencia…" />
-          <div id="results"></div>
-        </aside>
-        <section class="review">
-          <div class="tender">
-            <label for="tender">Licitación</label
-            ><select id="tender">
-              <option value="">Cargando licitaciones…</option>
-            </select>
-            <p id="tenderdetail"></p>
+      <div id="progress" role="status" aria-live="polite"></div>
+      <nav class="sections" aria-label="Secciones">
+        <button id="tab-matrix" aria-current="page">Matriz <span id="count-matrix"></span></button
+        ><button id="tab-questions">Preguntas <span id="count-questions"></span></button
+        ><button id="tab-documents">Documentos <span id="count-documents"></span></button
+        ><span id="updated"></span>
+      </nav>
+      <section id="review-view" aria-label="Revisión de requisitos">
+        <div id="summary" class="summary"></div>
+        <div class="filters">
+          <div class="searchfield">
+            <label for="requirement-search" class="sr-only">Buscar requisitos o preguntas</label
+            ><input type="search" id="requirement-search" placeholder="Buscar requisito…" />
           </div>
-          <div class="actionbar">
-            <button id="generate">Generar matriz con Meta</button
-            ><span id="progress" role="status" aria-live="polite"></span>
-          </div>
-          <p class="hint">
-            Se enviarán los requisitos, fragmentos de evidencia y tus respuestas a Meta. La búsqueda
-            es limitada: un resultado «falta» indica evidencia no encontrada, no incumplimiento
-            definitivo.
-          </p>
-          <div id="summary" class="summary"></div>
-          <div class="matrixbar">
-            <label for="filter">Mostrar</label
-            ><select id="filter">
-              <option value="all">Todos los requisitos</option>
-              <option value="cumple">Cumple</option>
-              <option value="falta">Falta</option>
-              <option value="dudoso">Dudoso</option>
-              <option value="pending">Pendiente de revisión</option>
-              <option value="questions">Con preguntas</option></select
-            ><a id="exportjson" hidden>Exportar JSON</a
-            ><a id="exportmd" hidden>Exportar Markdown</a>
-          </div>
-          <div id="matrix">
-            <div class="empty">
-              <h2>Construye una matriz con respaldo.</h2>
-              <p>
-                Elige una licitación, guarda evidencia y genera la matriz. Cada resultado mostrará
-                sus citas para que puedas comprobarlo.
-              </p>
+          <label for="filter" class="sr-only">Filtrar por estado</label
+          ><select id="filter">
+            <option value="attention">Por resolver</option>
+            <option value="all">Todos los estados</option>
+            <option value="falta">Falta evidencia</option>
+            <option value="dudoso">Por aclarar</option>
+            <option value="pending">Revisar bases</option>
+            <option value="contradiction">Contradicción</option>
+            <option value="cumple">Cumple</option>
+            <option value="not-applicable">No aplica</option></select
+          ><label for="stage" class="sr-only">Filtrar por etapa</label
+          ><select id="stage">
+            <option value="all">Todas las etapas</option>
+            <option value="oferta">Oferta</option>
+            <option value="adjudicacion">Adjudicación</option>
+            <option value="ejecucion">Ejecución</option></select
+          ><button
+            class="help"
+            type="button"
+            aria-label="Ayuda sobre los estados"
+            data-help="Falta evidencia significa que no se encontró respaldo suficiente, no un incumplimiento definitivo. Revisar bases significa que las citas del requisito necesitan revisión. No aplica es una condición que no se cumple para este proveedor; no cuenta como cumplimiento."
+          >
+            ?
+          </button>
+        </div>
+        <div id="workbench" class="workbench">
+          <div class="list-pane">
+            <div id="matrix"></div>
+            <div class="pagination">
+              <span id="range" aria-live="polite"></span
+              ><button id="previous" class="quiet">Anterior</button
+              ><button id="next" class="quiet">Siguiente</button>
             </div>
           </div>
-        </section>
-      </div>
+          <aside id="detail" class="detail" aria-labelledby="detail-title" hidden></aside>
+        </div>
+      </section>
+      <section id="documents-view" aria-label="Documentos del proveedor" hidden>
+        <div class="documents-actions">
+          <details id="uploadbox">
+            <summary class="primary">Añadir documento</summary>
+            <form id="upload">
+              <label for="docname">Nombre</label
+              ><input
+                id="docname"
+                maxlength="180"
+                placeholder="Ej. Certificado de experiencia"
+              /><label for="file">Archivo PDF o texto</label
+              ><input id="file" type="file" accept=".pdf,.txt,.md" />
+              <div class="label-help">
+                <label for="doctext">O pegar texto</label
+                ><button
+                  class="help"
+                  type="button"
+                  aria-label="Ayuda para cargar documentos"
+                  data-help="Elige un archivo o pega texto, una opción a la vez. Máximo 8 MB y 200.000 caracteres extraídos. Los PDF escaneados necesitan OCR externo. Se conserva el texto por página; guarda el archivo original por tu cuenta."
+                >
+                  ?
+                </button>
+              </div>
+              <textarea id="doctext" rows="5"></textarea
+              ><label class="check"
+                ><input id="fictional" type="checkbox" /> Documento ficticio</label
+              ><button type="submit" class="primary">Guardar documento</button>
+            </form>
+          </details>
+          <button id="demo" class="quiet">Cargar perfil ficticio</button
+          ><button
+            class="help"
+            type="button"
+            aria-label="Ayuda sobre el perfil ficticio"
+            data-help="Añade tres documentos de Taller Sur SpA para probar el flujo: una oferta de ejemplo y dos versiones contradictorias de experiencia. No representan una empresa real. Cualquier análisis que los use queda marcado como demostración."
+          >
+            ?</button
+          ><label for="search" class="sr-only">Buscar en documentos</label
+          ><input id="search" type="search" placeholder="Buscar en documentos…" />
+        </div>
+        <div id="results" aria-live="polite"></div>
+        <div class="documents-layout">
+          <div id="documents"></div>
+          <aside
+            id="document-viewer"
+            class="document-viewer"
+            aria-label="Contenido del documento"
+            hidden
+          ></aside>
+        </div>
+      </section>
     </main>
     <footer>
-      BidPilot CL · Las bases originales y sus aclaraciones prevalecen. No se envían postulaciones
-      desde esta aplicación.
+      <span>Revisión humana requerida. No es asesoría legal.</span
+      ><button
+        class="help"
+        type="button"
+        aria-label="Ayuda para interpretar el análisis"
+        data-help="Las citas pueden existir literalmente y aun así no respaldar toda una interpretación. Comprueba las bases originales y sus aclaraciones antes de usar los resultados. La aplicación no presenta ofertas en el portal."
+      >
+        ?
+      </button>
     </footer>
+    <div id="tooltip" role="tooltip" hidden></div>
   </body>
 </html>
