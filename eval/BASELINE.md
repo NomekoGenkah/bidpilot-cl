@@ -1,5 +1,7 @@
 # Primera evaluación de desarrollo
 
+Esta referencia queda congelada. La iteración posterior está en [V2.md](V2.md).
+
 Licitación histórica `730566-48-L123`; extracción de 66 candidatos del 27 de octubre
 de 2026. Etiquetas y adjudicaciones **provisionales, pendientes de revisión del usuario**.
 El documento ya se había usado para ajustar el extractor, por lo que esta muestra

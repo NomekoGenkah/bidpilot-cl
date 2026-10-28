@@ -16,7 +16,10 @@ const requirement = requirementSchema.parse({
   categoria: 'tecnica',
   etapa: 'oferta',
   naturaleza: 'obligacion',
-  cita: { pagina: 1, texto: quote, clausula: null },
+  paginaPrincipal: 1,
+  condicionAplicacion: null,
+  alternativasAceptadas: [],
+  citas: [{ pagina: 1, texto: quote, clausula: null }],
 });
 const bases = {
   tenderId: '730566-48-L123',
@@ -26,12 +29,52 @@ const bases = {
 };
 
 describe('verificación de citas', () => {
+  it('permite completar el sujeto y sus alternativas con citas de otra página disponible', () => {
+    const condition =
+      'Si el adjudicatario es persona jurídica, puede usar un documento equivalente.';
+    const compound = {
+      ...requirement,
+      paginaPrincipal: 2,
+      condicionAplicacion: 'Si es persona jurídica',
+      alternativasAceptadas: ['Documento equivalente'],
+      citas: [
+        { pagina: 1, texto: condition, clausula: null },
+        { pagina: 2, texto: quote, clausula: null },
+      ],
+    };
+    const available = [
+      { page: 1, text: condition },
+      { page: 2, text: quote },
+    ];
+    expect(verifyCitations([compound], available, [{ page: 2, text: quote }]).accepted).toEqual([
+      compound,
+    ]);
+    const invalid = {
+      ...compound,
+      citas: [...compound.citas, { pagina: 3, texto: quote, clausula: null }],
+    };
+    expect(verifyCitations([invalid], available).rejected).toHaveLength(1);
+  });
+
+  it('no acepta evidencia de contexto sin una cita en la página principal', () => {
+    const withoutPrimary = { ...requirement, paginaPrincipal: 2 };
+    expect(
+      verifyCitations(
+        [withoutPrimary],
+        [
+          { page: 1, text: quote },
+          { page: 2, text: quote },
+        ],
+      ).rejected,
+    ).toHaveLength(1);
+  });
+
   it('tolera espacios y saltos de línea pero rechaza palabras inventadas y páginas equivocadas', () => {
     const changed = {
       ...requirement,
-      cita: { ...requirement.cita, texto: quote.replace('dos', 'tres') },
+      citas: [{ pagina: 1, texto: quote.replace('dos', 'tres'), clausula: null }],
     };
-    const wrongPage = { ...requirement, cita: { ...requirement.cita, pagina: 2 } };
+    const wrongPage = { ...requirement, citas: [{ pagina: 2, texto: quote, clausula: null }] };
     const result = verifyCitations(
       [requirement, changed, wrongPage],
       [{ page: 1, text: quote.replaceAll(' ', '\n  ') }],
@@ -45,7 +88,7 @@ describe('extracción de requisitos', () => {
   it('reintenta citas inválidas y conserva solo las respaldadas tras el segundo intento', async () => {
     const invalid = {
       ...requirement,
-      cita: { ...requirement.cita, texto: 'Esta condición no está en las bases.' },
+      citas: [{ pagina: 1, texto: 'Esta condición no está en las bases.', clausula: null }],
     };
     vi.mocked(metaJson).mockResolvedValue({ requisitos: [requirement, invalid] });
     const result = await extractRequirements(bases, config);
@@ -80,7 +123,13 @@ describe('extracción de requisitos', () => {
     vi.mocked(metaJson)
       .mockResolvedValueOnce({ requisitos: [requirement] })
       .mockResolvedValue({
-        requisitos: [{ ...requirement, cita: { ...requirement.cita, pagina: 4 } }],
+        requisitos: [
+          {
+            ...requirement,
+            paginaPrincipal: 4,
+            citas: [{ pagina: 4, texto: quote, clausula: null }],
+          },
+        ],
       });
     const result = await extractRequirements(multi, config);
     expect(result.requisitos).toHaveLength(1);

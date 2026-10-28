@@ -1,6 +1,11 @@
 import { createHash } from 'node:crypto';
 import { z } from 'zod';
-import { basesSchema, requirementSchema } from './requirements.js';
+import {
+  basesSchema,
+  requirementSchema,
+  legacyRequirementSchema,
+  requirementFieldsSchema,
+} from './requirements.js';
 
 const hash = z.string().regex(/^[a-f0-9]{64}$/);
 const citation = z.object({
@@ -17,7 +22,7 @@ const labelSchema = z.object({
   split: z.literal('desarrollo'),
   requisitos: z
     .array(
-      requirementSchema.omit({ cita: true }).extend({
+      requirementFieldsSchema.extend({
         id: z.string(),
         citas: z.array(citation).min(1),
         nota: z.string(),
@@ -73,7 +78,12 @@ const reviewSchema = z.object({
 const predictionSchema = z.object({
   tenderId: z.string(),
   sourceSha256: hash,
-  requisitos: z.array(requirementSchema.extend({ id: z.string() })),
+  requisitos: z.array(
+    z.union([
+      requirementSchema.extend({ id: z.string() }),
+      legacyRequirementSchema.extend({ id: z.string() }),
+    ]),
+  ),
 });
 const sha256 = (text: string) => createHash('sha256').update(text).digest('hex');
 const normalize = (text: string) => text.normalize('NFC').replace(/\s+/gu, ' ').trim();
@@ -183,6 +193,9 @@ export function evaluateExtraction(
   const partial = review.matches.filter((item) => item.veredicto === 'parcial');
   const missing = review.matches.filter((item) => item.veredicto === 'ausente');
   const auditedCorrect = review.audits.filter((item) => item.veredicto === 'correcto');
+  const fragments = predictions.requisitos.flatMap((item) =>
+    'citas' in item ? item.citas : [item.cita],
+  );
   return {
     schemaVersion: 1,
     tenderId: bases.tenderId,
@@ -199,8 +212,14 @@ export function evaluateExtraction(
         review.audits.length,
       ),
       citasLiteralesTodaExtraccion: fraction(
-        predictions.requisitos.filter((item) => hasCitation(item.cita)).length,
+        predictions.requisitos.filter((item) =>
+          ('citas' in item ? item.citas : [item.cita]).every(hasCitation),
+        ).length,
         predictionIds.length,
+      ),
+      fragmentosLiteralesTodaExtraccion: fraction(
+        fragments.filter(hasCitation).length,
+        fragments.length,
       ),
       exclusionesRespetadasMuestra: fraction(
         review.exclusions.filter((item) => item.predictionIds.length === 0).length,

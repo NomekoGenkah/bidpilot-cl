@@ -4,15 +4,26 @@ import { evaluateExtraction } from './evaluation.js';
 import { validateTenderId } from './ingest.js';
 
 async function main() {
-  const [id, predictionPath] = process.argv.slice(2);
-  if (!id) throw new Error('Uso: npm run eval -- <id> [requirements.json]');
+  const [id, predictionPath, reviewPath] = process.argv.slice(2);
+  if (!id) throw new Error('Uso: npm run eval -- <id> [requirements.json] [review.json]');
   validateTenderId(id);
-  const [bases, labels, predictions, review] = await Promise.all([
+  const [bases, labels, predictions] = await Promise.all([
     readFile(resolve('data/tenders', id, 'bases.json'), 'utf8'),
     readFile(resolve('eval/labels', `${id}.json`), 'utf8'),
     readFile(predictionPath ?? resolve('data/tenders', id, 'requirements.json'), 'utf8'),
-    readFile(resolve('eval/reviews', `${id}.baseline.json`), 'utf8'),
   ]);
+  const format: unknown = JSON.parse(predictions);
+  const version =
+    typeof format === 'object' &&
+    format !== null &&
+    'schemaVersion' in format &&
+    format.schemaVersion === 2
+      ? 'v2'
+      : 'baseline';
+  const review = await readFile(
+    reviewPath ?? resolve('eval/reviews', `${id}.${version}.json`),
+    'utf8',
+  );
   const result = evaluateExtraction(
     JSON.parse(bases),
     JSON.parse(labels),

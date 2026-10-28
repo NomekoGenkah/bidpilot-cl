@@ -50,13 +50,18 @@ npm run extract -- 730566-48-L123
 Este comando **envía el texto de las bases a Meta**. Procesa bloques de cuatro páginas
 y guarda el resultado en `data/tenders/<id>/requirements.json`. Cada requisito candidato tiene
 categoría, etapa (oferta, adjudicación o ejecución), naturaleza (obligación o criterio
-de evaluación), página y cita textual.
+de evaluación), página principal, condiciones de aplicación, alternativas aceptadas
+y una o varias citas textuales. La versión de salida actual es `schemaVersion: 2`.
 
-El núcleo valida el JSON y comprueba cada cita contra su página, tolerando únicamente
+El núcleo valida el JSON y comprueba todas las citas contra sus páginas, tolerando únicamente
 diferencias de espacios y saltos de línea. Reintenta una vez los bloques con esquema
 o citas inválidas; las citas que siguen fallando quedan en `rechazados`, fuera de la
 lista de requisitos aceptados. Si una llamada falla o se trunca, conserva el resultado
 anterior y no publica una extracción parcial.
+
+Cada requisito debe tener una cita en su página principal, dentro del bloque objetivo.
+Puede completar la evidencia con la página anterior o siguiente cuando allí estén un
+encabezado, una condición o una continuación.
 
 La coincidencia de una cita no garantiza que la interpretación sea correcta ni que
 se hayan encontrado todos los requisitos. Revisa el resultado antes de usarlo.
@@ -70,9 +75,10 @@ npm run eval -- 730566-48-L123
 ```
 
 La primera muestra incluye 34 requisitos clave y una auditoría de 25 candidatos.
-El comando compara con adjudicaciones explícitas y genera un informe local sin llamar
+El comando selecciona la revisión de la versión de salida, compara con adjudicaciones explícitas y genera un informe local sin llamar
 al modelo. Las etiquetas son provisionales y la muestra es de desarrollo, no un test
 ciego. Resultados, denominadores y reproducción en [eval/README.md](eval/README.md).
+Comparación de la salida original y la versión 2: [eval/V2.md](eval/V2.md).
 
 ### Con Docker
 

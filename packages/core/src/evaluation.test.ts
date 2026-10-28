@@ -89,6 +89,40 @@ function fixture() {
 }
 
 describe('evaluación de etiquetas y adjudicaciones', () => {
+  it('evalúa el formato con varias citas sin aceptar requisitos con una cita falsa', () => {
+    const f = fixture();
+    const original = JSON.parse(f.predictionJson) as {
+      tenderId: string;
+      sourceSha256: string;
+      requisitos: {
+        id: string;
+        descripcion: string;
+        categoria: string;
+        etapa: string;
+        naturaleza: string;
+        cita: { pagina: number; texto: string; clausula: null };
+      }[];
+    };
+    const updated = {
+      ...original,
+      requisitos: original.requisitos.map(({ cita, ...fields }) => ({
+        ...fields,
+        paginaPrincipal: 1,
+        condicionAplicacion: null,
+        alternativasAceptadas: [],
+        citas: [cita, { ...cita, pagina: 2 }],
+      })),
+    };
+    const json = JSON.stringify(updated);
+    f.review.predictionSha256 = hash(json);
+    const result = evaluateExtraction(f.bases, f.labels, json, f.review);
+    expect(result.metrics.citasLiteralesTodaExtraccion).toEqual({
+      numerator: 0,
+      denominator: 2,
+      ratio: 0,
+    });
+  });
+
   it('separa cobertura completa/parcial, precisión auditada y coincidencia literal', () => {
     const f = fixture();
     const result = evaluateExtraction(f.bases, f.labels, f.predictionJson, f.review);

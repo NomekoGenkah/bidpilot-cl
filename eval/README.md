@@ -9,6 +9,7 @@ usuario. Este documento ya se utilizó para ajustar el prompt: **no es un test c
 - [Etiquetas de referencia](labels/730566-48-L123.json): contenido esperado, categoría, etapa, naturaleza y una o varias citas por requisito.
 - [Revisión de la extracción congelada](reviews/730566-48-L123.baseline.json): recuperaciones completas, parciales y ausentes; auditoría de 25 candidatos; exclusiones.
 - [Resultados y próximos ajustes](BASELINE.md).
+- [Revisión de la salida v2](reviews/730566-48-L123.v2.json) y [comparación](V2.md).
 
 ## Reproducir
 
@@ -19,6 +20,10 @@ npm run eval -- 730566-48-L123
 ```
 
 No llama al modelo ni requiere `.env`. Genera `data/eval/730566-48-L123.json`.
+Selecciona automáticamente la revisión `.v2.json` para salidas con `schemaVersion: 2`
+y `.baseline.json` para la salida original. Una ejecución nueva sigue necesitando su
+propia adjudicación: se verifica su hash, no se reutilizan juicios por el mero hecho
+de compartir versión de esquema. El evaluador acepta ambos formatos.
 El comando verifica las citas de referencia, la coincidencia del hash declarado del PDF,
 el hash del texto por páginas, el hash de la extracción y el hash de las etiquetas.
 No vuelve a leer ni extraer el PDF. Rechaza adjudicaciones
@@ -31,7 +36,10 @@ de ejecutar nuevamente el modelo:
 
 ```bash
 npm run eval -- 730566-48-L123 fixtures/private/730566-48-L123/requirements.baseline.json
+npm run eval -- 730566-48-L123 fixtures/private/730566-48-L123/requirements.v2.json
 ```
+
+También se puede indicar explícitamente un tercer argumento con la ruta a otra revisión.
 
 Los PDFs, textos completos y extracciones congeladas permanecen fuera de Git. Desde
 un clon sin esos archivos es necesario obtener las [bases originales](../docs/INGESTION_NOTES.md),

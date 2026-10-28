@@ -1,0 +1,432 @@
+{
+  "schemaVersion": 1,
+  "tenderId": "730566-48-L123",
+  "predictionSha256": "33aaa451aa9cadd708ee0937f05f4963879f87d72c79ce2059408dab8cbe8b4b",
+  "labelsSha256": "ef4814a5c55a697aeb89c0f4a5acbacea9d9916c6aa5bf85adb28ae143bb5a0a",
+  "status": "provisional_pendiente_revision",
+  "matches": [
+    {
+      "goldId": "G01",
+      "predictionIds": ["REQ-002"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G02",
+      "predictionIds": ["REQ-003"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G03",
+      "predictionIds": ["REQ-001"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G04",
+      "predictionIds": ["REQ-005"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G05",
+      "predictionIds": ["REQ-004"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G06",
+      "predictionIds": ["REQ-008"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G07",
+      "predictionIds": ["REQ-044"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G08",
+      "predictionIds": ["REQ-009"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G09",
+      "predictionIds": ["REQ-009"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G10",
+      "predictionIds": ["REQ-015"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G11",
+      "predictionIds": ["REQ-015"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G12",
+      "predictionIds": ["REQ-016"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G13",
+      "predictionIds": ["REQ-013"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G14",
+      "predictionIds": ["REQ-013"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G15",
+      "predictionIds": ["REQ-019"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G16",
+      "predictionIds": ["REQ-024"],
+      "veredicto": "parcial",
+      "nota": "Se conserva alternativa equivalente pero sigue faltando la restricción a persona jurídica."
+    },
+    {
+      "goldId": "G17",
+      "predictionIds": ["REQ-025"],
+      "veredicto": "parcial",
+      "nota": "Se conserva alternativa equivalente pero sigue faltando la restricción a persona jurídica."
+    },
+    {
+      "goldId": "G18",
+      "predictionIds": ["REQ-029"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G19",
+      "predictionIds": ["REQ-030"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G20",
+      "predictionIds": ["REQ-033"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G21",
+      "predictionIds": ["REQ-035"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G22",
+      "predictionIds": ["REQ-040"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G23",
+      "predictionIds": ["REQ-049"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G24",
+      "predictionIds": ["REQ-050"],
+      "veredicto": "parcial",
+      "nota": "La descripción incluye Anexo 2 para todos, pero condicionAplicacion adjunta el supuesto UTP al requisito compuesto; puede restringir indebidamente todo el anexo."
+    },
+    {
+      "goldId": "G25",
+      "predictionIds": ["REQ-052"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G26",
+      "predictionIds": ["REQ-053"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G27",
+      "predictionIds": ["REQ-055"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G28",
+      "predictionIds": ["REQ-056"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G29",
+      "predictionIds": ["REQ-057"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G30",
+      "predictionIds": ["REQ-058"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G31",
+      "predictionIds": ["REQ-060"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G32",
+      "predictionIds": ["REQ-061"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G33",
+      "predictionIds": ["REQ-062"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    },
+    {
+      "goldId": "G34",
+      "predictionIds": ["REQ-047"],
+      "veredicto": "completo",
+      "nota": "Recupera contenido de la etiqueta en descripción y campos de condiciones/alternativas; los errores adicionales se auditan aparte."
+    }
+  ],
+  "audits": [
+    {
+      "predictionId": "REQ-002",
+      "pairedBaselinePredictionId": "REQ-001",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Producto, cantidad, tramo y exigencia sustentados por varias citas."
+    },
+    {
+      "predictionId": "REQ-003",
+      "pairedBaselinePredictionId": "REQ-002",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Conserva producto y capacidad; incluye fila y contexto."
+    },
+    {
+      "predictionId": "REQ-001",
+      "pairedBaselinePredictionId": "REQ-003",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Carga, cuenta corporativa, coordinación y momento respaldados."
+    },
+    {
+      "predictionId": "REQ-005",
+      "pairedBaselinePredictionId": "REQ-004",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Sujeto y designación explícitos."
+    },
+    {
+      "predictionId": "REQ-006",
+      "pairedBaselinePredictionId": "REQ-006",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Incluye declaración de plataforma dentro de la cita completa."
+    },
+    {
+      "predictionId": "REQ-008",
+      "pairedBaselinePredictionId": "REQ-009",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Conserva versión de página 5."
+    },
+    {
+      "predictionId": "REQ-009",
+      "pairedBaselinePredictionId": "REQ-010",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Recupera mínimo legal y equivalente en campos y evidencia."
+    },
+    {
+      "predictionId": "REQ-011",
+      "pairedBaselinePredictionId": "REQ-012",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Recupera los supuestos de nacionalidad y ambas páginas."
+    },
+    {
+      "predictionId": "REQ-013",
+      "pairedBaselinePredictionId": "REQ-014",
+      "veredicto": "parcial",
+      "citaSuficiente": false,
+      "nota": "La política y acreditaciones están recuperadas, pero la redacción atribuye ambiguamente 100 puntos al subcriterio de género; el subcriterio otorga hasta 20 y el criterio inclusivo suma 100."
+    },
+    {
+      "predictionId": "REQ-015",
+      "pairedBaselinePredictionId": "REQ-016",
+      "veredicto": "correcto",
+      "citaSuficiente": false,
+      "nota": "Recupera alternativa de obtención por organismo y detalles temporales, pero cita la fila de ponderación sin el encabezado de porcentajes de página 5."
+    },
+    {
+      "predictionId": "REQ-024",
+      "pairedBaselinePredictionId": "REQ-025",
+      "veredicto": "parcial",
+      "citaSuficiente": false,
+      "nota": "Alternativa recuperada pero condicionAplicacion es null y no cita alcance a persona jurídica."
+    },
+    {
+      "predictionId": "REQ-025",
+      "pairedBaselinePredictionId": "REQ-026",
+      "veredicto": "parcial",
+      "citaSuficiente": false,
+      "nota": "Alternativa recuperada pero condicionAplicacion es null y no cita alcance a persona jurídica."
+    },
+    {
+      "predictionId": "REQ-029",
+      "pairedBaselinePredictionId": "REQ-030",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Plazo, hito y contenido completos."
+    },
+    {
+      "predictionId": "REQ-030",
+      "pairedBaselinePredictionId": "REQ-031",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "La cita ahora incluye condición, multa diaria y tope del 10%."
+    },
+    {
+      "predictionId": "REQ-033",
+      "pairedBaselinePredictionId": "REQ-033",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Reserva, duración y autorización completos."
+    },
+    {
+      "predictionId": "REQ-034",
+      "pairedBaselinePredictionId": "REQ-034",
+      "veredicto": "correcto",
+      "citaSuficiente": false,
+      "nota": "La cita todavía comienza en continuación sin sujeto de página anterior."
+    },
+    {
+      "predictionId": "REQ-041",
+      "pairedBaselinePredictionId": "REQ-040",
+      "veredicto": "correcto",
+      "citaSuficiente": false,
+      "nota": "Objeto contratado recuperado genéricamente; cita sin encabezado que lo sitúe como exigencia y redundancia con productos específicos."
+    },
+    {
+      "predictionId": "REQ-044",
+      "pairedBaselinePredictionId": "REQ-043",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Conserva versión de página 16."
+    },
+    {
+      "predictionId": "REQ-028",
+      "pairedBaselinePredictionId": "REQ-044",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Formalización mediante aceptación de orden de compra, sustentada en oración completa."
+    },
+    {
+      "predictionId": "REQ-045",
+      "pairedBaselinePredictionId": "REQ-045",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Tres citas respaldan supuesto, objeto y plazo."
+    },
+    {
+      "predictionId": "REQ-046",
+      "pairedBaselinePredictionId": "REQ-046",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Recupera supuesto de saldos insolutos y evidencia completa."
+    },
+    {
+      "predictionId": "REQ-048",
+      "pairedBaselinePredictionId": "REQ-050",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Condición de no transferencia a terceros recuperada y citada."
+    },
+    {
+      "predictionId": "REQ-053",
+      "pairedBaselinePredictionId": "REQ-057",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Cita incluye documento UTP, solidaridad y representante."
+    },
+    {
+      "predictionId": "REQ-055",
+      "pairedBaselinePredictionId": "REQ-059",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Persona jurídica, anexos y plazo incluidos en cita."
+    },
+    {
+      "predictionId": "REQ-060",
+      "pairedBaselinePredictionId": "REQ-063",
+      "veredicto": "correcto",
+      "citaSuficiente": true,
+      "nota": "Importes y anexo sustentados."
+    }
+  ],
+  "exclusions": [
+    {
+      "exclusionId": "N01",
+      "predictionIds": [],
+      "nota": "No se detecta inclusión de este caso negativo en la extracción v2 congelada."
+    },
+    {
+      "exclusionId": "N02",
+      "predictionIds": [],
+      "nota": "No se detecta inclusión de este caso negativo en la extracción v2 congelada."
+    },
+    {
+      "exclusionId": "N03",
+      "predictionIds": [],
+      "nota": "No se detecta inclusión de este caso negativo en la extracción v2 congelada."
+    },
+    {
+      "exclusionId": "N04",
+      "predictionIds": [],
+      "nota": "No se detecta inclusión de este caso negativo en la extracción v2 congelada."
+    },
+    {
+      "exclusionId": "N05",
+      "predictionIds": [],
+      "nota": "No se detecta inclusión de este caso negativo en la extracción v2 congelada."
+    },
+    {
+      "exclusionId": "N06",
+      "predictionIds": [],
+      "nota": "No se detecta inclusión de este caso negativo en la extracción v2 congelada."
+    },
+    {
+      "exclusionId": "N07",
+      "predictionIds": [],
+      "nota": "No se detecta inclusión de este caso negativo en la extracción v2 congelada."
+    },
+    {
+      "exclusionId": "N08",
+      "predictionIds": [],
+      "nota": "No se detecta inclusión de este caso negativo en la extracción v2 congelada."
+    }
+  ]
+}
