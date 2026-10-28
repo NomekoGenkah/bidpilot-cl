@@ -1,0 +1,78 @@
+{
+  "status": "prueba_funcional_no_metrica_de_precision",
+  "checkedAt": "2026-10-28T23:40:49.209Z",
+  "note": "Perfil ficticio. Resultados de ejecuciones individuales con Meta; no miden exactitud global. Las matrices completas y documentos permanecen locales.",
+  "checks": [
+    {
+      "tenderId": "730566-48-L123",
+      "matrixSha256": "f7e73c9ced59fc0008fb9ffef62a1ada31ddbe220389b9d4739b453fbf8f775b",
+      "rows": 63,
+      "counts": {
+        "falta": 38,
+        "dudoso": 24,
+        "cumple": 1
+      },
+      "pending": ["REQ-013", "REQ-015", "REQ-018", "REQ-024", "REQ-025", "REQ-034", "REQ-041"],
+      "sourceSha256": "0109081dd5842533cb29f23ef2443631430f264bdb958af998f1258f738f92b0",
+      "requirementsSha256": "ae76dfd9d52db2ac389ab1b0424de3a46e20bda4cc765538ad5d80d7fcaaa9ee",
+      "evidenceSha256": "cdb46ceb707836d79119e1562dde5c3175d8af34b20994ebfa5091eafb2e843a",
+      "basisReviewSha256": "48c3f5ccbcbabf10836c79b380ab9cbbcdf721dc21dfed91002d59827531a4a0",
+      "fictional": true,
+      "createdAt": "2026-10-28T23:38:14.873Z"
+    },
+    {
+      "tenderId": "730566-25-L124",
+      "matrixSha256": "b0166b5df260fa051ce1219b5e9f15520b2c870d0ff72acc390527d9d45aeeb6",
+      "rows": 63,
+      "counts": {
+        "falta": 36,
+        "dudoso": 26,
+        "cumple": 1
+      },
+      "pending": ["REQ-003", "REQ-008", "REQ-010", "REQ-016", "REQ-051"],
+      "sourceSha256": "af6da1aa559592265a3d819f37ad090797c53c9b9eb139f36c5c036d4897df70",
+      "requirementsSha256": "f0c1307f44750bc8429a768b112e0d2c632a203c3d7af1aea28fb8d3bac30867",
+      "evidenceSha256": "cdb46ceb707836d79119e1562dde5c3175d8af34b20994ebfa5091eafb2e843a",
+      "basisReviewSha256": "824cc3c33e8e5d5560bc3288ad88895f10c4cefb601e5e6540c985b06408963a",
+      "fictional": true,
+      "createdAt": "2026-10-28T23:40:26.319Z"
+    }
+  ],
+  "examples": [
+    {
+      "requirementId": "REQ-002",
+      "status": "falta",
+      "applicability": "aplica",
+      "contradiction": false,
+      "pending": false
+    },
+    {
+      "requirementId": "REQ-016",
+      "status": "dudoso",
+      "applicability": "aplica",
+      "contradiction": true,
+      "pending": true
+    },
+    {
+      "requirementId": "REQ-040",
+      "status": "dudoso",
+      "applicability": "no_aplica",
+      "contradiction": false,
+      "pending": false
+    },
+    {
+      "requirementId": "REQ-049",
+      "status": "cumple",
+      "applicability": "aplica",
+      "contradiction": false,
+      "pending": false
+    },
+    {
+      "requirementId": "REQ-051",
+      "status": "dudoso",
+      "applicability": "aplica",
+      "contradiction": false,
+      "pending": true
+    }
+  ]
+}

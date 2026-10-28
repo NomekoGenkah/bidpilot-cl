@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BidPilot CL · Mesa de postulación</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <a href="/" class="brand">BidPilot <span>CL</span></a
+      ><span>Tu mesa de postulación</span><span class="local">Guardado en este computador</span>
+    </header>
+    <main>
+      <section class="intro">
+        <div>
+          <h1>De las bases<br />a la evidencia.</h1>
+          <p>
+            Revisa qué puedes acreditar, qué falta y qué necesitas aclarar antes de preparar tu
+            oferta.
+          </p>
+        </div>
+        <aside>
+          <strong>La última palabra es tuya.</strong>
+          <p>
+            Los resultados son provisionales y requieren revisión humana. No es asesoría legal. Tú
+            revisas y postulas en el portal.
+          </p>
+        </aside>
+      </section>
+      <div id="notice" role="status" aria-live="polite"></div>
+      <div class="workspace">
+        <aside class="vault">
+          <h2>Baúl de evidencia</h2>
+          <p>
+            Sube antecedentes que permitan comprobar los requisitos. El texto seleccionado se
+            enviará a Meta al generar la matriz.
+          </p>
+          <form id="upload">
+            <label for="docname">Nombre del documento</label
+            ><input
+              id="docname"
+              maxlength="180"
+              placeholder="Ej. Experiencia del proveedor"
+            /><label for="file">Archivo PDF o texto UTF-8</label
+            ><input id="file" type="file" accept=".pdf,.txt,.md" /><label for="doctext"
+              >O pega el texto</label
+            ><textarea
+              id="doctext"
+              rows="5"
+              placeholder="Incluye fechas, condiciones y quién emite el documento."
+            ></textarea
+            ><label class="check"
+              ><input id="fictional" type="checkbox" /> Es un documento ficticio de prueba</label
+            ><button type="submit">Guardar documento</button>
+          </form>
+          <button id="demo" class="secondary">Cargar perfil ficticio</button>
+          <p class="hint">
+            El perfil de prueba contiene datos suficientes, ausentes y contradictorios. No
+            representa una empresa real.
+          </p>
+          <h3>Documentos guardados</h3>
+          <ul id="documents"></ul>
+          <label for="search">Buscar en la evidencia</label
+          ><input id="search" type="search" placeholder="Certificado, licencias, experiencia…" />
+          <div id="results"></div>
+        </aside>
+        <section class="review">
+          <div class="tender">
+            <label for="tender">Licitación</label
+            ><select id="tender">
+              <option value="">Cargando licitaciones…</option>
+            </select>
+            <p id="tenderdetail"></p>
+          </div>
+          <div class="actionbar">
+            <button id="generate">Generar matriz con Meta</button
+            ><span id="progress" role="status" aria-live="polite"></span>
+          </div>
+          <p class="hint">
+            Se enviarán los requisitos, fragmentos de evidencia y tus respuestas a Meta. La búsqueda
+            es limitada: un resultado «falta» indica evidencia no encontrada, no incumplimiento
+            definitivo.
+          </p>
+          <div id="summary" class="summary"></div>
+          <div class="matrixbar">
+            <label for="filter">Mostrar</label
+            ><select id="filter">
+              <option value="all">Todos los requisitos</option>
+              <option value="cumple">Cumple</option>
+              <option value="falta">Falta</option>
+              <option value="dudoso">Dudoso</option>
+              <option value="pending">Pendiente de revisión</option>
+              <option value="questions">Con preguntas</option></select
+            ><a id="exportjson" hidden>Exportar JSON</a
+            ><a id="exportmd" hidden>Exportar Markdown</a>
+          </div>
+          <div id="matrix">
+            <div class="empty">
+              <h2>Construye una matriz con respaldo.</h2>
+              <p>
+                Elige una licitación, guarda evidencia y genera la matriz. Cada resultado mostrará
+                sus citas para que puedas comprobarlo.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer>
+      BidPilot CL · Las bases originales y sus aclaraciones prevalecen. No se envían postulaciones
+      desde esta aplicación.
+    </footer>
+  </body>
+</html>
