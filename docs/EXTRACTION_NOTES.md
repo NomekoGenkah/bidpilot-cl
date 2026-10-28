@@ -27,7 +27,7 @@ Referencia de parámetros: [documentación oficial de Meta](https://dev.meta.ai/
 - Las citas que siguen fallando se guardan en `rechazados`, fuera de los requisitos aceptados.
 - Respuestas truncadas, contenido vacío o errores de API cancelan la ejecución; el resultado anterior permanece intacto.
 
-La salida usa `schemaVersion: 2`, `promptVersion: requisitos-v2` y `citas[]` en lugar
+La salida usa `schemaVersion: 2`, `promptVersion: requisitos-v3` y `citas[]` en lugar
 de `cita`. Cada candidato incluye `condicionAplicacion` (texto o null) y
 `alternativasAceptadas` (lista). Esos campos estructuran la interpretación del modelo;
 el verificador literal no comprueba por sí solo su exactitud.
@@ -72,6 +72,31 @@ y 30 días desde el cierre de recepción. La extracción no decide cuál prevale
 reconcilia contradicciones. Deben revisarse las bases originales y sus aclaraciones.
 
 ## Comparación y siguiente validación
+
+El prompt v3 conserva el esquema de salida v2 e incorpora instrucciones específicas
+para heredar el sujeto de los encabezados, separar obligaciones con condiciones
+distintas y distinguir puntajes de subcriterios, totales y ponderaciones. Estos cambios
+responden a errores de la auditoría v2; todavía no tienen una adjudicación completa
+ni métricas semánticas propias. Las cifras de `eval/V2.md` siguen correspondiendo al prompt v2.
+La verificación literal no comprueba el cumplimiento semántico de estas instrucciones.
+
+Prueba real del 28 de octubre de 2026 sobre el mismo documento: 66 candidatos,
+104 fragmentos literales y ningún rechazado. La salida local se conservó en
+`data/tenders/730566-48-L123/requirements.v3.json`, sin reemplazar `requirements.json`
+ni su evaluación v2. Una revisión puntual encontró:
+
+- `REQ-026` y `REQ-027` ya restringen los certificados al adjudicatario que no es
+  persona natural, pero siguen sin citar el encabezado de la página 10: su evidencia
+  todavía no respalda todo el alcance descrito.
+- `REQ-047` conserva el Anexo 2 como obligación general; `REQ-048` separa la
+  obligación condicional de quienes se unen para ofertar.
+- `REQ-014` distingue los 20 puntos del subcriterio de género de los 100 del criterio
+  agregado. Aún incluye una cita adicional del máximo agregado.
+- `REQ-015` conserva una ponderación de 5% sin citar el encabezado de porcentajes.
+
+Esta revisión puntual no constituye una auditoría de los 66 candidatos ni demuestra
+una mejora global. Siguen pendientes la suficiencia de los encabezados, una revisión
+completa y la validación con otra licitación antes de alimentar la matriz.
 
 Ya hay una primera muestra provisional de 34 requisitos de este documento y una
 auditoría semántica de 25 candidatos: [eval/BASELINE.md](../eval/BASELINE.md).

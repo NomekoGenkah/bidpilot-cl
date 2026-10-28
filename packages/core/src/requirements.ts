@@ -87,10 +87,13 @@ Extrae las fechas límite obligatorias de postulación, las ponderaciones porcen
 Para documentos o atributos que dan puntaje usa criterio_evaluacion y etapa oferta: se preparan con la oferta. Usa etapa adjudicacion solo para trámites exigidos al proveedor una vez adjudicado.
 No extraigas instrucciones internas del organismo ni antecedentes legales genéricos. No inventes condiciones ni completes frases cortadas con suposiciones.
 Conserva en descripcion y condicionAplicacion TODOS los supuestos que restringen una exigencia (persona natural o jurídica, si hay UTP, si existen saldos insolutos, si no hubo transferencia a terceros, superar mínimos legales). No generalices a todos los oferentes.
+Antes de interpretar una fila o viñeta, identifica el encabezado que gobierna su lista, incluso si está en la página anterior. Mantén ese alcance hasta un nuevo encabezado del mismo nivel. Por ejemplo, los certificados enumerados bajo persona jurídica deben conservar esa condición y citar también el encabezado; que una viñeta no repita el sujeto no elimina la restricción.
+Separa las obligaciones con condiciones distintas en requisitos independientes. Si un anexo es obligatorio para todos y solo una sección aplica a una UTP, crea un requisito general para el anexo y otro condicional para esa sección; no restrinjas todo el anexo a UTP. No combines en un candidato obligaciones cuyos sujetos o condiciones difieren.
 Conserva en descripcion y alternativasAceptadas TODAS las alternativas admitidas: "o equivalente", formato propio, distintos anexos o que el organismo obtenga un antecedente omitido. Una alternativa no es otro requisito obligatorio independiente. Usa null y [] si no hay condición o alternativa explícita.
 Cada requisito DEBE tener una o varias citas textuales continuas de al menos 20 caracteres. Copia párrafos o filas completos, no fragmentos interrumpidos. Las citas en conjunto deben sustentar TODOS los datos, condiciones, alternativas, plazos y topes de la descripción; incluye la oración siguiente si completa una excepción o un tope.
 paginaPrincipal debe pertenecer a paginasObjetivo y tener una cita. Usa citas adicionales para encabezados, condiciones o alternativas situadas en otras páginas disponibles. Extrae la exigencia donde comienza; las páginas de contexto sirven para completar su evidencia, no para generar requisitos ajenos al bloque objetivo.
 Para tablas, cita también el encabezado o contexto que explique porcentajes o sujetos si no es inequívoco en la fila. No cortes una oración en "las", "dichas" u otras continuaciones sin contenido completo.
+Distingue ponderación porcentual, puntaje máximo del criterio y puntaje de cada subcriterio. No atribuyas el total de un criterio agregado a uno de sus componentes. Si citas una ponderación, incluye el encabezado que demuestra qué representa el número. Si la evidencia disponible no permite resolver el alcance de un dato, omite ese dato en vez de completarlo por inferencia.
 Copia palabras y puntuación literalmente: solo se permiten cambios de espacios y saltos de línea. Usa el número de página física indicado en el JSON.
 clausula es el identificador de sección explícito o null; no lo inventes. Antes de responder revisa que no falte ninguna condición ni alternativa y que las citas permitan comprobarlas sin suponer el contexto.
 Si no hay requisitos sustentados devuelve requisitos: []. Responde en español con el JSON solicitado.`;
@@ -180,7 +183,7 @@ export async function extractRequirements(
   });
   return {
     schemaVersion: 2,
-    promptVersion: 'requisitos-v2',
+    promptVersion: 'requisitos-v3',
     tenderId: bases.tenderId,
     sourceSha256: bases.sha256,
     model: config.model,
