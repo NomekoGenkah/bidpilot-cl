@@ -113,6 +113,11 @@ describe('reglas de cumplimiento', () => {
     expect(result.rows[0]?.estado).toBe('dudoso');
     expect(result.rows[0]?.pendienteRevision).toBe(true);
   });
+  it('no permite usar archivos sin analizar como respaldo aunque contengan páginas', () => {
+    const result = guardJudgment(req, good, [{ ...doc, analysisStatus: 'sin_analizar' }], true);
+    expect(result.estado).toBe('dudoso');
+    expect(result.citasEvidencia).toEqual([]);
+  });
   it('rechaza resultados duplicados y requisitos de otro documento', async () => {
     const bases = {
       tenderId: '730566-25-L124',

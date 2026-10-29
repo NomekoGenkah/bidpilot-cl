@@ -43,7 +43,9 @@
           <details class="export-menu">
             <summary>Exportar</summary>
             <div>
-              <a id="exportjson" hidden>JSON</a><a id="exportmd" hidden>Markdown</a
+              <button id="exportfolder" class="quiet" type="button" hidden>
+                Carpeta con documentos</button
+              ><a id="exportjson" hidden>JSON</a><a id="exportmd" hidden>Markdown</a
               ><span id="exportempty">Primero genera un análisis actualizado.</span>
             </div>
           </details>
@@ -111,15 +113,14 @@
                 id="docname"
                 maxlength="180"
                 placeholder="Ej. Certificado de experiencia"
-              /><label for="file">Archivo PDF o texto</label
-              ><input id="file" type="file" accept=".pdf,.txt,.md" />
+              /><label for="file">Archivo PDF o texto</label><input id="file" type="file" />
               <div class="label-help">
                 <label for="doctext">O pegar texto</label
                 ><button
                   class="help"
                   type="button"
                   aria-label="Ayuda para cargar documentos"
-                  data-help="Elige un archivo o pega texto, una opción a la vez. Máximo 8 MB y 200.000 caracteres extraídos. Los PDF escaneados necesitan OCR externo. Se conserva el texto por página; guarda el archivo original por tu cuenta."
+                  data-help="Elige un archivo o pega texto. El original queda en el baúl. Se analizan PDF con texto y archivos UTF-8; otros formatos quedan guardados sin analizar. Máximo 8 MB."
                 >
                   ?
                 </button>
@@ -164,6 +165,35 @@
         ?
       </button>
     </footer>
+    <dialog id="package-dialog" aria-labelledby="package-title">
+      <form id="package-form">
+        <div class="package-header">
+          <h1 id="package-title">Exportar carpeta</h1>
+          <button id="package-close" type="button" class="quiet">Cerrar</button>
+        </div>
+        <p>Se creará una carpeta nueva con la matriz, las preguntas y los archivos que elijas.</p>
+        <label for="destination">Carpeta de destino</label
+        ><input
+          id="destination"
+          required
+          placeholder="/home/usuario/Documentos"
+          autocomplete="off"
+        />
+        <p class="hint">
+          Pega la ruta completa de una carpeta existente en el computador donde corre BidPilot.
+        </p>
+        <fieldset>
+          <legend>Documentos a incluir</legend>
+          <div id="package-documents"></div>
+        </fieldset>
+        <p id="package-warning" class="hint">
+          La matriz conserva sus citas y descripciones aunque excluyas el archivo original. Revisa
+          la selección antes de compartir esta copia.
+        </p>
+        <div id="package-result" role="status" aria-live="polite"></div>
+        <button id="package-save" type="submit" class="primary">Guardar copia en carpeta</button>
+      </form>
+    </dialog>
     <div id="tooltip" role="tooltip" hidden></div>
   </body>
 </html>

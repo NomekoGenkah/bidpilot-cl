@@ -189,3 +189,72 @@ it('serializa generaciones y bloquea cambios durante el análisis', async () => 
   expect(state.stale).toBe(true);
   expect((await fetch(origin + `/api/tenders/${id}/export`)).status).toBe(409);
 });
+
+it('conserva originales, exporta una carpeta seleccionada e invalida al reemplazar o retirar', async () => {
+  const bytes = Buffer.from('Documento ficticio para conservar el original.');
+  const uploaded = await post('/api/evidence', {
+    name: 'Original',
+    kind: 'texto',
+    originalName: 'oferta.txt',
+    content: bytes.toString('base64'),
+    fictional: true,
+  });
+  const doc = (await uploaded.json()) as { id: string };
+  const original = await fetch(origin + `/api/evidence/${doc.id}/original`);
+  expect(Buffer.from(await original.arrayBuffer())).toEqual(bytes);
+  expect(original.headers.get('content-disposition')).toContain('attachment');
+  vi.mocked(metaJson).mockResolvedValue({
+    resultados: [
+      {
+        requirementId: req.id,
+        estado: 'cumple',
+        sustentoBases: true,
+        aplicabilidad: 'aplica',
+        contradiccion: false,
+        razon: 'Evidencia ficticia conservada para la prueba.',
+        pregunta: null,
+        citasEvidencia: [{ documentId: doc.id, pagina: 1, texto: bytes.toString() }],
+      },
+    ],
+  });
+  await post(`/api/tenders/${id}/matrix`, {});
+  expect(await waitJob()).toBe('done');
+  const preview = (await (await fetch(origin + `/api/tenders/${id}/package`)).json()) as {
+    documents: { id: string; cited: boolean; hasOriginal: boolean }[];
+  };
+  expect(preview.documents.find((d) => d.id === doc.id)).toMatchObject({
+    cited: true,
+    hasOriginal: true,
+  });
+  const target = join(dir, 'exportaciones');
+  await mkdir(target);
+  const exported = await post(`/api/tenders/${id}/package`, {
+    destination: target,
+    documentIds: [doc.id],
+  });
+  expect(exported.status).toBe(201);
+  const result = (await exported.json()) as { path: string };
+  expect(await readFile(join(result.path, 'contenido.json'), 'utf8')).toContain(doc.id);
+  const replacement = await post(`/api/evidence/${doc.id}/replace`, {
+    name: 'Nueva oferta',
+    kind: 'archivo',
+    originalName: 'oferta.docx',
+    content: Buffer.from([0, 1, 2, 255]).toString('base64'),
+    fictional: true,
+  });
+  expect(replacement.status).toBe(200);
+  expect(await replacement.json()).toMatchObject({
+    id: doc.id,
+    analysisStatus: 'sin_analizar',
+    pages: [],
+  });
+  expect((await fetch(origin + `/api/tenders/${id}/export`)).status).toBe(409);
+  expect(
+    (await post(`/api/tenders/${id}/package`, { destination: target, documentIds: [] })).status,
+  ).toBe(409);
+  const binary = await fetch(origin + `/api/evidence/${doc.id}/original?inline=1`);
+  expect(binary.headers.get('content-type')).toBe('application/octet-stream');
+  expect(binary.headers.get('content-disposition')).toContain('attachment');
+  expect((await post(`/api/evidence/${doc.id}/remove`, {})).status).toBe(200);
+  expect((await fetch(origin + `/api/evidence/${doc.id}/original`)).status).toBe(404);
+});

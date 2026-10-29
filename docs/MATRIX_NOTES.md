@@ -25,8 +25,9 @@ separada para trabajar con otro proveedor.
 
 - `data/evidence/<uuid>.json`: nombre, tipo, marca ficticia, hash SHA-256 del archivo
   original, fecha y texto por página física. Los nombres nunca se usan como rutas.
-- Los PDFs de evidencia se procesan temporalmente y se eliminan; se conserva su texto,
-  no el original. Guarda el PDF fuente por tu cuenta si necesitas cotejarlo después.
+- Los archivos nuevos conservan sus originales como `data/evidence/<uuid>.bin`, con
+  hash y nombre de descarga. Solo se eliminan los temporales de extracción. Los
+  documentos antiguos que no tenían original siguen disponibles como texto.
 - `data/tenders/<id>/answers.json`: declaraciones del usuario por requisito.
 - `data/tenders/<id>/matrix.json`: resultado, modelo, fecha, hashes de bases,
   requisitos, evidencia y respuestas, citas y motivos de revisión.
@@ -79,8 +80,9 @@ La pestaña puede cerrarse y volver a abrirse mientras el servidor sigue funcion
 Un reinicio del servidor interrumpe el trabajo; la matriz guardada se conserva y se
 puede volver a generar. No hay cola persistente ni recuperación de bloques parciales.
 
-Se admiten documentos de hasta 8 MB y 200.000 caracteres extraídos, con cuerpo HTTP
-máximo de 12 MB. No hay OCR ni validación de firma digital. La búsqueda por términos
+Se admiten archivos de hasta 8 MB, con cuerpo HTTP máximo de 12 MB. El análisis
+se limita a 200.000 caracteres extraídos. Otros formatos y PDF sin texto extraíble
+quedan guardados sin analizar. No hay OCR ni validación de firma digital. La búsqueda por términos
 puede omitir evidencia con sinónimos o vocabulario diferente. Una respuesta vuelve a
 contrastar la matriz completa, con el costo y tiempo correspondientes.
 
@@ -136,3 +138,6 @@ siguen reproduciendo sus resultados originales.
 
 La organización de las secciones, los filtros y las ayudas «?» se describen en
 [UI_REVIEW.md](UI_REVIEW.md).
+
+La conservación de originales, reemplazo, retiro y exportación a carpetas se
+describen en [VAULT_EXPORT.md](VAULT_EXPORT.md).

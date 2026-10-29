@@ -42,6 +42,7 @@ export function guardJudgment(
     const doc = docs.find((d) => d.id === c.documentId);
     const text = doc?.pages.find((p) => p.page === c.pagina)?.text;
     return (
+      doc?.analysisStatus !== 'sin_analizar' &&
       text !== undefined &&
       normalized(c.texto).length >= 10 &&
       normalized(text).includes(normalized(c.texto))

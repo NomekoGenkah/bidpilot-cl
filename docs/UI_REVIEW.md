@@ -35,7 +35,8 @@ declaración y vuelve a analizar toda la matriz mediante Meta. Sus límites no c
 «Añadir documento» despliega la carga de PDF/texto. Tras guardar se cierra el
 formulario. Cada documento tiene una acción Abrir para leer sus páginas; la búsqueda
 local enlaza cada fragmento con su página. Se conserva el perfil ficticio de prueba.
-No se añadieron eliminación de documentos, OCR ni cambios al motor de contraste.
+En esta revisión no se añadieron eliminación de documentos, OCR ni cambios al motor de contraste.
+La gestión posterior de originales y retiro está documentada en [VAULT_EXPORT.md](VAULT_EXPORT.md).
 
 ## Comprobaciones
 

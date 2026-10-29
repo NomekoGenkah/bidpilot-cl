@@ -85,7 +85,10 @@ Comparación de la salida original y la versión 2: [eval/V2.md](eval/V2.md).
 Con una licitación ingerida y sus requisitos extraídos, ejecuta `npm start` y abre
 http://127.0.0.1:3000. Guarda evidencia en texto/PDF, selecciona la licitación y pulsa
 «Analizar con Meta». Revisa las citas, responde preguntas y exporta JSON o
-Markdown. «Cargar perfil ficticio» permite probar con datos de demostración.
+Markdown. El baúl conserva los archivos originales y permite reemplazarlos o retirarlos.
+Exportar → Carpeta con documentos guarda una copia independiente con los respaldos que
+selecciones. [Uso y límites](docs/VAULT_EXPORT.md).
+«Cargar perfil ficticio» permite probar con datos de demostración.
 
 El texto seleccionado y las respuestas se envían a Meta al generar la matriz.
 Los resultados son provisionales: citas insuficientes quedan pendientes de revisión

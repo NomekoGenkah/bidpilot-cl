@@ -912,3 +912,102 @@ textarea:focus-visible,
     grid-template-columns: minmax(0, 1fr);
   }
 }
+.document-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.original-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+dialog {
+  border: 1px solid #b9cbd9;
+  border-radius: 10px;
+  padding: 24px;
+  width: 620px;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100vh - 32px);
+  color: var(--ink);
+  background: white;
+}
+dialog::backdrop {
+  background: #23374665;
+}
+.package-header {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.package-header h1 {
+  font-size: 21px;
+  margin: 0;
+  flex: 1;
+}
+dialog p {
+  font-size: 14px;
+  line-height: 1.6;
+}
+dialog input:not([type='checkbox']) {
+  width: 100%;
+  border: 1px solid #aebfcd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 8px;
+}
+dialog fieldset {
+  border: 1px solid var(--line);
+  padding: 12px;
+  margin: 20px 0;
+}
+dialog legend {
+  font-size: 14px;
+  font-weight: 600;
+}
+.package-document {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  padding: 10px 0;
+  align-items: start;
+}
+.package-document input {
+  margin-top: 3px;
+}
+.package-document:has(input:disabled) {
+  color: var(--muted);
+}
+#package-result:not(:empty) {
+  font-size: 13px;
+  padding: 12px;
+  background: #eaf2f8;
+  margin-bottom: 14px;
+  overflow-wrap: anywhere;
+}
+.hint {
+  font-size: 12px !important;
+  color: var(--muted);
+}
+@media (max-width: 600px) {
+  .document-item {
+    align-items: start;
+    flex-direction: column;
+  }
+  .document-actions {
+    justify-content: flex-start;
+    width: 100%;
+  }
+  .document-actions button {
+    font-size: 11px;
+  }
+  .package-header {
+    gap: 8px;
+  }
+  dialog {
+    padding: 18px;
+  }
+}

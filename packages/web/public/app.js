@@ -15,6 +15,7 @@ let tenders = [],
   tooltipOwner = null,
   pinned = false,
   helpTimer;
+let replacing = '';
 const pageSize = 15,
   drafts = {};
 const text = (tag, value, cls) => {
@@ -127,13 +128,19 @@ async function documents() {
         text('strong', doc.name),
         text(
           'p',
-          `${doc.kind === 'pdf' ? 'PDF' : 'Texto'} · ${doc.pages.length} ${doc.pages.length === 1 ? 'página' : 'páginas'}${doc.fictional ? ' · Ficticio' : ''}`,
+          `${doc.kind === 'pdf' ? 'PDF' : doc.kind === 'archivo' ? 'Archivo' : 'Texto'} · ${doc.analysisStatus === 'sin_analizar' ? 'Sin analizar' : `${doc.pages.length} ${doc.pages.length === 1 ? 'página' : 'páginas'}`}${doc.fictional ? ' · Ficticio' : ''}`,
         ),
       );
       const open = button('Abrir', () => openDocument(doc));
       open.id = `doc-open-${doc.id}`;
       open.setAttribute('aria-label', `Abrir ${doc.name}`);
-      row.append(info, open);
+      const actions = text('div', '', 'document-actions');
+      actions.append(
+        open,
+        button('Reemplazar', () => beginReplace(doc)),
+        button('Retirar', () => retireDocument(doc)),
+      );
+      row.append(info, actions);
       return row;
     }),
   );
@@ -167,6 +174,39 @@ function openDocument(doc, targetPage) {
     body.id = `doc-page-${p.page}`;
     viewer.append(body);
   }
+  const originals = text('div', '', 'original-actions');
+  if (doc.original) {
+    for (const [label, inline] of doc.kind === 'archivo'
+      ? [['Descargar', false]]
+      : [
+          ['Abrir original', true],
+          ['Descargar', false],
+        ]) {
+      const a = text('a', label);
+      a.href = `/api/evidence/${doc.id}/original${inline ? '?inline=1' : ''}`;
+      if (inline) {
+        a.target = '_blank';
+        a.rel = 'noopener';
+      } else a.download = '';
+      originals.append(a);
+    }
+  } else
+    originals.append(
+      text(
+        'p',
+        'Original no disponible: solo se conserva el texto extraído. Puedes reemplazarlo con el archivo original.',
+      ),
+    );
+  viewer.insertBefore(originals, title.nextSibling);
+  if (doc.analysisStatus === 'sin_analizar')
+    viewer.append(
+      text(
+        'p',
+        doc.analysisNote ??
+          'Guardado sin analizar. Este archivo no se utiliza como evidencia de cumplimiento.',
+        'basis-warning',
+      ),
+    );
   title.focus();
   if (targetPage) $(`doc-page-${targetPage}`)?.scrollIntoView({ block: 'center' });
 }
@@ -206,6 +246,7 @@ function render() {
       : '';
   $('generate').textContent = matrix ? 'Actualizar con Meta' : 'Analizar con Meta';
   $('exportempty').hidden = Boolean(matrix && !stale);
+  $('exportfolder').hidden = !matrix || stale;
   for (const id of ['exportjson', 'exportmd']) {
     $(id).hidden = !matrix || stale;
     if (matrix && !stale) {
@@ -508,7 +549,11 @@ $('upload').addEventListener('submit', async (event) => {
     let content = base64($('doctext').value),
       kind = 'texto';
     if (file) {
-      kind = file.name.toLowerCase().endsWith('.pdf') ? 'pdf' : 'texto';
+      kind = file.name.toLowerCase().endsWith('.pdf')
+        ? 'pdf'
+        : /\.(txt|md|csv|json)$/iu.test(file.name) || file.type.startsWith('text/')
+          ? 'texto'
+          : 'archivo';
       content = await new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => resolve(String(reader.result).split(',')[1]);
@@ -516,7 +561,17 @@ $('upload').addEventListener('submit', async (event) => {
         reader.readAsDataURL(file);
       });
     }
-    await api('evidence', { name, kind, content, fictional: $('fictional').checked });
+    await api(replacing ? `evidence/${replacing}/replace` : 'evidence', {
+      name,
+      kind,
+      content,
+      fictional: $('fictional').checked,
+      ...(file ? { originalName: file.name } : {}),
+    });
+    replacing = '';
+    $('upload').querySelector('button[type=submit]').textContent = 'Guardar documento';
+    $('document-viewer').hidden = true;
+    $('document-viewer').parentElement.classList.remove('has-viewer');
     $('upload').reset();
     $('uploadbox').open = false;
     await documents();
@@ -705,3 +760,100 @@ async function init() {
   }
 }
 void init();
+
+function beginReplace(doc) {
+  if (running) return notice('Espera a que termine el análisis.');
+  replacing = doc.id;
+  switchMode('documents');
+  $('upload').reset();
+  $('docname').value = doc.name;
+  $('fictional').checked = doc.fictional;
+  $('upload').querySelector('button[type=submit]').textContent = 'Reemplazar documento';
+  $('uploadbox').open = true;
+  $('file').focus();
+}
+$('uploadbox').addEventListener('toggle', () => {
+  if (!$('uploadbox').open && replacing) {
+    replacing = '';
+    $('upload').reset();
+    $('upload').querySelector('button[type=submit]').textContent = 'Guardar documento';
+  }
+});
+async function retireDocument(doc) {
+  if (running) return notice('Espera a que termine el análisis.');
+  if (
+    !window.confirm(
+      `¿Retirar «${doc.name}» del baúl? Las matrices quedarán desactualizadas. Se conservará una copia local en retirados.`,
+    )
+  )
+    return;
+  busy(true);
+  try {
+    await api(`evidence/${doc.id}/remove`, {});
+    $('document-viewer').hidden = true;
+    $('document-viewer').parentElement.classList.remove('has-viewer');
+    await documents();
+    await selectTender();
+    notice('Documento retirado del baúl.');
+  } catch (e) {
+    notice(e.message);
+  } finally {
+    busy(false);
+  }
+}
+$('exportfolder').addEventListener('click', async () => {
+  try {
+    const preview = await api(`tenders/${currentId}/package`);
+    $('package-documents').replaceChildren(
+      ...preview.documents.map((d) => {
+        const label = text('label', '', 'package-document'),
+          checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = d.id;
+        checkbox.checked = d.cited && d.hasOriginal;
+        checkbox.disabled = !d.hasOriginal;
+        label.append(
+          checkbox,
+          text(
+            'span',
+            `${d.name}${d.cited ? ' · Citado' : ''}${!d.hasOriginal ? ' · Original no disponible' : d.analysisStatus === 'sin_analizar' ? ' · Sin analizar' : ''}`,
+          ),
+        );
+        return label;
+      }),
+    );
+    $('package-result').textContent = '';
+    $('package-dialog').dataset.tender = currentId;
+    $('package-dialog').showModal();
+    document.querySelector('.export-menu').open = false;
+  } catch (e) {
+    notice(e.message);
+  }
+});
+$('package-close').addEventListener('click', () => $('package-dialog').close());
+$('package-form').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const save = $('package-save');
+  save.disabled = true;
+  $('package-close').disabled = true;
+  try {
+    const documentIds = [...$('package-documents').querySelectorAll('input:checked')].map(
+      (i) => i.value,
+    );
+    const result = await api(`tenders/${$('package-dialog').dataset.tender}/package`, {
+      destination: $('destination').value.trim(),
+      documentIds,
+    });
+    $('package-result').textContent =
+      `Copia guardada: ${result.path} (${result.documents} documentos).`;
+  } catch (e) {
+    $('package-result').textContent = e.message;
+  } finally {
+    save.disabled = false;
+    $('package-close').disabled = false;
+  }
+});
+
+$('package-dialog').addEventListener('cancel', (event) => {
+  if ($('package-save').disabled) event.preventDefault();
+});

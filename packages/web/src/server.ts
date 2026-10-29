@@ -9,8 +9,11 @@ import {
   saveJson,
   searchEvidence,
   digest,
+  originalBytes,
+  retireEvidence,
 } from '../../core/src/evidence.js';
 import { answersSchema, buildMatrix, matrixMarkdown, type Matrix } from '../../core/src/matrix.js';
+import { packagePreview, exportPackage } from '../../core/src/package-export.js';
 import { loadConfig } from '../../core/src/config.js';
 import { validateTenderId } from '../../core/src/ingest.js';
 
@@ -157,7 +160,8 @@ async function route(req: IncomingMessage, res: ServerResponse) {
     const input = z
       .object({
         name: z.string().min(1).max(180),
-        kind: z.enum(['texto', 'pdf']),
+        kind: z.enum(['texto', 'pdf', 'archivo']),
+        originalName: z.string().min(1).max(180).optional(),
         content: z.string().min(1),
         fictional: z.boolean(),
       })
@@ -172,11 +176,70 @@ async function route(req: IncomingMessage, res: ServerResponse) {
         input.kind,
         Buffer.from(input.content, 'base64'),
         input.fictional,
+        input.originalName,
       ),
     );
   }
+  const evidenceMatch = /^\/api\/evidence\/([^/]+)\/(original|replace|remove)$/.exec(url.pathname);
+  if (evidenceMatch?.[1]) {
+    const evidenceId = z.string().uuid().parse(evidenceMatch[1]);
+    const doc = (await readEvidence(vault)).find((d) => d.id === evidenceId);
+    if (!doc) return json(res, 404, { error: 'Documento no disponible en el baúl.' });
+    if (evidenceMatch[2] === 'original' && method === 'GET') {
+      if (!doc.original)
+        return json(res, 409, {
+          error: 'Solo se conserva texto extraído. Vuelve a cargar el original.',
+        });
+      const bytes = await originalBytes(vault, doc);
+      const inline = url.searchParams.get('inline') === '1' && doc.kind !== 'archivo';
+      const filename = encodeURIComponent(doc.original.name).replaceAll("'", '%27');
+      res.writeHead(200, {
+        'Content-Type':
+          doc.kind === 'pdf'
+            ? 'application/pdf'
+            : doc.kind === 'texto'
+              ? 'text/plain; charset=utf-8'
+              : 'application/octet-stream',
+        'Content-Disposition': `${inline ? 'inline' : 'attachment'}; filename*=UTF-8''${filename}`,
+        'Content-Security-Policy': "sandbox; default-src 'none'",
+        'X-Content-Type-Options': 'nosniff',
+        'Cache-Control': 'no-store',
+      });
+      return res.end(bytes);
+    }
+    if (evidenceMatch[2] === 'remove' && method === 'POST') {
+      await retireEvidence(vault, evidenceId);
+      return json(res, 200, { retired: true });
+    }
+    if (evidenceMatch[2] === 'replace' && method === 'POST') {
+      const input = z
+        .object({
+          name: z.string().min(1).max(180),
+          kind: z.enum(['texto', 'pdf', 'archivo']),
+          originalName: z.string().min(1).max(180).optional(),
+          content: z.string().min(1),
+          fictional: z.boolean(),
+        })
+        .strict()
+        .parse(await body(req));
+      return json(
+        res,
+        200,
+        await addEvidence(
+          vault,
+          input.name,
+          input.kind,
+          Buffer.from(input.content, 'base64'),
+          input.fictional,
+          input.originalName,
+          evidenceId,
+        ),
+      );
+    }
+    return json(res, 405, { error: 'Método no permitido.' });
+  }
   if (url.pathname === '/api/job' && method === 'GET') return json(res, 200, job);
-  const match = /^\/api\/tenders\/([^/]+)\/(matrix|answers|export)$/.exec(url.pathname);
+  const match = /^\/api\/tenders\/([^/]+)\/(matrix|answers|export|package)$/.exec(url.pathname);
   if (!match?.[1]) return json(res, 404, { error: 'Ruta no encontrada.' });
   const id = validateTenderId(match[1]),
     action = match[2];
@@ -221,6 +284,33 @@ async function route(req: IncomingMessage, res: ServerResponse) {
           'No se pudo completar la matriz. Revisa la configuración y vuelve a intentarlo; la matriz anterior se conserva.';
       });
     return json(res, 202, job);
+  }
+  if (action === 'package' && (method === 'GET' || method === 'POST')) {
+    const state = await matrixState(id);
+    if (!state.matrix || state.stale)
+      return json(res, 409, { error: 'Actualiza la matriz antes de exportar una carpeta.' });
+    const current = await inputs(id);
+    if (method === 'GET')
+      return json(res, 200, { documents: packagePreview(state.matrix, current.evidence) });
+    const input = z
+      .object({
+        destination: z.string().trim().min(1).max(4096),
+        documentIds: z.array(z.string().uuid()).max(200),
+      })
+      .strict()
+      .parse(await body(req));
+    return json(
+      res,
+      201,
+      await exportPackage(
+        state.matrix,
+        current.evidence,
+        current.answers,
+        input.documentIds,
+        input.destination,
+        vault,
+      ),
+    );
   }
   if (action === 'export' && method === 'GET') {
     const { matrix, stale } = await matrixState(id);
