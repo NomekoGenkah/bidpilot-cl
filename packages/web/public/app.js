@@ -363,14 +363,27 @@ function render() {
     );
     if (!matrix) {
       empty.append(
-        button(docsCache.length ? 'Analizar licitación' : 'Añadir evidencia', () => {
-          if (docsCache.length) void generate();
-          else {
-            switchMode('documents');
-            $('uploadbox').open = true;
-            $('docname').focus();
-          }
-        }),
+        button(
+          !currentId
+            ? offline
+              ? 'Probar demo sin Meta'
+              : 'Nueva postulación'
+            : docsCache.length
+              ? 'Analizar licitación'
+              : 'Añadir evidencia',
+          () => {
+            if (!currentId) {
+              $(offline ? 'replay-demo' : 'new-tender').click();
+              return;
+            }
+            if (docsCache.length) void generate();
+            else {
+              switchMode('documents');
+              $('uploadbox').open = true;
+              $('docname').focus();
+            }
+          },
+        ),
       );
     } else
       empty.append(
@@ -536,9 +549,10 @@ async function poll() {
       setTimeout(poll, 1500);
       return;
     }
-    busy(false);
     if (job.status === 'error') notice(job.message);
+    await refreshTenders(currentId);
     await selectTender();
+    busy(false);
   } catch (e) {
     busy(false);
     notice(e.message);
