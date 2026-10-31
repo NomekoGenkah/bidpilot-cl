@@ -15,7 +15,9 @@ let tenders = [],
   tooltipOwner = null,
   pinned = false,
   helpTimer;
-let replacing = '';
+let replacing = '',
+  agentState = null,
+  offline = false;
 const pageSize = 15,
   drafts = {};
 const text = (tag, value, cls) => {
@@ -58,12 +60,14 @@ const notice = (message) => {
 function busy(value) {
   running = value;
   for (const b of document.querySelectorAll(
-    '#generate, #demo, #upload button[type=submit], .answer-actions .primary',
+    '#generate, #demo, #replay-demo, #new-tender, #prepare-form button, #agent-retry, #agent-defer, #upload button[type=submit], .answer-actions .primary',
   ))
     b.disabled = value;
   $('tender').disabled = value;
   $('generate').disabled = value || !currentId;
   $('uploadbox').inert = value;
+  $('prepare-form').inert = value;
+  $('agent-answers').inert = value;
 }
 function status(r) {
   if (r.pendienteRevision) return { label: 'Revisar bases', cls: 'pending' };
@@ -106,12 +110,13 @@ function filtered() {
 function switchMode(next) {
   mode = next;
   hideHelp();
-  for (const item of ['matrix', 'questions', 'documents']) {
+  for (const item of ['matrix', 'questions', 'documents', 'submission']) {
     if (item === next) $(`tab-${item}`).setAttribute('aria-current', 'page');
     else $(`tab-${item}`).removeAttribute('aria-current');
   }
   $('documents-view').hidden = next !== 'documents';
-  $('review-view').hidden = next === 'documents';
+  $('review-view').hidden = !['matrix', 'questions'].includes(next);
+  $('submission-view').hidden = next !== 'submission';
   $('requirement-search').placeholder =
     next === 'questions' ? 'Buscar pregunta…' : 'Buscar requisito…';
   page = 0;
@@ -119,6 +124,7 @@ function switchMode(next) {
 }
 async function documents() {
   docsCache = await api('evidence');
+  evidenceChoices('prepare-evidence', chosenEvidence('prepare-evidence'));
   $('count-documents').textContent = docsCache.length;
   $('documents').replaceChildren(
     ...docsCache.map((doc) => {
@@ -220,17 +226,20 @@ async function selectTender() {
   currentId = id;
   $('generate').disabled = true;
   matrix = null;
+  agentState = null;
   answers = {};
   stale = false;
   if (id) {
-    const [state, saved] = await Promise.all([
+    const [state, saved, agent] = await Promise.all([
       api(`tenders/${id}/matrix`),
       api(`tenders/${id}/answers`),
+      api(`tenders/${id}/agent`),
     ]);
     if (version !== selectionVersion) return;
     matrix = state.matrix;
     stale = state.stale;
     answers = saved;
+    agentState = agent;
   }
   render();
   busy(running);
@@ -238,15 +247,26 @@ async function selectTender() {
 function render() {
   $('count-matrix').textContent = matrix?.rows.length ?? '';
   $('count-questions').textContent = matrix?.rows.filter((r) => r.pregunta).length ?? '';
-  $('profile').hidden = !matrix?.fictional && !docsCache.some((d) => d.fictional);
+  $('profile').hidden =
+    !matrix?.fictional &&
+    !docsCache.some((d) => d.fictional && agentState?.run?.selectedEvidenceIds.includes(d.id));
   $('updated').textContent = stale
     ? 'Desactualizada'
     : matrix
       ? `Actualizado ${new Date(matrix.createdAt).toLocaleString('es-CL', { hour: '2-digit', minute: '2-digit' })}`
       : '';
-  $('generate').textContent = matrix ? 'Actualizar con Meta' : 'Analizar con Meta';
+  $('generate').textContent =
+    agentState?.run?.mode === 'replay'
+      ? 'Actualizar demo'
+      : agentState?.run
+        ? 'Actualizar paquete con Meta'
+        : 'Preparar paquete con Meta';
   $('exportempty').hidden = Boolean(matrix && !stale);
-  $('exportfolder').hidden = !matrix || stale;
+  $('exportfolder').hidden =
+    !matrix ||
+    stale ||
+    Boolean(agentState?.run && (agentState.run.status !== 'done' || agentState.stale));
+  renderAgent();
   for (const id of ['exportjson', 'exportmd']) {
     $(id).hidden = !matrix || stale;
     if (matrix && !stale) {
@@ -486,7 +506,10 @@ function renderDetail(r) {
         drafts[draftKey] = undefined;
         stale = true;
         busy(false);
-        await generate();
+        if (agentState?.run) {
+          await selectTender();
+          notice('Respuesta guardada. Continúa desde las preguntas del agente.');
+        } else await generate();
       } catch (e) {
         busy(false);
         notice(e.message);
@@ -504,6 +527,10 @@ async function poll() {
       return;
     }
     $('progress').textContent = job.message;
+    if (currentId) {
+      agentState = await api(`tenders/${currentId}/agent`);
+      renderAgent();
+    }
     if (job.status === 'running') {
       busy(true);
       setTimeout(poll, 1500);
@@ -520,9 +547,31 @@ async function poll() {
 async function generate() {
   if (!currentId || running) return;
   notice('');
+  if (!agentState?.run) {
+    $('preparation').open = true;
+    $('tender-id').value = currentId;
+    $('existing-bases').checked = true;
+    $('bases-file').required = false;
+    evidenceChoices(
+      'prepare-evidence',
+      docsCache.map((d) => d.id),
+    );
+    $('tender-id').focus();
+    return;
+  }
+  if (agentState.run.status === 'awaiting_user') {
+    $('agent-answers').scrollIntoView({ block: 'center' });
+    return;
+  }
   busy(true);
   try {
-    await api(`tenders/${currentId}/matrix`, {});
+    await api(`tenders/${currentId}/agent/continue`, {
+      answers: {},
+      defer: false,
+      ...(['ready', 'error', 'done'].includes(agentState.run.status)
+        ? { documentIds: chosenEvidence('retry-evidence') }
+        : {}),
+    });
     await poll();
   } catch (e) {
     busy(false);
@@ -712,7 +761,7 @@ $('search').addEventListener('input', () => {
     }
   }, 300);
 });
-for (const item of ['matrix', 'questions', 'documents'])
+for (const item of ['matrix', 'questions', 'documents', 'submission'])
   $(`tab-${item}`).addEventListener('click', () => switchMode(item));
 $('generate').addEventListener('click', generate);
 $('tender').addEventListener('change', () => {
@@ -737,15 +786,16 @@ $('next').addEventListener('click', () => {
 });
 async function init() {
   try {
-    tenders = await api('tenders');
-    $('tender').replaceChildren(
-      ...tenders.map((t) => {
-        const o = text('option', `${t.id} · ${t.name}`);
-        o.value = t.id;
-        return o;
-      }),
-    );
+    offline = (await api('settings')).offline;
+    $('connection-mode').textContent = offline ? 'Reproducción sin conexión' : 'Local';
+    $('new-tender').hidden = offline;
+    $('preparation').hidden = offline;
+    await refreshTenders();
     await documents();
+    if (!tenders.length && !offline) {
+      $('preparation').open = true;
+      evidenceChoices('prepare-evidence', []);
+    }
     await selectTender();
     const job = await api('job');
     if (job?.status === 'running') {
@@ -857,3 +907,299 @@ $('package-form').addEventListener('submit', async (event) => {
 $('package-dialog').addEventListener('cancel', (event) => {
   if ($('package-save').disabled) event.preventDefault();
 });
+
+function evidenceChoices(target, ids) {
+  $(target).replaceChildren(
+    ...docsCache.map((doc) => {
+      const label = text('label', '', 'package-document'),
+        input = document.createElement('input');
+      input.type = 'checkbox';
+      input.value = doc.id;
+      input.checked = ids.includes(doc.id);
+      label.append(
+        input,
+        text(
+          'span',
+          `${doc.name}${doc.fictional ? ' · Ficticio' : ''}${doc.analysisStatus === 'sin_analizar' ? ' · Sin analizar' : ''}`,
+        ),
+      );
+      return label;
+    }),
+  );
+  if (!docsCache.length)
+    $(target).append(
+      text(
+        'p',
+        'El baúl está vacío. Puedes añadir documentos o continuar dejando las brechas explícitas.',
+      ),
+    );
+}
+const chosenEvidence = (target) =>
+  [...$(target).querySelectorAll('input:checked')].map((i) => i.value);
+async function refreshTenders(id = currentId) {
+  tenders = await api('tenders');
+  $('tender').replaceChildren(
+    ...tenders.map((t) => {
+      const option = text(
+        'option',
+        `${t.id} · ${t.name}${t.mode === 'replay' ? ' · Sin Meta' : ''}`,
+      );
+      option.value = t.id;
+      return option;
+    }),
+  );
+  if (tenders.some((t) => t.id === id)) $('tender').value = id;
+}
+function renderAgent() {
+  const run = agentState?.run;
+  $('agent-work').hidden = !run;
+  const replay = run?.mode === 'replay';
+  $('mode-banner').hidden = !replay && !offline;
+  $('mode-banner').textContent = replay
+    ? 'Demo ficticia · Reproducción sin Meta. Los resultados siguen un escenario incluido; no representan una evaluación real.'
+    : 'Servidor de reproducción sin conexiones externas. Para trabajar con tus bases y Meta, ejecuta npm start.';
+  if (!run) {
+    $('submission-content').replaceChildren(
+      text('p', 'Inicia la preparación para obtener recomendación, riesgos, checklist y borrador.'),
+    );
+    return;
+  }
+  const labels = {
+    ready: 'Listo para continuar',
+    running: 'Agente trabajando',
+    awaiting_user: 'Esperando tu decisión',
+    done: 'Paquete preparado para revisión',
+    error: 'Preparación interrumpida',
+  };
+  $('agent-status').textContent = `${labels[run.status]}${replay ? ' · Sin Meta' : ''}`;
+  const followEvents =
+    $('agent-events').scrollHeight - $('agent-events').scrollTop - $('agent-events').clientHeight <
+    30;
+  if ($('agent-timeline').dataset.status !== `${run.id}:${run.status}`) {
+    $('agent-timeline').open = ['running', 'ready', 'error'].includes(run.status);
+    $('agent-document-selection').open = ['ready', 'error'].includes(run.status);
+    $('agent-timeline').dataset.status = `${run.id}:${run.status}`;
+  }
+  $('agent-events').replaceChildren(
+    ...run.events.map((event) => {
+      const item = text('li', '', `event-${event.kind}`);
+      const time = text(
+        'time',
+        new Date(event.at).toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' }),
+      );
+      time.dateTime = event.at;
+      item.append(time, text('span', event.message));
+      return item;
+    }),
+  );
+  if (followEvents) $('agent-events').scrollTop = $('agent-events').scrollHeight;
+  $('agent-error').hidden = run.status === 'done';
+  $('agent-recovery').hidden = !['ready', 'error', 'done'].includes(run.status);
+  $('agent-error').textContent =
+    run.error ??
+    (run.status === 'done'
+      ? 'Puedes revisar la selección de evidencia y actualizar el paquete.'
+      : 'Puedes continuar sin repetir los pasos completados.');
+  $('agent-retry').textContent =
+    run.status === 'done' ? 'Actualizar paquete' : 'Continuar desde el progreso guardado';
+  const waiting = run.status === 'awaiting_user';
+  $('agent-answers').hidden = !waiting;
+  // No reemplazar controles mientras la persona escribe ni durante cada sondeo.
+  const key = `${run.id}:${run.questions.map((q) => q.requirementId).join(',')}:${docsCache.map((d) => d.id + d.sha256).join(',')}`;
+  if (['ready', 'error', 'done'].includes(run.status) && $('agent-recovery').dataset.key !== key) {
+    $('agent-recovery').dataset.key = key;
+    evidenceChoices('retry-evidence', run.selectedEvidenceIds);
+  }
+  if (waiting && $('agent-answers').dataset.key !== key) {
+    $('agent-answers').dataset.key = key;
+    $('agent-questions').replaceChildren(
+      ...run.questions.map((q) => {
+        const group = text('div', '', 'agent-question'),
+          label = text('label', `${q.requirementId} · ${q.question}`),
+          input = document.createElement('textarea');
+        input.id = `agent-answer-${q.requirementId}`;
+        input.dataset.requirement = q.requirementId;
+        input.maxLength = 4000;
+        input.rows = 3;
+        input.value = answers[q.requirementId] ?? '';
+        label.htmlFor = input.id;
+        group.append(label, input);
+        return group;
+      }),
+    );
+    evidenceChoices('resume-evidence', run.selectedEvidenceIds);
+  }
+  const s = agentState.submission,
+    container = $('submission-content');
+  container.replaceChildren();
+  if (!s) {
+    container.append(
+      text('h2', 'Paquete en preparación'),
+      text(
+        'p',
+        'El agente guardará aquí la recomendación, los riesgos, el checklist y el borrador después de las preguntas.',
+      ),
+    );
+    return;
+  }
+  if (agentState.stale || run.status !== 'done')
+    container.append(
+      text(
+        'p',
+        'Versión anterior. Continúa o actualiza el agente antes de exportar este paquete.',
+        'basis-warning',
+      ),
+    );
+  const decision = {
+    no_go: 'No avanzar',
+    pendiente: 'Decisión pendiente',
+    go_condicionado: 'Avanzar sujeto a revisión',
+  };
+  container.append(
+    text('h2', decision[s.recomendacion.decision]),
+    ...s.recomendacion.razones.map((r) => text('p', r)),
+    text(
+      'p',
+      `Cierre informado: ${s.recomendacion.fechaCierre ?? 'No disponible; revisar bases y portal.'}`,
+    ),
+  );
+  if (!agentState.stale && run.status === 'done') {
+    const link = text('a', 'Descargar paquete en Markdown');
+    link.href = `/api/tenders/${currentId}/agent/submission`;
+    link.download = '';
+    container.append(link);
+  }
+  const addRefs = (parent, item) => {
+    const detail = document.createElement('details');
+    detail.append(text('summary', 'Ver sustento documental'));
+    for (const c of item.bases)
+      detail.append(text('p', `Bases · pág. ${c.pagina}`), text('blockquote', c.texto));
+    for (const c of item.evidencia ?? [])
+      detail.append(
+        text('p', `${c.documento ?? c.documentId} · pág. ${c.pagina}`),
+        text('blockquote', c.texto),
+      );
+    parent.append(detail);
+  };
+  for (const [title, list, describe] of [
+    ['Riesgos', s.riesgos, (r) => `${r.asunto}\n${r.motivo}`],
+    ['Brechas', s.brechas, (r) => `${r.descripcion}\n${r.razon}`],
+    [
+      'Checklist documental',
+      s.checklist,
+      (r) =>
+        `${stageLabel(r.etapa)} · ${r.tarea}\n${r.accion}\nPlazo: ${r.plazoDocumental ?? 'No identificado; revisar bases.'}`,
+    ],
+    [
+      'Borrador de propuesta técnica',
+      s.propuesta.secciones,
+      (r) =>
+        `${r.titulo}\n${r.texto}${r.condicion ? `\nCondición: ${r.condicion}` : ''}${r.alternativas.length ? `\nAlternativas: ${r.alternativas.join('; ')}` : ''}`,
+    ],
+  ]) {
+    const section = document.createElement('section');
+    section.append(text('h2', title));
+    if (title === 'Borrador de propuesta técnica')
+      section.append(text('p', s.propuesta.introduccion));
+    if (!list.length)
+      section.append(
+        text('p', 'Sin elementos identificados en esta matriz. Revisar las bases originales.'),
+      );
+    for (const item of list) {
+      const article = text('article', '', 'submission-item');
+      article.append(text('h3', item.requirementId), text('p', describe(item)));
+      addRefs(article, item);
+      section.append(article);
+    }
+    container.append(section);
+  }
+  container.append(text('h2', 'Por completar por el proveedor'));
+  const list = document.createElement('ul');
+  for (const p of s.propuesta.pendientesGenerales) list.append(text('li', p));
+  container.append(list, text('p', s.recomendacion.limites));
+}
+$('new-tender').addEventListener('click', () => {
+  $('prepare-form').reset();
+  $('preparation').open = true;
+  $('bases-file').required = true;
+  evidenceChoices(
+    'prepare-evidence',
+    docsCache.filter((d) => !d.fictional).map((d) => d.id),
+  );
+  $('tender-id').focus();
+});
+$('existing-bases').addEventListener('change', () => {
+  $('bases-file').required = !$('existing-bases').checked;
+});
+$('prepare-form').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const file = $('bases-file').files[0];
+  if (!$('existing-bases').checked && (!file || file.size > 8 * 1024 * 1024))
+    return notice('Selecciona las bases PDF de hasta 8 MB.');
+  busy(true);
+  try {
+    let content;
+    if (!$('existing-bases').checked)
+      content = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result).split(',')[1]);
+        reader.onerror = () => reject(new Error('No se pudo leer el PDF.'));
+        reader.readAsDataURL(file);
+      });
+    const result = await api('agent', {
+      tenderId: $('tender-id').value.trim(),
+      ...(content ? { content } : {}),
+      existing: $('existing-bases').checked,
+      documentIds: chosenEvidence('prepare-evidence'),
+      confirmed: $('prepare-consent').checked,
+    });
+    $('preparation').open = false;
+    await refreshTenders(result.tenderId);
+    await selectTender();
+    await poll();
+  } catch (error) {
+    busy(false);
+    notice(error.message);
+  }
+});
+$('replay-demo').addEventListener('click', async () => {
+  busy(true);
+  try {
+    const result = await api('demo', {});
+    await documents();
+    await refreshTenders(result.tenderId);
+    await selectTender();
+    await poll();
+  } catch (error) {
+    busy(false);
+    notice(error.message);
+  }
+});
+async function continueAgent(defer) {
+  const responses = Object.fromEntries(
+    [...$('agent-questions').querySelectorAll('textarea')]
+      .filter((input) => input.value.trim())
+      .map((input) => [input.dataset.requirement, input.value.trim()]),
+  );
+  busy(true);
+  try {
+    await api(`tenders/${currentId}/agent/continue`, {
+      answers: responses,
+      defer,
+      documentIds: chosenEvidence('resume-evidence'),
+    });
+    $('agent-answers').dataset.key = '';
+    await poll();
+  } catch (error) {
+    busy(false);
+    notice(error.message);
+  }
+}
+$('agent-answers').addEventListener('submit', (event) => {
+  event.preventDefault();
+  void continueAgent(false);
+});
+$('agent-defer').addEventListener('click', () => {
+  void continueAgent(true);
+});
+$('agent-retry').addEventListener('click', generate);

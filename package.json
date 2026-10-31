@@ -21,8 +21,10 @@
     "test:watch": "vitest",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
-    "typecheck": "npm run typecheck --workspaces",
-    "check": "npm run typecheck && npm run lint && npm test"
+    "typecheck": "npm run typecheck --workspaces && tsc --noEmit -p tsconfig.scripts.json",
+    "check": "npm run typecheck && npm run lint && npm test",
+    "demo": "tsx scripts/demo.ts",
+    "demo:rehearse": "tsx scripts/rehearse-demo.ts"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

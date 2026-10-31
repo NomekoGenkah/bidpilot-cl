@@ -1011,3 +1011,116 @@ dialog legend {
     padding: 18px;
   }
 }
+
+/* El expediente mantiene la paleta azul, el texto de sistema y el espacio de revisión.
+   La secuencia y sus citas organizan la pantalla; no se añade decoración de marketing. */
+.preparation-actions {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+.preparation {
+  border: 1px solid var(--line);
+  background: var(--white);
+  padding: 16px;
+  margin: 16px 0;
+}
+.preparation > summary {
+  font-size: 18px;
+  font-weight: 650;
+}
+#prepare-form {
+  margin-top: 18px;
+  max-width: 900px;
+}
+#prepare-form label,
+.agent-question label {
+  display: block;
+  margin: 10px 0 6px;
+}
+.form-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.form-pair input {
+  width: 100%;
+}
+#agent-work {
+  padding: 18px 0;
+  border-block: 1px solid var(--line);
+}
+#agent-status {
+  font-weight: 650;
+}
+.agent-events {
+  max-height: 240px;
+  overflow: auto;
+  padding: 12px 12px 0 24px;
+  margin: 0;
+}
+.agent-events li {
+  padding: 5px 0 5px 8px;
+}
+.agent-events time {
+  color: var(--muted);
+  font-size: 13px;
+  margin-right: 12px;
+}
+.event-pause,
+.event-error {
+  color: #8a3c0e;
+}
+#agent-answers {
+  max-width: 900px;
+  padding: 16px 0;
+}
+.agent-question textarea {
+  width: 100%;
+}
+#agent-answers .answer-actions {
+  flex-wrap: wrap;
+}
+#submission-view {
+  max-width: 1000px;
+  padding-block: 16px;
+}
+#submission-content > section {
+  margin-top: 32px;
+}
+.submission-item {
+  padding-block: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.submission-item h3 {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+.submission-item p {
+  white-space: pre-line;
+  max-width: 80ch;
+  overflow-wrap: anywhere;
+}
+.submission-item details {
+  margin-top: 8px;
+}
+#prepare-form fieldset,
+#agent-answers fieldset {
+  border: 1px solid var(--line);
+  margin: 18px 0;
+}
+#prepare-form .check {
+  display: flex;
+  align-items: start;
+  gap: 8px;
+}
+@media (max-width: 650px) {
+  .form-pair {
+    grid-template-columns: 1fr;
+  }
+  .sections {
+    flex-wrap: wrap;
+  }
+}

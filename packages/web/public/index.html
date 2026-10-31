@@ -10,7 +10,7 @@
   <body>
     <header class="topbar">
       <a href="/" class="brand">BidPilot <span>CL</span></a
-      ><span class="local">Local</span
+      ><span id="connection-mode" class="local">Local</span
       ><button
         class="help"
         type="button"
@@ -51,13 +51,89 @@
           </details>
         </div>
       </section>
+      <div class="preparation-actions">
+        <button id="new-tender" class="quiet">Nueva postulación</button>
+        <button id="replay-demo" class="quiet">Probar demo sin Meta</button>
+      </div>
+      <details id="preparation" class="preparation">
+        <summary>Preparar postulación</summary>
+        <form id="prepare-form">
+          <div class="form-pair">
+            <div>
+              <label for="tender-id">ID de Mercado Público</label
+              ><input id="tender-id" required placeholder="730566-48-L123" maxlength="40" />
+            </div>
+            <div>
+              <label for="bases-file">Bases PDF con texto · máximo 8 MB</label
+              ><input id="bases-file" type="file" accept="application/pdf,.pdf" />
+            </div>
+          </div>
+          <label class="check"
+            ><input type="checkbox" id="existing-bases" /> Usar las bases ya ingeridas de este
+            ID</label
+          >
+          <fieldset>
+            <legend>Evidencia que puede consultar el agente</legend>
+            <div id="prepare-evidence"></div>
+          </fieldset>
+          <p>
+            Si necesitas añadir documentos, guárdalos primero en Documentos. Sin respaldo, el
+            resultado conservará las brechas.
+          </p>
+          <label class="check"
+            ><input type="checkbox" id="prepare-consent" required /> Confirmo que el PDF corresponde
+            al ID. Autorizo enviar a Meta el texto de las bases, la evidencia seleccionada y mis
+            respuestas.</label
+          >
+          <button class="primary" type="submit">Iniciar agente con Meta</button>
+        </form>
+      </details>
+      <div id="mode-banner" class="basis-warning" hidden></div>
       <div id="notice" role="status" aria-live="polite"></div>
       <div id="progress" role="status" aria-live="polite"></div>
+      <section id="agent-work" aria-label="Preparación de la postulación" hidden>
+        <details id="agent-timeline" open>
+          <summary id="agent-status">Actividad del agente</summary>
+          <ol
+            id="agent-events"
+            class="agent-events"
+            tabindex="0"
+            aria-label="Historial de acciones del agente"
+          ></ol>
+        </details>
+        <div id="agent-recovery" hidden>
+          <p id="agent-error"></p>
+          <details id="agent-document-selection">
+            <summary>Revisar evidencia seleccionada</summary>
+            <fieldset>
+              <legend>Evidencia para continuar</legend>
+              <div id="retry-evidence"></div>
+            </fieldset>
+            <button id="agent-retry">Continuar desde el progreso guardado</button>
+          </details>
+        </div>
+        <form id="agent-answers" hidden>
+          <h2>El agente necesita tu decisión</h2>
+          <p>
+            Responde con lo que sabes. Una declaración no sustituye documentos. Puedes continuar con
+            pendientes; quedarán en el paquete.
+          </p>
+          <div id="agent-questions"></div>
+          <fieldset>
+            <legend>Evidencia para continuar</legend>
+            <div id="resume-evidence"></div>
+          </fieldset>
+          <div class="answer-actions">
+            <button class="primary" type="submit">Guardar respuestas y continuar</button
+            ><button id="agent-defer" class="quiet" type="button">Continuar con pendientes</button>
+          </div>
+        </form>
+      </section>
       <nav class="sections" aria-label="Secciones">
         <button id="tab-matrix" aria-current="page">Matriz <span id="count-matrix"></span></button
         ><button id="tab-questions">Preguntas <span id="count-questions"></span></button
         ><button id="tab-documents">Documentos <span id="count-documents"></span></button
-        ><span id="updated"></span>
+        ><button id="tab-submission">Paquete</button><span id="updated"></span>
       </nav>
       <section id="review-view" aria-label="Revisión de requisitos">
         <div id="summary" class="summary"></div>
@@ -102,6 +178,9 @@
           </div>
           <aside id="detail" class="detail" aria-labelledby="detail-title" hidden></aside>
         </div>
+      </section>
+      <section id="submission-view" aria-label="Paquete de postulación" hidden>
+        <div id="submission-content"></div>
       </section>
       <section id="documents-view" aria-label="Documentos del proveedor" hidden>
         <div class="documents-actions">
@@ -171,7 +250,10 @@
           <h1 id="package-title">Exportar carpeta</h1>
           <button id="package-close" type="button" class="quiet">Cerrar</button>
         </div>
-        <p>Se creará una carpeta nueva con la matriz, las preguntas y los archivos que elijas.</p>
+        <p>
+          Se creará una carpeta con el paquete de revisión disponible, la matriz, sus citas y los
+          documentos que elijas.
+        </p>
         <label for="destination">Carpeta de destino</label
         ><input
           id="destination"

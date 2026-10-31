@@ -258,3 +258,39 @@ it('conserva originales, exporta una carpeta seleccionada e invalida al reemplaz
   expect((await post(`/api/evidence/${doc.id}/remove`, {})).status).toBe(200);
   expect((await fetch(origin + `/api/evidence/${doc.id}/original`)).status).toBe(404);
 });
+
+it('recorre la demo del agente por HTTP y bloquea el paquete hasta resolver o diferir preguntas', async () => {
+  expect((await post('/api/demo', {})).status).toBe(202);
+  expect(await waitJob()).toBe('done');
+  const path = '/api/tenders/990000-1-L126';
+  const first = (await (await fetch(origin + path + '/agent')).json()) as {
+    run: { status: string; questions: { requirementId: string }[] };
+    submission: unknown;
+  };
+  expect(first.run.status).toBe('awaiting_user');
+  expect(first.run.questions).toHaveLength(3);
+  expect(first.submission).toBeNull();
+  expect((await post(path + '/package', { destination: dir, documentIds: [] })).status).toBe(400);
+  expect((await post(path + '/agent/continue', { answers: {}, defer: false })).status).toBe(400);
+  expect((await post(path + '/agent/continue', { answers: {}, defer: true })).status).toBe(202);
+  expect(await waitJob()).toBe('done');
+  const state = (await (await fetch(origin + path + '/agent')).json()) as {
+    run: { status: string };
+    submission: { recomendacion: { decision: string } };
+    stale: boolean;
+  };
+  expect(state.run.status).toBe('done');
+  expect(state.stale).toBe(false);
+  expect(state.submission.recomendacion.decision).toBe('pendiente');
+  const markdown = await fetch(origin + path + '/agent/submission');
+  expect(markdown.status).toBe(200);
+  expect(await markdown.text()).toContain('POR COMPLETAR');
+  const exported = await post(path + '/package', { destination: dir, documentIds: [] });
+  expect(exported.status).toBe(201);
+  const output = (await exported.json()) as { path: string };
+  expect(await readFile(join(output.path, 'checklist.json'), 'utf8')).toContain('REQ-004');
+  expect(await readFile(join(output.path, 'LEEME.txt'), 'utf8')).toContain('REPRODUCCIÓN SIN META');
+  await post(path + '/answers', { 'REQ-003': 'Nueva declaración.' });
+  expect((await fetch(origin + path + '/agent/submission')).status).toBe(409);
+  expect((await post(path + '/package', { destination: dir, documentIds: [] })).status).toBe(409);
+});
