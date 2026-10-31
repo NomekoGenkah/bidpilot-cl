@@ -5,6 +5,8 @@ export {
   addEvidence,
   readEvidence,
   searchEvidence,
+  retrieveEvidence,
+  type Retrieval,
   originalBytes,
   retireEvidence,
   type Evidence,

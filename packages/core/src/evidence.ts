@@ -140,6 +140,52 @@ export function searchEvidence(docs: Evidence[], query: string, limit = 12) {
     .slice(0, limit);
 }
 
+export const retrievalSchema = z.object({
+  evidenceSha256: z.string(),
+  queriesSha256: z.string(),
+  results: z.record(
+    z.string(),
+    z
+      .array(
+        z.object({
+          documentId: z.string().uuid(),
+          name: z.string(),
+          fictional: z.boolean(),
+          page: z.number().int().positive(),
+          text: z.string(),
+          score: z.number(),
+        }),
+      )
+      .max(5),
+  ),
+});
+export type Retrieval = z.infer<typeof retrievalSchema>;
+type EvidenceQuery = { id: string; descripcion: string; condicionAplicacion: string | null };
+export const queryDigest = (requirements: EvidenceQuery[]) =>
+  digest(JSON.stringify(requirements.map((r) => [r.id, r.descripcion, r.condicionAplicacion])));
+/** Búsqueda acotada por requisito; este artefacto es la entrada documental del contraste. */
+export function retrieveEvidence(docs: Evidence[], requirements: EvidenceQuery[]): Retrieval {
+  const chunks = docs.map((doc) => ({
+    ...doc,
+    pages: doc.pages.flatMap((p) =>
+      Array.from({ length: Math.ceil(p.text.length / 3500) }, (_, i) => ({
+        page: p.page,
+        text: p.text.slice(i * 3500, i * 3500 + 4000),
+      })),
+    ),
+  }));
+  return {
+    evidenceSha256: digest(JSON.stringify(docs)),
+    queriesSha256: queryDigest(requirements),
+    results: Object.fromEntries(
+      requirements.map((r) => [
+        r.id,
+        searchEvidence(chunks, `${r.descripcion} ${r.condicionAplicacion ?? ''}`, 5),
+      ]),
+    ),
+  };
+}
+
 export async function originalBytes(root: string, doc: Evidence) {
   if (!doc.original)
     throw new Error(

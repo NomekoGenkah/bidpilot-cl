@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { buildMatrix, guardJudgment, type Judgment } from './matrix.js';
 import { metaJson } from './meta.js';
-import type { Evidence } from './evidence.js';
+import { retrieveEvidence, type Evidence } from './evidence.js';
 vi.mock('./meta.js', () => ({ metaJson: vi.fn() }));
 const req = {
   id: 'REQ-001',
@@ -160,4 +160,35 @@ it('reutiliza el bloque guardado y vuelve a verificar sus citas documentales', a
   expect(metaJson).not.toHaveBeenCalled();
   expect(matrix.rows[0]?.estado).toBe('dudoso');
   expect(matrix.rows[0]?.citasEvidencia).toHaveLength(0);
+});
+
+it('consume la búsqueda de la herramienta y rechaza búsquedas desactualizadas o fragmentos inventados', async () => {
+  const bases = {
+    tenderId: '730566-25-L124',
+    sha256: 'a'.repeat(64),
+    pageCount: 1,
+    pages: [{ page: 1, text: req.citas[0]?.texto }],
+  };
+  const config = { apiKey: 'fake', model: 'fake', baseUrl: 'https://example.com' };
+  const extraction = { tenderId: bases.tenderId, sourceSha256: bases.sha256, requisitos: [req] };
+  const query = { ...req, descripcion: 'Acreditar proyectos de desarrollo web.' };
+  const current = { ...extraction, requisitos: [query] };
+  const retrieval = retrieveEvidence([doc], [query]);
+  vi.mocked(metaJson)
+    .mockClear()
+    .mockResolvedValue({ resultados: [good] });
+  expect(
+    (await buildMatrix(bases, current, [doc], {}, config, () => {}, [], undefined, retrieval))
+      .rows[0]?.estado,
+  ).toBe('cumple');
+  await expect(
+    buildMatrix(bases, extraction, [doc], {}, config, () => {}, [], undefined, retrieval),
+  ).rejects.toThrow('La búsqueda no corresponde');
+  const fragment = retrieval.results[req.id]?.[0];
+  if (!fragment) throw new Error('Falta fragmento');
+  fragment.text = 'Esta evidencia es inventada y no está en el documento.';
+  await expect(
+    buildMatrix(bases, current, [doc], {}, config, () => {}, [], undefined, retrieval),
+  ).rejects.toThrow('no coincide');
+  expect(metaJson).toHaveBeenCalledTimes(1);
 });

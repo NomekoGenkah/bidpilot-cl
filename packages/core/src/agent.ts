@@ -3,7 +3,14 @@ import { mkdir, readFile, writeFile, access } from 'node:fs/promises';
 import { join } from 'node:path';
 import { z } from 'zod';
 import type { Config } from './config.js';
-import { digest, saveJson, readEvidence, searchEvidence, type Evidence } from './evidence.js';
+import {
+  digest,
+  saveJson,
+  readEvidence,
+  retrieveEvidence,
+  retrievalSchema,
+  type Evidence,
+} from './evidence.js';
 import { extractPdfPages, getTender, validateTenderId } from './ingest.js';
 import { extractRequirements, basesSchema } from './requirements.js';
 import { buildMatrix, answersSchema, type Matrix, requirementsFileSchema } from './matrix.js';
@@ -243,14 +250,7 @@ export async function executeRun(
         run.phase = 'search_evidence';
       } else if (tool === 'search_evidence') {
         const reqs = requirementsFileSchema.parse(await readJson(path('requirements.json')));
-        const results = reqs.requisitos.map((req) => ({
-          requirementId: req.id,
-          fragments: searchEvidence(docs, `${req.descripcion} ${req.condicionAplicacion ?? ''}`, 5),
-        }));
-        await saveJson(path('search.json'), {
-          evidenceSha256: digest(JSON.stringify(docs)),
-          results,
-        });
+        await saveJson(path('search.json'), retrieveEvidence(docs, reqs.requisitos));
         run.phase = 'check_requirements';
         progress(
           `Búsqueda en ${docs.length} documentos seleccionados. No encontrar respaldo no demuestra incumplimiento.`,
@@ -282,10 +282,20 @@ export async function executeRun(
         };
         const matrix = replay
           ? await replay.matrix(bases, reqs, docs, answers)
-          : await buildMatrix(bases, reqs, docs, answers, liveConfig().meta, progress, known, {
-              load: (offset) => optionalJson(cacheFile(offset)),
-              save: (offset, value) => saveJson(cacheFile(offset), value),
-            });
+          : await buildMatrix(
+              bases,
+              reqs,
+              docs,
+              answers,
+              liveConfig().meta,
+              progress,
+              known,
+              {
+                load: (offset) => optionalJson(cacheFile(offset)),
+                save: (offset, value) => saveJson(cacheFile(offset), value),
+              },
+              retrievalSchema.parse(await readJson(path('search.json'))),
+            );
         await saveJson(path('matrix.json'), matrix);
         progress(
           `Matriz: ${matrix.rows.filter((r) => r.estado === 'cumple').length} cumple, ${matrix.rows.filter((r) => r.estado === 'falta').length} falta, ${matrix.rows.filter((r) => r.estado === 'dudoso').length} dudoso. Resultados provisionales.`,

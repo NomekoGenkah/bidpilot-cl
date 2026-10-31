@@ -2,7 +2,15 @@ import { z } from 'zod';
 import type { Config } from './config.js';
 import { metaJson } from './meta.js';
 import { basesSchema, requirementSchema, verifyCitations } from './requirements.js';
-import { digest, normalized, searchEvidence, type Evidence } from './evidence.js';
+import {
+  digest,
+  normalized,
+  retrieveEvidence,
+  retrievalSchema,
+  queryDigest,
+  type Retrieval,
+  type Evidence,
+} from './evidence.js';
 
 export const requirementsFileSchema = z.object({
   tenderId: z.string(),
@@ -92,36 +100,39 @@ export async function buildMatrix(
     load: (offset: number) => Promise<unknown | null>;
     save: (offset: number, value: unknown) => Promise<void>;
   },
+  retrievalInput?: Retrieval,
 ) {
   const bases = basesSchema.parse(basesInput);
   const extraction = requirementsFileSchema.parse(requirementsInput);
   answersSchema.parse(answers);
   if (extraction.tenderId !== bases.tenderId || extraction.sourceSha256 !== bases.sha256)
     throw new Error('Los requisitos no corresponden a estas bases.');
+  const retrieval = retrievalSchema.parse(
+    retrievalInput ?? retrieveEvidence(docs, extraction.requisitos),
+  );
+  if (
+    retrieval.evidenceSha256 !== digest(JSON.stringify(docs)) ||
+    retrieval.queriesSha256 !== queryDigest(extraction.requisitos)
+  )
+    throw new Error('La búsqueda no corresponde a los requisitos o evidencia actuales.');
+  for (const fragments of Object.values(retrieval.results))
+    for (const fragment of fragments) {
+      const source = docs
+        .find((d) => d.id === fragment.documentId && d.analysisStatus !== 'sin_analizar')
+        ?.pages.find((p) => p.page === fragment.page)?.text;
+      if (!source || !normalized(source).includes(normalized(fragment.text)))
+        throw new Error('Un fragmento recuperado no coincide con su documento.');
+    }
   const rows: ReturnType<typeof guardJudgment>[] = [];
   for (let offset = 0; offset < extraction.requisitos.length; offset += 6) {
     const batch = extraction.requisitos.slice(offset, offset + 6);
     progress(
       `Contrastando requisitos ${offset + 1}–${offset + batch.length} de ${extraction.requisitos.length}`,
     );
-    // Fragmentos acotados y separados por página: nunca mezclar páginas al citar.
-    const chunks = docs.flatMap((doc) => ({
-      ...doc,
-      pages: doc.pages.flatMap((p) =>
-        Array.from({ length: Math.ceil(p.text.length / 3500) }, (_, i) => ({
-          page: p.page,
-          text: p.text.slice(i * 3500, i * 3500 + 4000),
-        })),
-      ),
-    }));
-    const found = new Map<string, ReturnType<typeof searchEvidence>[number]>();
+    const found = new Map<string, Retrieval['results'][string][number]>();
     for (const req of batch)
-      for (const page of searchEvidence(
-        chunks,
-        `${req.descripcion} ${req.condicionAplicacion ?? ''}`,
-        5,
-      ))
-        found.set(`${page.documentId}:${page.page}:${digest(page.text)}`, page);
+      for (const fragment of retrieval.results[req.id] ?? [])
+        found.set(`${fragment.documentId}:${fragment.page}:${digest(fragment.text)}`, fragment);
     const cached = await checkpoint?.load(offset);
     if (cached)
       progress(
