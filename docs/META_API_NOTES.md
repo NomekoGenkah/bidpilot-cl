@@ -8,13 +8,13 @@ Documento de trabajo. Se completa a medida que verificamos cada punto con llamad
 
 - [x] Autenticación verificada: `Authorization: Bearer <META_API_KEY>`.
 - [x] URL base `https://api.meta.ai/v1`; probado `POST /chat/completions`.
-- [ ] ¿Es compatible con algún SDK existente (formato tipo OpenAI u otro)?
+- [x] Formato compatible con clientes Chat Completions; el producto usa `fetch` directamente.
 - [x] Modelo probado: `muse-spark-1.3` (no es un inventario de todos los disponibles).
 
 ### Tool use y salida estructurada
 
 - [x] Tool use: formato `tools[].function` y respuesta `message.tool_calls`.
-- [x] Salida estructurada con `response_format.type = "json_schema"` y `strict: true`: una prueba sintética exitosa; fiabilidad en bases reales pendiente.
+- [x] Salida estructurada con `response_format.type = "json_schema"` y `strict: true`: probado con bases reales; ver evaluaciones provisionales y sus límites.
 - [ ] ¿Permite varias llamadas a herramientas en una sola respuesta?
 
 ### Límites de tasa
@@ -60,3 +60,16 @@ el texto de las 23 páginas de las bases históricas `730566-48-L123` a Meta. Se
 JSON Schema estricto, `reasoning_effort: low` y `max_completion_tokens: 16384`.
 Los requisitos candidatos se validan contra el texto de cada página antes de aceptarse.
 Procedimiento, resultados y límites en [EXTRACTION_NOTES.md](EXTRACTION_NOTES.md).
+
+## Integración del agente · 31 de octubre de 2026
+
+La extracción estructurada y el contraste documental ya se usan con bases reales.
+El controlador actual usa herramientas nativas para avanzar por pasos con precondiciones
+locales; véase [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md). Una llamada real verificó que
+`tool_choice: required` responde HTTP 400 con indicación de que únicamente se admite
+`auto`. Con `auto`, el modelo solicitó correctamente `get_tender`. El cliente valida el
+nombre permitido y argumentos vacíos antes de ejecutar herramientas locales.
+
+El formato compatible está documentado en la [referencia de Chat Completions de Meta](https://dev.meta.ai/docs/protocols/chat-completions).
+No se necesita un SDK adicional. Las preguntas de límites de contexto/tasa y soporte de
+archivos directos permanecen abiertas; el producto extrae PDF localmente.

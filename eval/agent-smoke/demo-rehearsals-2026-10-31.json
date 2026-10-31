@@ -1,0 +1,46 @@
+{
+  "createdAt": "2026-10-31T18:14:43.126Z",
+  "results": [
+    {
+      "trial": 1,
+      "status": "passed",
+      "questions": 3,
+      "exportedDocuments": 2,
+      "artifacts": 13,
+      "restartAtPause": false,
+      "viewport": "1280x720",
+      "a11yViolations": 0
+    },
+    {
+      "trial": 2,
+      "status": "passed",
+      "questions": 3,
+      "exportedDocuments": 1,
+      "artifacts": 13,
+      "restartAtPause": false,
+      "viewport": "1280x720",
+      "a11yViolations": 0
+    },
+    {
+      "trial": 3,
+      "status": "passed",
+      "questions": 3,
+      "exportedDocuments": 2,
+      "artifacts": 13,
+      "restartAtPause": true,
+      "viewport": "390x844",
+      "a11yViolations": 0
+    }
+  ],
+  "runtimeCommit": "cee9b3f",
+  "source": "clon_local_limpio_sin_env_ni_PDFs_privados",
+  "node": "24.21.0",
+  "checks": {
+    "typecheck": "passed",
+    "eslint": "passed",
+    "prettier": "passed",
+    "tests": 53,
+    "testFiles": 10
+  },
+  "note": "Ensayos funcionales del escenario ficticio. No son métricas de calidad de Meta ni de ahorro de tiempo."
+}

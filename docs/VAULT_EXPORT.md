@@ -1,5 +1,10 @@
 # Originales y exportación a carpeta
 
+> Registro del hito anterior. El flujo actual del agente, su recuperación y el paquete
+> completo están en [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md); la reproducción sin Meta,
+> en [DEMO.md](DEMO.md). Los recuentos de tests y “siguientes pasos” de abajo describen
+> las verificaciones históricas, no todos los pendientes actuales.
+
 ## Baúl
 
 En Documentos, «Añadir documento» acepta archivos de hasta 8 MB o texto pegado. Se

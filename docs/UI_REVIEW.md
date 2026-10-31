@@ -1,5 +1,10 @@
 # Interfaz de revisión · 28 de octubre de 2026
 
+> Registro del hito anterior. El flujo actual del agente, su recuperación y el paquete
+> completo están en [AGENT_WORKFLOW.md](AGENT_WORKFLOW.md); la reproducción sin Meta,
+> en [DEMO.md](DEMO.md). Los recuentos de tests y “siguientes pasos” de abajo describen
+> las verificaciones históricas, no todos los pendientes actuales.
+
 La pantalla abre la licitación seleccionada con sus acciones y tres secciones:
 Matriz, Preguntas y Documentos. Se retiraron el bloque promocional inicial y los
 subtítulos explicativos repetidos. Las ayudas secundarias están en botones «?» con

@@ -6,11 +6,11 @@ Agente que prepara postulaciones a licitaciones de [Mercado Público](https://ww
 
 ## Local-first
 
-BidPilot CL corre en tu computador. Tus documentos y datos se guardan localmente (carpeta `data/`); lo único que sale de tu máquina son las llamadas al modelo de Meta y las consultas a la API de Mercado Público.
+BidPilot CL corre en tu computador. Tus documentos y datos se guardan localmente (carpeta `data/`); en modo real se envían a Meta las bases, los fragmentos de evidencia seleccionada y las respuestas necesarias para el análisis, y se consultan metadatos de Mercado Público. El modo de reproducción no llama a esas APIs.
 
 ## Instalación
 
-Requiere Node.js 20.16 o superior (por la extracción de PDF).
+Usa Node.js 24 LTS, la versión verificada para ejecutar y comprobar el proyecto.
 
 ```bash
 npm install
@@ -20,79 +20,57 @@ npm start              # abre http://127.0.0.1:3000
 
 Otros comandos: `npm run dev` (recarga automática), `npm test`, `npm run lint`, `npm run typecheck` y `npm run check` (los tres anteriores).
 
-### Ingestar una licitación y sus bases
+### Preparar una postulación desde el navegador
 
-Descarga el PDF original y guárdalo en `fixtures/private/` (fuera de Git). Luego:
+1. Guarda la evidencia del proveedor en **Documentos** (PDF con texto, archivos UTF-8 o texto pegado).
+2. Pulsa **Nueva postulación**, ingresa el ID, carga sus bases PDF y selecciona la evidencia.
+3. Confirma la asociación ID/PDF y el envío a Meta. El agente encadena lectura, extracción con citas, búsqueda y matriz; su línea de tiempo conserva las acciones.
+4. Responde sus preguntas o continúa dejando pendientes explícitos. Puedes añadir documentos y cambiar la selección antes de continuar.
+5. Revisa **Paquete**: recomendación, riesgos, brechas, checklist y borrador técnico alineado con los requisitos y criterios de evaluación.
+6. Exporta una carpeta con el paquete, sus citas y los originales que selecciones. Revisa todo antes de postular por tu cuenta.
+
+Los pasos y bloques validados se conservan al cerrar la pestaña o reiniciar el servidor.
+El borrador usa antecedentes documentales y marca lo que el proveedor debe completar;
+no inventa equipo, credenciales, precios ni compromisos. Los plazos relativos no se
+convierten en fechas sin su evento inicial. [Funcionamiento y límites](docs/AGENT_WORKFLOW.md).
+
+### Demo sin claves ni llamadas externas
+
+```bash
+npm ci
+npm run demo
+```
+
+Abre http://127.0.0.1:3000 y pulsa **Probar demo sin Meta**. Incluye bases y evidencia
+**ficticias**, resultados de reproducción identificados y el recorrido completo hasta
+la exportación. Guarda sus datos en `data/demo/`, separados del uso normal. No evalúa
+la calidad de Meta. [Guion, reproducción y límites](docs/DEMO.md).
+
+### Uso avanzado por CLI y evaluaciones
+
+La ingesta y extracción por CLI siguen disponibles:
 
 ```bash
 npm run ingest -- 730566-48-L123 fixtures/private/730566-48-L123/bases.pdf
-```
-
-Puedes añadir la URL de origen del PDF como tercer argumento. El comando carga `.env`,
-consulta los metadatos de Mercado Público y guarda `tender.json` y `bases.json` en
-`data/tenders/<id>/`. Las bases conservan el texto de cada página física (desde 1),
-las páginas sin texto y el hash SHA-256 del PDF original. Verifica que el documento
-corresponda al ID indicado: esa asociación se realiza manualmente.
-
-La descarga de adjuntos del portal aún es manual. Los PDFs escaneados requieren OCR,
-que todavía no está implementado. La ingesta no extrae requisitos ni los envía al modelo.
-
-La primera prueba real y sus fuentes están documentadas en [docs/INGESTION_NOTES.md](docs/INGESTION_NOTES.md).
-
-### Extraer requisitos con citas
-
-Después de la ingesta:
-
-```bash
 npm run extract -- 730566-48-L123
-```
-
-Este comando **envía el texto de las bases a Meta**. Procesa bloques de cuatro páginas
-y guarda el resultado en `data/tenders/<id>/requirements.json`. Cada requisito candidato tiene
-categoría, etapa (oferta, adjudicación o ejecución), naturaleza (obligación o criterio
-de evaluación), página principal, condiciones de aplicación, alternativas aceptadas
-y una o varias citas textuales. La versión de salida actual es `schemaVersion: 2`.
-
-El núcleo valida el JSON y comprueba todas las citas contra sus páginas, tolerando únicamente
-diferencias de espacios y saltos de línea. Reintenta una vez los bloques con esquema
-o citas inválidas; las citas que siguen fallando quedan en `rechazados`, fuera de la
-lista de requisitos aceptados. Si una llamada falla o se trunca, conserva el resultado
-anterior y no publica una extracción parcial.
-
-Cada requisito debe tener una cita en su página principal, dentro del bloque objetivo.
-Puede completar la evidencia con la página anterior o siguiente cuando allí estén un
-encabezado, una condición o una continuación.
-
-La coincidencia de una cita no garantiza que la interpretación sea correcta ni que
-se hayan encontrado todos los requisitos. Revisa el resultado antes de usarlo.
-
-Detalles de validación y límites: [docs/EXTRACTION_NOTES.md](docs/EXTRACTION_NOTES.md).
-
-### Evaluar la extracción
-
-```bash
 npm run eval -- 730566-48-L123
 ```
 
-La primera muestra incluye 34 requisitos clave y una auditoría de 25 candidatos.
-El comando selecciona la revisión de la versión de salida, compara con adjudicaciones explícitas y genera un informe local sin llamar
-al modelo. Las etiquetas son provisionales y la muestra es de desarrollo, no un test
-ciego. Resultados, denominadores y reproducción en [eval/README.md](eval/README.md).
-Comparación de la salida original y la versión 2: [eval/V2.md](eval/V2.md).
+La descarga de bases desde el portal es manual; puedes cargarlas directamente desde
+el navegador. La extracción conserva páginas físicas y verifica citas literales con
+JSON validado. La matriz distingue ausencia, contradicción, aplicabilidad y sustento
+insuficiente. Una cita literal no garantiza interpretación correcta ni autenticidad.
 
-### Evidencia y matriz desde el navegador
+El set de desarrollo contiene dos licitaciones históricas y adjudicaciones provisionales.
+La primera extracción evaluada v2 obtiene cobertura estricta de 31/34 etiquetas y
+citas suficientes en 19/25 candidatos auditados; la segunda, 11/12 y 12/16. Son muestras
+seleccionadas, con denominadores diferentes; no estiman calidad global ni ahorro de tiempo.
+Los PDFs históricos y snapshots privados no se incluyen en el clon; la demo ficticia sí.
+[Evaluación y reproducción](eval/README.md).
 
-Con una licitación ingerida y sus requisitos extraídos, ejecuta `npm start` y abre
-http://127.0.0.1:3000. Guarda evidencia en texto/PDF, selecciona la licitación y pulsa
-«Analizar con Meta». Revisa las citas, responde preguntas y exporta JSON o
-Markdown. El baúl conserva los archivos originales y permite reemplazarlos o retirarlos.
-Exportar → Carpeta con documentos guarda una copia independiente con los respaldos que
-selecciones. [Uso y límites](docs/VAULT_EXPORT.md).
-«Cargar perfil ficticio» permite probar con datos de demostración.
-
-El texto seleccionado y las respuestas se envían a Meta al generar la matriz.
-Los resultados son provisionales: citas insuficientes quedan pendientes de revisión
-y no permiten afirmar cumplimiento. [Uso, persistencia y límites](docs/MATRIX_NOTES.md).
+Notas: [ingesta](docs/INGESTION_NOTES.md), [extracción](docs/EXTRACTION_NOTES.md),
+[matriz](docs/MATRIX_NOTES.md), [gestión de originales](docs/VAULT_EXPORT.md)
+y [API de Meta](docs/META_API_NOTES.md).
 
 ### Con Docker
 
@@ -111,9 +89,9 @@ La interfaz queda en http://127.0.0.1:3000 y los datos locales se guardan en `./
 ## Estructura
 
 ```
-packages/core   núcleo del agente (herramientas, bucle, esquemas), sin dependencia de la interfaz
+packages/core   núcleo del agente, herramientas, checkpoints, esquemas y paquete
 packages/web    interfaz local servida en localhost
-fixtures/       licitaciones de ejemplo (public/ se publica, private/ no)
+fixtures/       demo ficticia pública y bases históricas privadas
 eval/           set de evaluación
 docs/           notas técnicas
 ```
