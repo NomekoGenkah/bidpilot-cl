@@ -103,6 +103,10 @@ export async function extractRequirements(
   input: unknown,
   config: Config['meta'],
   onProgress: (message: string) => void = () => {},
+  checkpoint?: {
+    load: (offset: number) => Promise<unknown | null>;
+    save: (offset: number, value: unknown) => Promise<void>;
+  },
 ) {
   const bases = basesSchema.parse(input);
   const requirements: Requirement[] = [];
@@ -122,6 +126,29 @@ export async function extractRequirements(
     const available = [...previous, ...pages, ...following];
     const from = offset + 1;
     const to = offset + pages.length;
+    const cached = await checkpoint?.load(offset);
+    if (cached) {
+      const block = z
+        .object({
+          requisitos: z.array(requirementSchema),
+          rechazados: z.array(z.object({ requisito: requirementSchema, motivo: z.string() })),
+          intentos: z.number(),
+        })
+        .parse(cached);
+      if (verifyCitations(block.requisitos, available, pages).rejected.length)
+        throw new Error('El bloque guardado no corresponde a las bases.');
+      requirements.push(...block.requisitos);
+      rejected.push(...block.rechazados);
+      blocks.push({
+        desde: from,
+        hasta: to,
+        intentos: block.intentos,
+        aceptados: block.requisitos.length,
+        rechazados: block.rechazados.length,
+      });
+      onProgress(`Recuperadas páginas ${from}–${to} del progreso guardado.`);
+      continue;
+    }
     onProgress(`Extrayendo páginas ${from}–${to} de ${bases.pageCount}…`);
     let feedback = '';
     let final: ReturnType<typeof verifyCitations> | undefined;
@@ -161,6 +188,11 @@ export async function extractRequirements(
         onProgress(`Reintentando páginas ${from}–${to}: ${final.rejected.length} citas inválidas.`);
     }
     if (!final) throw new Error(`No se pudo validar el bloque ${from}–${to}.`);
+    await checkpoint?.save(offset, {
+      requisitos: final.accepted,
+      rechazados: final.rejected,
+      intentos: attempts,
+    });
     requirements.push(...final.accepted);
     rejected.push(...final.rejected);
     blocks.push({

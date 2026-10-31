@@ -67,3 +67,30 @@ describe('cliente de Meta', () => {
     );
   });
 });
+
+it('usa herramientas nativas con auto y rechaza nombres, argumentos o respuestas truncadas', async () => {
+  const { metaTool } = await import('./meta.js');
+  const answer = (name = 'read_bases', args = '{ }', finish = 'tool_calls') =>
+    new Response(
+      JSON.stringify({
+        choices: [
+          {
+            finish_reason: finish,
+            message: { tool_calls: [{ type: 'function', function: { name, arguments: args } }] },
+          },
+        ],
+      }),
+    );
+  const fetch = vi.fn().mockResolvedValue(answer());
+  vi.stubGlobal('fetch', fetch);
+  const available = [{ name: 'read_bases', description: 'Leer bases PDF' }];
+  expect(await metaTool(config, 'Siguiente paso', available)).toBe('read_bases');
+  const sent = JSON.parse(fetch.mock.calls[0]?.[1].body ?? '{}') as { tool_choice: string };
+  expect(sent.tool_choice).toBe('auto');
+  fetch.mockResolvedValue(answer('delete_files'));
+  await expect(metaTool(config, 'Siguiente paso', available)).rejects.toThrow('no permitidos');
+  fetch.mockResolvedValue(answer('read_bases', '{"path":"/etc/passwd"}'));
+  await expect(metaTool(config, 'Siguiente paso', available)).rejects.toThrow();
+  fetch.mockResolvedValue(answer('read_bases', '{}', 'length'));
+  await expect(metaTool(config, 'Siguiente paso', available)).rejects.toThrow();
+});

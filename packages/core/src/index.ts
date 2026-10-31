@@ -11,3 +11,6 @@ export {
 } from './evidence.js';
 export { buildMatrix, matrixMarkdown, type Matrix } from './matrix.js';
 export { exportPackage, packagePreview } from './package-export.js';
+
+export { createRun, executeRun, resumeRun, readRun, type AgentRun } from './agent.js';
+export { buildSubmission, submissionMarkdown, type Submission } from './submission.js';

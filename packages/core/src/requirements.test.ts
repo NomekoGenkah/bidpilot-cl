@@ -172,3 +172,35 @@ describe('extracción de requisitos', () => {
     expect(metaJson).not.toHaveBeenCalled();
   });
 });
+
+it('recupera bloques validados tras un fallo sin repetir llamadas ya completadas', async () => {
+  const cache = new Map<number, unknown>();
+  const checkpoint = {
+    load: async (offset: number) => cache.get(offset) ?? null,
+    save: async (offset: number, value: unknown) => {
+      cache.set(offset, value);
+    },
+  };
+  const large = {
+    ...bases,
+    pageCount: 5,
+    pages: Array.from({ length: 5 }, (_, i) => ({ page: i + 1, text: quote })),
+  };
+  const second = {
+    ...requirement,
+    paginaPrincipal: 5,
+    citas: [{ pagina: 5, texto: quote, clausula: null }],
+  };
+  vi.mocked(metaJson)
+    .mockResolvedValueOnce({ requisitos: [requirement] })
+    .mockRejectedValueOnce(new Error('Fallo de red'));
+  await expect(extractRequirements(large, config, () => {}, checkpoint)).rejects.toThrow(
+    'Fallo de red',
+  );
+  expect(cache.has(0)).toBe(true);
+  expect(cache.has(4)).toBe(false);
+  vi.mocked(metaJson).mockResolvedValueOnce({ requisitos: [second] });
+  const result = await extractRequirements(large, config, () => {}, checkpoint);
+  expect(result.requisitos).toHaveLength(2);
+  expect(metaJson).toHaveBeenCalledTimes(3);
+});

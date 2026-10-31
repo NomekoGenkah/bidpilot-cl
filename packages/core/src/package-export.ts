@@ -13,6 +13,9 @@ import { basename, isAbsolute, join, relative, sep } from 'node:path';
 import { validateTenderId } from './ingest.js';
 import { digest, originalBytes, type Evidence } from './evidence.js';
 import { matrixMarkdown, type Matrix } from './matrix.js';
+import { submissionMarkdown, type Submission } from './submission.js';
+import type { AgentRun } from './agent.js';
+import { basesSchema } from './requirements.js';
 
 export function packagePreview(matrix: Matrix, docs: Evidence[]) {
   const cited = new Set(matrix.rows.flatMap((r) => r.citasEvidencia.map((c) => c.documentId)));
@@ -39,8 +42,18 @@ export async function exportPackage(
   selectedIds: string[],
   destination: string,
   vault: string,
+  submission: Submission | null = null,
+  run: AgentRun | null = null,
+  basesInput: unknown = null,
+  basesPdf: Buffer | null = null,
 ) {
   validateTenderId(matrix.tenderId);
+  if (run && (run.status !== 'done' || !submission))
+    throw new Error('Completa el agente antes de exportar el paquete.');
+  if (submission && submission.matrixSha256 !== digest(JSON.stringify(matrix)))
+    throw new Error('El paquete no corresponde a la matriz actual. Actualiza el agente.');
+  if (basesPdf && digest(basesPdf) !== matrix.sourceSha256)
+    throw new Error('El PDF original no corresponde a la matriz.');
   if (!isAbsolute(destination))
     throw new Error('Escribe la ruta absoluta de una carpeta existente.');
   const parent = await realpath(destination).catch(() => {
@@ -120,12 +133,59 @@ export async function exportPackage(
     });
     await json('preguntas.json', questionList);
     await json('referencias.json', references);
+    if (submission) {
+      await json('postulacion.json', submission);
+      await json('recomendacion.json', submission.recomendacion);
+      await json('riesgos.json', submission.riesgos);
+      await json('brechas.json', submission.brechas);
+      await json('checklist.json', submission.checklist);
+      await writeFile(join(staging, 'postulacion.md'), submissionMarkdown(submission), {
+        mode: 0o600,
+        flag: 'wx',
+      });
+    }
+    if (run) await json('agente.json', run);
+    if (basesInput) {
+      const bases = basesSchema.parse(basesInput);
+      if (bases.sha256 !== matrix.sourceSha256 || bases.tenderId !== matrix.tenderId)
+        throw new Error('Las bases no corresponden a la matriz.');
+      await json('bases.json', bases);
+    }
+    if (basesPdf)
+      await writeFile(join(staging, 'bases.pdf'), basesPdf, { mode: 0o600, flag: 'wx' });
+    const artifactNames = [
+      'matriz.json',
+      'matriz.md',
+      'preguntas.json',
+      'referencias.json',
+      ...(submission
+        ? [
+            'postulacion.json',
+            'postulacion.md',
+            'recomendacion.json',
+            'riesgos.json',
+            'brechas.json',
+            'checklist.json',
+          ]
+        : []),
+      ...(run ? ['agente.json'] : []),
+      ...(basesInput ? ['bases.json'] : []),
+      ...(basesPdf ? ['bases.pdf'] : []),
+    ];
+    const artifacts = await Promise.all(
+      artifactNames.map(async (file) => ({
+        file,
+        sha256: digest(await readFile(join(staging, file))),
+      })),
+    );
     await json('contenido.json', {
       schemaVersion: 1,
       tenderId: matrix.tenderId,
       exportedAt: new Date().toISOString(),
       fictional: matrix.fictional,
       files,
+      artifacts,
+      mode: run?.mode ?? 'live',
       omittedCitedIds: [
         ...new Set(matrix.rows.flatMap((r) => r.citasEvidencia.map((c) => c.documentId))),
       ].filter((id) => !selectedIds.includes(id)),
@@ -134,7 +194,13 @@ export async function exportPackage(
     await writeFile(
       join(staging, 'LEEME.txt'),
       'Copia de revisión de BidPilot CL. No es una oferta presentada ni un paquete listo para enviar.\nRevisa las bases originales, sus aclaraciones y cada documento antes de postular.\nmatriz.json y matriz.md conservan el análisis íntegro, incluidas citas a documentos no seleccionados.\nreferencias.json indica qué archivos se incluyeron y cuáles se omitieron; contenido.json registra sus hashes.\nLos documentos sin analizar se guardan como adjuntos: no acreditan cumplimiento por sí solos.\n' +
-        (matrix.fictional ? 'PERFIL FICTICIO: SOLO DEMOSTRACIÓN.\n' : ''),
+        (matrix.fictional ? 'PERFIL FICTICIO: SOLO DEMOSTRACIÓN.\n' : '') +
+        (run?.mode === 'replay'
+          ? 'REPRODUCCIÓN SIN META. Los resultados son un escenario sintético fijo.\n'
+          : '') +
+        (submission
+          ? 'postulacion.md reúne recomendación, riesgos, brechas, checklist y borrador. Los marcadores POR COMPLETAR requieren intervención del proveedor. No se infieren compromisos ni se calculan fechas relativas.\n'
+          : ''),
       { mode: 0o600, flag: 'wx' },
     );
     await mkdir(output, { mode: 0o700 });

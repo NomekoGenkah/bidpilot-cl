@@ -1,0 +1,9 @@
+BASES FICTICIAS - DEMOSTRACION BIDPILOT CL
+Licitacion 990000-1-L126. No corresponde a un proceso real.
+1. Se requiere desarrollar un sitio web accesible con entrega de codigo fuente.
+2. La experiencia otorga 20 puntos por acreditar dos proyectos de desarrollo web.
+3. El oferente debe adjuntar un certificado de vigencia de la sociedad al cierre.
+4. La propuesta debe incluir un plan de trabajo de 30 dias desde la orden de compra.
+5. La oferta economica debe expresarse en pesos chilenos e incluir impuestos.
+6. El contrato contempla una multa de 1 por ciento del monto por cada dia de atraso.
+La fecha de cierre no esta definida en estas bases ficticias. No se deben inferir fechas.

@@ -136,3 +136,28 @@ describe('reglas de cumplimiento', () => {
     ).rejects.toThrow('no corresponden');
   });
 });
+
+it('reutiliza el bloque guardado y vuelve a verificar sus citas documentales', async () => {
+  const bases = {
+    tenderId: '730566-25-L124',
+    sha256: 'a'.repeat(64),
+    pageCount: 1,
+    pages: [{ page: 1, text: req.citas[0]?.texto }],
+  };
+  const config = { apiKey: 'fake', model: 'fake', baseUrl: 'https://example.com' };
+  const cache = { load: async () => ({ resultados: [good] }), save: vi.fn(async () => {}) };
+  vi.mocked(metaJson).mockClear();
+  const matrix = await buildMatrix(
+    bases,
+    { tenderId: bases.tenderId, sourceSha256: bases.sha256, requisitos: [req] },
+    [],
+    {},
+    config,
+    () => {},
+    [],
+    cache,
+  );
+  expect(metaJson).not.toHaveBeenCalled();
+  expect(matrix.rows[0]?.estado).toBe('dudoso');
+  expect(matrix.rows[0]?.citasEvidencia).toHaveLength(0);
+});

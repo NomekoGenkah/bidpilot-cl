@@ -88,6 +88,10 @@ export async function buildMatrix(
   config: Config['meta'],
   progress: (message: string) => void = () => {},
   knownInsufficient: string[] = [],
+  checkpoint?: {
+    load: (offset: number) => Promise<unknown | null>;
+    save: (offset: number, value: unknown) => Promise<void>;
+  },
 ) {
   const bases = basesSchema.parse(basesInput);
   const extraction = requirementsFileSchema.parse(requirementsInput);
@@ -118,24 +122,31 @@ export async function buildMatrix(
         5,
       ))
         found.set(`${page.documentId}:${page.page}:${digest(page.text)}`, page);
-    const raw = await metaJson(
-      config,
-      [
-        { role: 'developer', content: instruction },
-        {
-          role: 'user',
-          content: JSON.stringify({
-            requisitos: batch,
-            evidencia: [...found.values()],
-            respuestas: Object.fromEntries(
-              batch.filter((r) => answers[r.id]).map((r) => [r.id, answers[r.id]]),
-            ),
-            alcanceBusqueda: 'Hasta cinco fragmentos por requisito; resultados no exhaustivos.',
-          }),
-        },
-      ],
-      z.toJSONSchema(responseSchema),
-    );
+    const cached = await checkpoint?.load(offset);
+    if (cached)
+      progress(
+        `Recuperado contraste ${offset + 1}–${offset + batch.length} del progreso guardado.`,
+      );
+    const raw =
+      cached ??
+      (await metaJson(
+        config,
+        [
+          { role: 'developer', content: instruction },
+          {
+            role: 'user',
+            content: JSON.stringify({
+              requisitos: batch,
+              evidencia: [...found.values()],
+              respuestas: Object.fromEntries(
+                batch.filter((r) => answers[r.id]).map((r) => [r.id, answers[r.id]]),
+              ),
+              alcanceBusqueda: 'Hasta cinco fragmentos por requisito; resultados no exhaustivos.',
+            }),
+          },
+        ],
+        z.toJSONSchema(responseSchema),
+      ));
     const parsed = responseSchema.parse(raw);
     const expected = new Set(batch.map((r) => r.id));
     if (
@@ -144,6 +155,7 @@ export async function buildMatrix(
       parsed.resultados.some((r) => !expected.has(r.requirementId))
     )
       throw new Error('La matriz no contiene exactamente un resultado por requisito.');
+    await checkpoint?.save(offset, raw);
     for (const req of batch) {
       const judgment = parsed.resultados.find((r) => r.requirementId === req.id);
       if (!judgment) throw new Error('Falta un requisito en la matriz.');
