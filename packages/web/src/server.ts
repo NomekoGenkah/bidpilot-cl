@@ -440,7 +440,8 @@ async function route(req: IncomingMessage, res: ServerResponse) {
   }
   if (action === 'matrix' && method === 'GET') return json(res, 200, await matrixState(id));
   if (action === 'matrix' && method === 'POST') {
-    if (offline) return json(res, 409, { error: 'Modo reproducción: usa el agente de la demo.' });
+    if (offline || (await readRun(tenderDir(id)))?.mode === 'replay')
+      return json(res, 409, { error: 'Modo reproducción: usa el agente de la demo.' });
     activeAgent = '';
     const config = loadConfig();
     const input = await inputs(id);

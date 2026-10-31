@@ -103,6 +103,7 @@ try {
       await browser('wait', '#generate:not(:disabled)');
       await browser('click', '#tab-submission');
       await writeFile(join(dir, 'package.txt'), await browser('snapshot', '-i'));
+      await browser('scroll', 'up', '10000');
       await browser('click', '.export-menu summary');
       await browser('wait', '.export-menu[open] #exportfolder:not([hidden])');
       await browser('click', '#exportfolder');

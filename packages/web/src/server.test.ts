@@ -49,11 +49,11 @@ beforeAll(async () => {
   const address = server.address();
   if (!address || typeof address === 'string') throw new Error('Puerto no disponible');
   origin = `http://127.0.0.1:${address.port}`;
-});
+}, 30_000); // La importación en frío incluye PDF.js y las herramientas del agente.
 afterAll(async () => {
-  await new Promise<void>((resolve) => server.close(() => resolve()));
+  if (server?.listening) await new Promise<void>((resolve) => server.close(() => resolve()));
   vi.unstubAllEnvs();
-  await rm(dir, { recursive: true, force: true });
+  if (dir) await rm(dir, { recursive: true, force: true });
 });
 async function post(path: string, data: unknown, requestOrigin = origin) {
   return fetch(origin + path, {
@@ -270,6 +270,7 @@ it('recorre la demo del agente por HTTP y bloquea el paquete hasta resolver o di
   expect(first.run.status).toBe('awaiting_user');
   expect(first.run.questions).toHaveLength(3);
   expect(first.submission).toBeNull();
+  expect((await post(path + '/matrix', {})).status).toBe(409);
   expect((await post(path + '/package', { destination: dir, documentIds: [] })).status).toBe(400);
   expect((await post(path + '/agent/continue', { answers: {}, defer: false })).status).toBe(400);
   expect((await post(path + '/agent/continue', { answers: {}, defer: true })).status).toBe(202);
