@@ -32,6 +32,34 @@ describe('cliente de Meta', () => {
     expect(fetch).toHaveBeenCalledTimes(2);
   });
 
+  it('respeta retry-after también al elegir herramienta', async () => {
+    vi.useFakeTimers();
+    const { metaTool } = await import('./meta.js');
+    const toolAnswer = new Response(
+      JSON.stringify({
+        choices: [
+          {
+            finish_reason: 'tool_calls',
+            message: {
+              tool_calls: [{ type: 'function', function: { name: 'read_bases', arguments: '{}' } }],
+            },
+          },
+        ],
+      }),
+    );
+    const fetch = vi
+      .fn()
+      .mockResolvedValueOnce(new Response('', { status: 503, headers: { 'retry-after': '7' } }))
+      .mockResolvedValueOnce(toolAnswer);
+    vi.stubGlobal('fetch', fetch);
+    const pending = metaTool(config, 'Siguiente paso', [{ name: 'read_bases', description: 'x' }]);
+    await vi.advanceTimersByTimeAsync(6_900);
+    expect(fetch).toHaveBeenCalledTimes(1);
+    await vi.advanceTimersByTimeAsync(200);
+    await expect(pending).resolves.toBe('read_bases');
+    expect(fetch).toHaveBeenCalledTimes(2);
+  });
+
   it('no reintenta un HTTP 400 ni expone el cuerpo remoto', async () => {
     const fetch = vi.fn().mockResolvedValue(new Response('test-secret', { status: 400 }));
     vi.stubGlobal('fetch', fetch);
