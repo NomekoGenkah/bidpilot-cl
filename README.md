@@ -1,105 +1,52 @@
 # BidPilot CL
 
-Agente que prepara postulaciones a licitaciones de [Mercado Público](https://www.mercadopublico.cl) (Chile): lee las bases, extrae los requisitos con su cita, los contrasta con tu evidencia y te deja un paquete de postulación casi listo para revisar.
+Agente local-first que prepara postulaciones a licitaciones de [Mercado Público](https://www.mercadopublico.cl) (Chile).
+Lee las bases, extrae los requisitos **con su cita literal**, los contrasta con la evidencia del proveedor y deja un paquete auditable para revisión humana.
 
-> Proyecto en construcción para el Meta Global AI Developer Hackathon (pista Indie).
+![Demo: el agente analiza bases ficticias, pide decisiones y arma el paquete](docs/media/demo.gif)
 
-## Local-first
-
-BidPilot CL corre en tu computador. Tus documentos y datos se guardan localmente (carpeta `data/`); en modo real se envían a Meta las bases, los fragmentos de evidencia seleccionada y las respuestas necesarias para el análisis, y se consultan metadatos de Mercado Público. El modo de reproducción no llama a esas APIs.
-
-## Instalación
-
-Usa Node.js 24 LTS, la versión verificada para ejecutar y comprobar el proyecto.
+## Pruébalo sin claves
 
 ```bash
-npm install
-cp .env.example .env   # completa tus claves
-npm start              # abre http://127.0.0.1:3000
+npm ci && npm run demo   # Node.js 24
 ```
 
-Otros comandos: `npm run dev` (recarga automática), `npm test`, `npm run lint`, `npm run typecheck` y `npm run check` (los tres anteriores).
+Abre http://127.0.0.1:3000 y pulsa **Probar demo sin Meta**. Usa bases y evidencia ficticias
+con resultados de reproducción: no llama a APIs externas. [Guion de la demo](docs/DEMO.md).
 
-### Preparar una postulación desde el navegador
+## Decisiones de diseño
 
-1. Guarda la evidencia del proveedor en **Documentos** (PDF con texto, archivos UTF-8 o texto pegado).
-2. Pulsa **Nueva postulación**, ingresa el ID, carga sus bases PDF y selecciona la evidencia.
-3. Confirma la asociación ID/PDF y el envío a Meta. El agente encadena lectura, extracción con citas, búsqueda y matriz; su línea de tiempo conserva las acciones.
-4. Responde sus preguntas o continúa dejando pendientes explícitos. Puedes añadir documentos y cambiar la selección antes de continuar.
-5. Revisa **Paquete**: recomendación, riesgos, brechas, checklist y borrador técnico alineado con los requisitos y criterios de evaluación.
-6. Exporta una carpeta con el paquete, sus citas y los originales que selecciones. Revisa todo antes de postular por tu cuenta.
+- **Límite agente/código.** El controlador decide fases, precondiciones, rutas y escrituras;
+  el modelo solo extrae y clasifica dentro de esquemas JSON estrictos (Zod). Lo que no valida
+  se rechaza. Qué preguntar al usuario, en qué orden y cuándo pausar lo decide el código.
+  [Flujo del agente](docs/AGENT_WORKFLOW.md).
+- **Citas verificadas.** Cada requisito lleva página física y cita, que se comprueba
+  literalmente contra el texto del PDF; si no aparece, el requisito no se acepta.
+  [Extracción](docs/EXTRACTION_NOTES.md) · [Matriz](docs/MATRIX_NOTES.md).
+- **Checkpoints reanudables.** Extracción y matriz se procesan por bloques guardados con
+  hash de sus entradas: un reinicio o un fallo de red retoma desde el último bloque válido
+  sin repetir llamadas ni duplicar resultados. Reintentos con backoff y `retry-after`.
+- **Evals con etiquetas propias.** Dos licitaciones históricas etiquetadas a mano, con
+  revisiones congeladas por hash para medir cada versión del prompt (p. ej. 31/34 requisitos
+  recuperados). [Evaluación](eval/README.md).
+- **Local-first y trazable.** Los datos quedan en `data/`; la exportación incluye manifiesto
+  con hashes de cada artefacto y original. Nunca envía nada al portal.
 
-Los pasos y bloques validados se conservan al cerrar la pestaña o reiniciar el servidor.
-El borrador usa antecedentes documentales y marca lo que el proveedor debe completar;
-no inventa equipo, credenciales, precios ni compromisos. Los plazos relativos no se
-convierten en fechas sin su evento inicial. [Funcionamiento y límites](docs/AGENT_WORKFLOW.md).
-
-### Demo sin claves ni llamadas externas
+## Desarrollo
 
 ```bash
-npm ci
-npm run demo
+npm run check            # typecheck + ESLint + Prettier + tests (Vitest)
+npm run demo:rehearse    # 3 recorridos completos de la demo (requiere agent-browser)
 ```
 
-Abre http://127.0.0.1:3000 y pulsa **Probar demo sin Meta**. Incluye bases y evidencia
-**ficticias**, resultados de reproducción identificados y el recorrido completo hasta
-la exportación. Guarda sus datos en `data/demo/`, separados del uso normal. No evalúa
-la calidad de Meta. [Guion, reproducción y límites](docs/DEMO.md).
-
-### Uso avanzado por CLI y evaluaciones
-
-La ingesta y extracción por CLI siguen disponibles:
-
-```bash
-npm run ingest -- 730566-48-L123 fixtures/private/730566-48-L123/bases.pdf
-npm run extract -- 730566-48-L123
-npm run eval -- 730566-48-L123
-```
-
-La descarga de bases desde el portal es manual; puedes cargarlas directamente desde
-el navegador. La extracción conserva páginas físicas y verifica citas literales con
-JSON validado. La matriz distingue ausencia, contradicción, aplicabilidad y sustento
-insuficiente. Una cita literal no garantiza interpretación correcta ni autenticidad.
-
-El set de desarrollo contiene dos licitaciones históricas y adjudicaciones provisionales.
-La primera extracción evaluada v2 obtiene cobertura estricta de 31/34 etiquetas y
-citas suficientes en 19/25 candidatos auditados; la segunda, 11/12 y 12/16. Son muestras
-seleccionadas, con denominadores diferentes; no estiman calidad global ni ahorro de tiempo.
-Los PDFs históricos y snapshots privados no se incluyen en el clon; la demo ficticia sí.
-[Evaluación y reproducción](eval/README.md).
-
-Notas: [ingesta](docs/INGESTION_NOTES.md), [extracción](docs/EXTRACTION_NOTES.md),
-[matriz](docs/MATRIX_NOTES.md), [gestión de originales](docs/VAULT_EXPORT.md)
-y [API de Meta](docs/META_API_NOTES.md).
-
-### Con Docker
-
-```bash
-cp .env.example .env   # completa tus claves
-docker compose up --build
-```
-
-La interfaz queda en http://127.0.0.1:3000 y los datos locales se guardan en `./data`.
-
-## Avisos
-
-- **No es asesoría legal.** Revisa siempre las bases originales antes de postular.
-- **Nunca envía nada al portal.** Tú revisas el paquete y postulas por tu cuenta.
-
-## Estructura
+Modo real con Meta y Mercado Público, CLI, métricas y Docker: [uso avanzado](docs/USO_AVANZADO.md).
 
 ```
-packages/core   núcleo del agente, herramientas, checkpoints, esquemas y paquete
+packages/core   agente, herramientas, checkpoints, esquemas y paquete
 packages/web    interfaz local servida en localhost
-fixtures/       demo ficticia pública y bases históricas privadas
-eval/           set de evaluación
+eval/           etiquetas, revisiones y resultados de evaluación
 docs/           notas técnicas
 ```
 
-## Herramientas de desarrollo
-
-Parte del código de este repositorio se escribió con la ayuda de [Claude Code](https://claude.com/claude-code).
-
-## Licencia
-
-[MIT](LICENSE)
+**No es asesoría legal.** Revisa siempre las bases originales antes de postular.
+Parte del código se escribió con ayuda de [Claude Code](https://claude.com/claude-code). Licencia [MIT](LICENSE).
