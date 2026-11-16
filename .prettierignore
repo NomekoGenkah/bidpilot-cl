@@ -1,1 +1,4 @@
 package-lock.json
+# Markdown local de la raíz (solo el README se versiona)
+/*.md
+!/README.md
