@@ -6,7 +6,7 @@
   "description": "Agente local-first que prepara postulaciones a licitaciones de Mercado Público (Chile).",
   "license": "MIT",
   "engines": {
-    "node": ">=20.16.0"
+    "node": ">=24"
   },
   "workspaces": [
     "packages/*"
