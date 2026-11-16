@@ -1,5 +1,4 @@
 # Nunca entran a la imagen
-PLAN.md
 .env
 .env.*
 !.env.example
@@ -10,6 +9,7 @@ fixtures/private/
 node_modules/
 **/node_modules/
 dist/
+**/*.md
 coverage/
 .git/
 .vscode/
